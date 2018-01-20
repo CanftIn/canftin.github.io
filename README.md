@@ -5,4 +5,4 @@ Visit => [canftin.github.io](https://canftin.github.io).
 
 Visit => [www.canftin.com](http://www.canftin.com).
 
-Powered by [Jekyll](http://jekyllrb.com/) & [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme).
+Powered by [startbootstrap](http://startbootstrap.com/).
