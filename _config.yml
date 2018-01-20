@@ -1,61 +1,113 @@
-# Developer's Note: This is a sample _config.yml file offered with
-# jekyll-theme-prologue for your convenience. To use it, move it to your
-# project's root directory. Please note that the following lines are
-# NECESSARY for Prologue to work correctly:
-#
-# theme: jekyll-theme-prologue
-# collections: [sections]
-#
-# They activate the theme and tell Jekyll to find your homepage content
-# in /_sections. Note where "sections" starts with an underscore
-# and where it doesn't. The social settings will make links to
-# Twitter, etc., but only if you give the URL.
-#
-# Also, be sure to customize url and baseurl for your site.
-#
-# ---------------------------------------------------------------
-#
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
+# which you are expected to set up once and rarely need to edit after that.
 # For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+# 'jekyll serve'. If you change this file, please restart the server process.
+#
+# ,--------.      ,--.   ,--. ,--.
+# '--.  .--',---.  \  `.'  /,-'  '-.
+#    |  |  | .-. :  .'    \ '-.  .-'
+#    |  |  \   --. /  .'.  \  |  |
+#    `--'   `----''--'   '--' `--'
 
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-title: Your awesome title
-subtitle: Your awesome subtitle
-description: >- # this means to ignore newlines until "baseurl:"
-  This is the demo site for a Jekyll theme version of
-  HTML5 UP's sleek, responsive site template Prologue.
-author: Your Incredible Name
-email: your-email@example.com
-avatar: assets/images/avatar.jpg
+## Base settings ##
+url: https://tianqi.name #the base hostname & protocol for your site e.g. https://www.someone.com
+baseurl: /
+title: Qi's Blog
+description: > #this means to ignore newlines until "nav_lists:"
+    Tian Qi's Blog | 田琦的博客
 
-# You'll want to customize url and baseurl for your own site:
-baseurl: "/jekyll-theme-prologue" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+nav_lists:
+  - titles:
+      en: About
+      zh: 关于
+      zh-Hans: 关于
+      zh-Hant: 關於
+    url: /blog/about.html
 
-# Social settings
-facebook_url:
-github_url:
-googleplus_url:
-instagram_url:
-linkedin_url:
-pinterest_url:
-slack_url:
-twitter_url:
+paths:
+  base: /blog
+  home: /
+  all:  /blog/all.html
+  rss:  /feed.xml
 
-# Google Analytics Tracking ID goes here:
-google_analytics:
+## GitHub repository (if the site is hosted by GitHub) ##
+repository: kitian616/kitian616.github.io
+repository_tree: master
 
-# The following settings are NECESSARY for the Prologue theme to run:
-theme: jekyll-theme-prologue
-collections: [sections]
+## Language & timezone ##
+lang: zh #the language of your site, eg: en(English), zh(简体中文), zh-Hans(简体中文), zh-Hant(繁體中文)
+timezone: Asia/Shanghai
+
+## Author & social ##
+author:
+  name: "Tian Qi"
+  email: kitian616@outlook.com
+  # facebook:  #your Facebook username
+  twitter: kitian616
+  github:  kitian616
+  googleplus: 101827554735084402671
+  weibo: 234695683
+  douban: kitian616
+  # linkedin:  #your Linkedin username
+
+## Comment system (Disqus) ##
+disqus:
+  shortname: kitian616-github-io #the Disqus shortname for the site
+
+## Google Analytics ##
+ga_tracking_id: UA-71907556-1 #Google analytics id for the site
+
+## Reading quantity (LeanCloud) ##
+leancloud:
+  app_id: uAG3OhdcH8H4fxSqXLyBljA7-gzGzoHsz
+  app_key: Mzf5m9skSwYVWVXhGiYMNyXs
+  app_class: ThomasBlog
+
+# mathjax: true
+
+## Paginate ##
+paginate: 7
+paginate_path: /blog/page:num
+
+## Post excerpts ##
+excerpt_separator: <!--more-->
+excerpt_type: html # text | html
+
+## Build ##
+markdown: kramdown
+highlighter: rouge
+permalink: date
+
+exclude:
+  - CHANGELOG.md
+  - CHECKLIST.md
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README-*.md
+  - README.md
+  - gulpfile.js
+  - jekyll-text-theme.gemspec
+  - package-lock.json
+  - package.json
+  - /docs
+  - /node_modules
+  - /screenshots
+  - /test
+  - /vendor
+
+## Plugins ##
+gems:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate
+  - jemoji
+
+## Server ##
+server_url: "0.0.0.0"
+port: 4001
+
+## Development ##
+isdebug: false
