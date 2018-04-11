@@ -352,13 +352,14 @@
       </div>
     {% endif %}
 
-    <!-- 我加的内容 “本文结束”标记 -->
+    <!-- 我加的内容 “本文结束”标记 
     <div>
       {% if not is_index %}
         {% include 'passage-end-tag.swag' %}
       {% endif %}
     <div>
-
+    -->
+    
     <footer class="post-footer">
       {% if post.tags and post.tags.length and not is_index %}
         <div class="post-tags">
