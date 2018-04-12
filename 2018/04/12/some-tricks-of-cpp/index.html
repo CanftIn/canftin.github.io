@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Some Tricks Of C Plus Plus[TOC] shared_ptr123456789class FXXK&amp;#123;    string shit_;public:    FXXK(string shit) : shit_(shit) &amp;#123; cout &amp;lt;&amp;lt; &amp;quot;FXXK-shit is created: &amp;quot; &amp;lt;&amp;lt; shit &amp;lt">
+<meta name="description" content="Some Tricks Of C Plus Plusshared_ptr123456789class FXXK&amp;#123;    string shit_;public:    FXXK(string shit) : shit_(shit) &amp;#123; cout &amp;lt;&amp;lt; &amp;quot;FXXK-shit is created: &amp;quot; &amp;lt;&amp;lt; shit &amp;lt;&amp;lt;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="some tricks of cpp">
 <meta property="og:url" content="http://yoursite.com/2018/04/12/some-tricks-of-cpp/index.html">
 <meta property="og:site_name" content="矩木">
-<meta property="og:description" content="Some Tricks Of C Plus Plus[TOC] shared_ptr123456789class FXXK&amp;#123;    string shit_;public:    FXXK(string shit) : shit_(shit) &amp;#123; cout &amp;lt;&amp;lt; &amp;quot;FXXK-shit is created: &amp;quot; &amp;lt;&amp;lt; shit &amp;lt">
+<meta property="og:description" content="Some Tricks Of C Plus Plusshared_ptr123456789class FXXK&amp;#123;    string shit_;public:    FXXK(string shit) : shit_(shit) &amp;#123; cout &amp;lt;&amp;lt; &amp;quot;FXXK-shit is created: &amp;quot; &amp;lt;&amp;lt; shit &amp;lt;&amp;lt;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-12T09:33:22.150Z">
+<meta property="og:updated_time" content="2018-04-12T09:36:14.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="some tricks of cpp">
-<meta name="twitter:description" content="Some Tricks Of C Plus Plus[TOC] shared_ptr123456789class FXXK&amp;#123;    string shit_;public:    FXXK(string shit) : shit_(shit) &amp;#123; cout &amp;lt;&amp;lt; &amp;quot;FXXK-shit is created: &amp;quot; &amp;lt;&amp;lt; shit &amp;lt">
+<meta name="twitter:description" content="Some Tricks Of C Plus Plusshared_ptr123456789class FXXK&amp;#123;    string shit_;public:    FXXK(string shit) : shit_(shit) &amp;#123; cout &amp;lt;&amp;lt; &amp;quot;FXXK-shit is created: &amp;quot; &amp;lt;&amp;lt; shit &amp;lt;&amp;lt;">
 
 
 
@@ -302,8 +302,7 @@
       
 
       
-        <h1 id="Some-Tricks-Of-C-Plus-Plus"><a href="#Some-Tricks-Of-C-Plus-Plus" class="headerlink" title="Some Tricks Of C Plus Plus"></a>Some Tricks Of C Plus Plus</h1><p>[TOC]</p>
-<h2 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class FXXK</span><br><span class="line">&#123;</span><br><span class="line">    string shit_;</span><br><span class="line">public:</span><br><span class="line">    FXXK(string shit) : shit_(shit) &#123; cout &lt;&lt; &quot;FXXK-shit is created: &quot; &lt;&lt; shit &lt;&lt; endl; &#125;</span><br><span class="line">    FXXK() &#123; cout &lt;&lt; &quot;Smelly FXXK created. &quot; &lt;&lt; endl; shit_ = &quot;Smelly&quot;; &#125;</span><br><span class="line">    ~FXXK() &#123; cout &lt;&lt; &quot;FXXK is destroyed: &quot; &lt;&lt; shit_ &lt;&lt; endl; &#125;</span><br><span class="line">    void shit() &#123; cout &lt;&lt; &quot;FXXK &quot; &lt;&lt; shit_ &lt;&lt; &quot;....&quot; &lt;&lt; endl; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <h1 id="Some-Tricks-Of-C-Plus-Plus"><a href="#Some-Tricks-Of-C-Plus-Plus" class="headerlink" title="Some Tricks Of C Plus Plus"></a>Some Tricks Of C Plus Plus</h1><h2 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class FXXK</span><br><span class="line">&#123;</span><br><span class="line">    string shit_;</span><br><span class="line">public:</span><br><span class="line">    FXXK(string shit) : shit_(shit) &#123; cout &lt;&lt; &quot;FXXK-shit is created: &quot; &lt;&lt; shit &lt;&lt; endl; &#125;</span><br><span class="line">    FXXK() &#123; cout &lt;&lt; &quot;Smelly FXXK created. &quot; &lt;&lt; endl; shit_ = &quot;Smelly&quot;; &#125;</span><br><span class="line">    ~FXXK() &#123; cout &lt;&lt; &quot;FXXK is destroyed: &quot; &lt;&lt; shit_ &lt;&lt; endl; &#125;</span><br><span class="line">    void shit() &#123; cout &lt;&lt; &quot;FXXK &quot; &lt;&lt; shit_ &lt;&lt; &quot;....&quot; &lt;&lt; endl; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>case:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FXXK* fxxk = new FXXK(&quot;shit&quot;);</span><br><span class="line">fxxk-&gt;shit(); //fxxk is a dangling pointer, the memory will be leaked.</span><br></pre></td></tr></table></figure>
 <p>so we need to:</p>
