@@ -53,9 +53,44 @@ RigidShape.prototype.updateMass = function (delta) {
     }
 
     mass += delta;
-    if (mass <= 0)="" {="" this.minvmass="0;" this.mvelocity="new" vec2(0,="" 0);="" this.macceleration="new" this.mangularvelocity="0;" this.mangularacceleration="0;" }="" else="" mass;="" this.updateinertia();="" };="" rigidshape.prototype.updateinertia="function" ()="" subclass="" must="" define="" this.="" anime="" rigidshape.prototype.update="function" if="" (gengine.core.mmovement)="" var="" dt="gEngine.Core.mUpdateIntervalInSeconds;" v="" +="a*t" s="" this.move(this.mvelocity.scale(dt));="" *="" dt;="" this.rotate(this.mangularvelocity="" dt);="" rigidshape.prototype.boundtest="function" (othershape)="" vfrom1to2="otherShape.mCenter.subtract(this.mCenter);" rsum="this.mBoundRadius" othershape.mboundradius;="" dist="vFrom1to2.length();" (dist=""> rSum) {
+    if (mass <= 0) {
+        this.mInvMass = 0;
+        this.mVelocity = new Vec2(0, 0);
+        this.mAcceleration = new Vec2(0, 0);
+        this.mAngularVelocity = 0;
+        this.mAngularAcceleration = 0;
+    } else {
+        this.mInvMass = 1 / mass;
+        this.mAcceleration = gEngine.Core.mGravity;
+    }
+    this.updateInertia();
+};
+
+RigidShape.prototype.updateInertia = function () {
+    // subclass must define this.
+};
+
+// anime
+RigidShape.prototype.update = function () {
+    if (gEngine.Core.mMovement) {
+        var dt = gEngine.Core.mUpdateIntervalInSeconds;
+        //v += a*t
+        this.mVelocity = this.mVelocity.add(this.mAcceleration.scale(dt));
+        //s += v*t 
+        this.move(this.mVelocity.scale(dt));
+
+        this.mAngularVelocity += this.mAngularAcceleration * dt;
+        this.rotate(this.mAngularVelocity * dt);        
+    }
+};
+
+RigidShape.prototype.boundTest = function (otherShape) {
+    var vFrom1to2 = otherShape.mCenter.subtract(this.mCenter);
+    var rSum = this.mBoundRadius + otherShape.mBoundRadius;
+    var dist = vFrom1to2.length();
+    if (dist > rSum) {
         //not overlapping
         return false;
     }
     return true;
-};</=>
+};

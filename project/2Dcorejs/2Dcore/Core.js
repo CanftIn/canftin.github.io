@@ -23,7 +23,7 @@ gEngine.Core = (function () {
     var updateUIEcho = function () {
         document.getElementById("uiEchoString").innerHTML =
                 "<p><b>Selected Object:</b>:</p>" +
-                "<ul style="\"margin:-10px\"">" +
+                "<ul style=\"margin:-10px\">" +
                 "<li>Id: " + gObjectNum + "</li>" +
                 "<li>Center: " + mAllObjects[gObjectNum].mCenter.x.toPrecision(3) + "," + mAllObjects[gObjectNum].mCenter.y.toPrecision(3) + "</li>" +
                 "<li>Angle: " + mAllObjects[gObjectNum].mAngle.toPrecision(3) + "</li>" +
@@ -35,7 +35,7 @@ gEngine.Core = (function () {
                 "<li>Movement: " + gEngine.Core.mMovement + "</li>" +
                 "</ul> <hr>" +
                 "<p><b>Control</b>: of selected object</p>" +
-                "<ul style="\"margin:-10px\"">" +
+                "<ul style=\"margin:-10px\">" +
                 "<li><b>Num</b> or <b>Up/Down Arrow</b>: Select Object</li>" +
                 "<li><b>WASD</b> + <b>QE</b>: Position [Move + Rotate]</li>" +
                 "<li><b>IJKL</b> + <b>UO</b>: Velocities [Linear + Angular]</li>" +

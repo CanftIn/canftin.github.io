@@ -13,7 +13,15 @@ function userControl(event) {
     }
 
     // 0-9
-    if (keycode >= 48 && keycode <= 48="" 57)="" {="" if="" (keycode="" -="" <="" gengine.core.mallobjects.length)="" gobjectnum="keycode" 48;="" }="" ↑="" ↓="" 38)="" up="" arrow="" (gobjectnum=""> 0) {
+    if (keycode >= 48 && keycode <= 57) {
+        if (keycode - 48 < gEngine.Core.mAllObjects.length) {
+            gObjectNum = keycode - 48;
+        }
+    }
+
+    // ↑ ↓
+    if (keycode === 38) { //up arrow
+        if (gObjectNum > 0) {
             gObjectNum--;
         }
     }
@@ -113,4 +121,4 @@ function userControl(event) {
         gEngine.Core.mAllObjects.splice(5, gEngine.Core.mAllObjects.length);
         gObjectNum = 0;
     }
-}</=>
+}
