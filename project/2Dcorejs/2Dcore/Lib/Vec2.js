@@ -1,1 +1,65 @@
-"use strict";var Vec2=function(t,e){this.x=t,this.y=e};Vec2.prototype.length=function(){return Math.sqrt(this.x*this.x+this.y*this.y)},Vec2.prototype.add=function(t){return new Vec2(t.x+this.x,t.y+this.y)},Vec2.prototype.subtract=function(t){return new Vec2(this.x-t.x,this.y-t.y)},Vec2.prototype.scale=function(t){return new Vec2(this.x*t,this.y*t)},Vec2.prototype.dot=function(t){return this.x*t.x+this.y*t.y},Vec2.prototype.cross=function(t){return this.x*t.y-this.y*t.x},Vec2.prototype.rotate=function(t,e){var n=[],i=this.x-t.x,r=this.y-t.y;return n[0]=i*Math.cos(e)-r*Math.sin(e),n[1]=i*Math.sin(e)+r*Math.cos(e),n[0]+=t.x,n[1]+=t.y,new Vec2(n[0],n[1])},Vec2.prototype.normalize=function(){var t=this.length();return 0<t&&(t=1/t),new Vec2(this.x*t,this.y*t)},Vec2.prototype.distance=function(t){var e=this.x-t.x,n=this.y-t.y;return Math.sqrt(e*e+n*n)};
+/*
+    Vec2 class
+*/
+
+"use strict";
+var Vec2 = function(x, y){
+    this.x = x;
+    this.y = y;
+};
+
+Vec2.prototype.length = function () {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+};
+
+Vec2.prototype.add = function (vec) {
+    return new Vec2(vec.x + this.x, vec.y + this.y);
+};
+
+Vec2.prototype.subtract = function (vec) {
+    return new Vec2(this.x - vec.x, this.y - vec.y);
+};
+
+Vec2.prototype.scale = function (n) {
+    return new Vec2(this.x * n, this.y * n);
+};
+
+Vec2.prototype.dot = function (vec) {
+    return (this.x * vec.x + this.y * vec.y);
+};
+
+Vec2.prototype.cross = function (vec) {
+    return (this.x * vec.y - this.y * vec.x);
+};
+
+//            [cosA  sinA]
+//  [x, y] x  [-sinA cosA] = [x*cosA-y*sinA  x*sinA+y*cosA]
+Vec2.prototype.rotate = function (center, angle) {
+    var r = [];
+
+    var x = this.x - center.x;
+    var y = this.y - center.y;
+
+    r[0] = x * Math.cos(angle) - y * Math.sin(angle);
+    r[1] = x * Math.sin(angle) + y * Math.cos(angle);
+
+    r[0] += center.x;
+    r[1] += center.y;
+
+    return new Vec2(r[0], r[1]);
+}
+
+Vec2.prototype.normalize = function () {
+
+    var len = this.length();
+    if (len > 0) {
+        len = 1 / len;
+    }
+    return new Vec2(this.x * len, this.y * len);
+};
+
+Vec2.prototype.distance = function (vec) {
+    var x = this.x - vec.x;
+    var y = this.y - vec.y;
+    return Math.sqrt(x * x + y * y);
+};

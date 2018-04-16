@@ -1,1 +1,102 @@
-"use strict";var gEngine=gEngine||{};gEngine.Core=function(){var e,t,i=1200;e=document.getElementById("canvas"),t=e.getContext("2d"),e.height=700,e.width=i;var n,l,o=new Vec2(0,10),c=Date.now(),r=0,b=1/60*1e3,s=[],m=function(){var e;for(e=0;e<s.length;e++)s[e].update(t)},a=function(){for(requestAnimationFrame(function(){a()}),n=Date.now(),l=n-c,c=n,r+=l,document.getElementById("uiEchoString").innerHTML='<p><b>Selected Object:</b>:</p><ul style="margin:-10px"><li>Id: '+gObjectNum+"</li><li>Center: "+s[gObjectNum].mCenter.x.toPrecision(3)+","+s[gObjectNum].mCenter.y.toPrecision(3)+"</li><li>Angle: "+s[gObjectNum].mAngle.toPrecision(3)+"</li><li>Velocity: "+s[gObjectNum].mVelocity.x.toPrecision(3)+","+s[gObjectNum].mVelocity.y.toPrecision(3)+"</li><li>AngluarVelocity: "+s[gObjectNum].mAngularVelocity.toPrecision(3)+"</li><li>Mass: "+1/s[gObjectNum].mInvMass.toPrecision(3)+"</li><li>Friction: "+s[gObjectNum].mFriction.toPrecision(3)+"</li><li>Restitution: "+s[gObjectNum].mRestitution.toPrecision(3)+"</li><li>Movement: "+gEngine.Core.mMovement+'</li></ul> <hr><p><b>Control</b>: of selected object</p><ul style="margin:-10px"><li><b>Num</b> or <b>Up/Down Arrow</b>: Select Object</li><li><b>WASD</b> + <b>QE</b>: Position [Move + Rotate]</li><li><b>IJKL</b> + <b>UO</b>: Velocities [Linear + Angular]</li><li><b>Z/X</b>: Mass [Decrease/Increase]</li><li><b>C/V</b>: Frictrion [Decrease/Increase]</li><li><b>B/N</b>: Restitution [Decrease/Increase]</li><li><b>,</b>: Movement [On/Off]</li></ul> <hr><b>F/G</b>: Spawn [Rectangle/Circle] at selected object<p><b>H</b>: Excite all objects</p><p><b>R</b>: Reset System</p><hr>',function(){t.clearRect(0,0,i,700);for(var e=0;e<s.length;++e)t.strokeStyle="blue",e===gObjectNum&&(t.strokeStyle="red"),s[e].draw(t)}();b<=r;)r-=b,gEngine.Physics.collision(),m()};return{initializeEngineCore:function(){a()},mAllObjects:s,mWidth:i,mHeight:700,mContext:t,mGravity:o,mUpdateIntervalInSeconds:1/60,mMovement:!1}}();
+/* global object: gObjectNum */
+"use strict";
+
+var gEngine = gEngine || {};
+
+gEngine.Core = (function () {
+    var mCanvas, mContext, mWidth = 1200, mHeight = 700;
+    mCanvas = document.getElementById('canvas');
+    mContext = mCanvas.getContext('2d');
+    mCanvas.height = mHeight;
+    mCanvas.width = mWidth;
+
+    var mGravity = new Vec2(0, 10);
+    var mMovement = false;
+
+    var mCurrentTime, mElapsedTime, mPreviousTime = Date.now(), mLagTime = 0;
+    var kFPS = 60;          // Frames per second
+    var kFrameTime = 1 / kFPS;
+    var mUpdateIntervalInSeconds = kFrameTime;
+    var kMPF = 1000 * kFrameTime; // Milliseconds per frame.
+    var mAllObjects = [];
+
+    var updateUIEcho = function () {
+        document.getElementById("uiEchoString").innerHTML =
+                "<p><b>Selected Object:</b>:</p>" +
+                "<ul style=\"margin:-10px\">" +
+                "<li>Id: " + gObjectNum + "</li>" +
+                "<li>Center: " + mAllObjects[gObjectNum].mCenter.x.toPrecision(3) + "," + mAllObjects[gObjectNum].mCenter.y.toPrecision(3) + "</li>" +
+                "<li>Angle: " + mAllObjects[gObjectNum].mAngle.toPrecision(3) + "</li>" +
+                "<li>Velocity: " + mAllObjects[gObjectNum].mVelocity.x.toPrecision(3) + "," + mAllObjects[gObjectNum].mVelocity.y.toPrecision(3) + "</li>" +
+                "<li>AngluarVelocity: " + mAllObjects[gObjectNum].mAngularVelocity.toPrecision(3) + "</li>" +
+                "<li>Mass: " + 1 / mAllObjects[gObjectNum].mInvMass.toPrecision(3) + "</li>" +
+                "<li>Friction: " + mAllObjects[gObjectNum].mFriction.toPrecision(3) + "</li>" +
+                "<li>Restitution: " + mAllObjects[gObjectNum].mRestitution.toPrecision(3) + "</li>" +
+                "<li>Movement: " + gEngine.Core.mMovement + "</li>" +
+                "</ul> <hr>" +
+                "<p><b>Control</b>: of selected object</p>" +
+                "<ul style=\"margin:-10px\">" +
+                "<li><b>Num</b> or <b>Up/Down Arrow</b>: Select Object</li>" +
+                "<li><b>WASD</b> + <b>QE</b>: Position [Move + Rotate]</li>" +
+                "<li><b>IJKL</b> + <b>UO</b>: Velocities [Linear + Angular]</li>" +
+                "<li><b>Z/X</b>: Mass [Decrease/Increase]</li>" +
+                "<li><b>C/V</b>: Frictrion [Decrease/Increase]</li>" +
+                "<li><b>B/N</b>: Restitution [Decrease/Increase]</li>" +
+                "<li><b>,</b>: Movement [On/Off]</li>" +
+                "</ul> <hr>" +
+                "<b>F/G</b>: Spawn [Rectangle/Circle] at selected object" +
+                "<p><b>H</b>: Excite all objects</p>" +
+                "<p><b>R</b>: Reset System</p>" +
+                "<hr>";
+    };
+    var update = function () {
+        var i;
+        for (i = 0; i < mAllObjects.length; i++) {
+            mAllObjects[i].update(mContext);
+        }
+    };
+    var draw = function () {
+        mContext.clearRect(0, 0, mWidth, mHeight);
+        for(var i = 0; i < mAllObjects.length; ++i) {
+            mContext.strokeStyle = 'blue';
+            if (i === gObjectNum) {
+                mContext.strokeStyle = 'red';
+            }
+            mAllObjects[i].draw(mContext);
+        }
+    };
+    var runGameLoop = function () {
+        requestAnimationFrame(function () {
+            runGameLoop();
+        });
+
+        mCurrentTime = Date.now();
+        mElapsedTime = mCurrentTime - mPreviousTime;
+        mPreviousTime = mCurrentTime;
+        mLagTime += mElapsedTime;
+
+        updateUIEcho();
+        draw();
+
+        while (mLagTime >= kMPF) {
+            mLagTime -= kMPF;
+            gEngine.Physics.collision();
+            update();
+        }
+    };
+    var initializeEngineCore = function () {
+        runGameLoop();
+    };
+
+    var mPublic = {
+        initializeEngineCore: initializeEngineCore,
+        mAllObjects: mAllObjects,
+        mWidth: mWidth,
+        mHeight: mHeight,
+        mContext: mContext,
+        mGravity: mGravity,
+        mUpdateIntervalInSeconds: mUpdateIntervalInSeconds,
+        mMovement: mMovement
+    };
+    return mPublic;
+}());
