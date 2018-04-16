@@ -131,7 +131,8 @@ scheme: Muse
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/CanftIn || github
-  Weibo: https://weibo.com/5632002270/profile?rightmod=1&wvr=6&mod=personinfo
+  Weibo: https://weibo.com/5632002270/profile?rightmod=1&wvr=6&mod=personinfo || weibo
+  知乎: https://www.zhihu.com/people/MatrixWood
   #E-Mail: mailto:yourname@gmail.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
