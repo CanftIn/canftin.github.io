@@ -152,10 +152,12 @@ social_icons:
 
 # Blog rolls
 links_icon: link
-links_title: Links
+links_title: 友链
 links_layout: block
 #links_layout: inline
-#links:
+links:
+  Baidu: http://www.baidu.com
+  CanftIn wordpress: http://www.wangyulin.cc
   #Title: http://example.com/
 
 # Sidebar Avatar
