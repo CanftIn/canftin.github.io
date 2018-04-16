@@ -781,6 +781,7 @@ vendors:
 
   # Internal version: 1.0.0
   # https://github.com/hustcc/canvas-nest.js
+  # CanftIn config
   canvas_nest:
 
   # three
