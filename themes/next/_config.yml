@@ -102,7 +102,7 @@ menu:
   #commonweal: /404/ || heartbeat
 
   # CanftIn config
-  项目: /project/list.html || code`
+  项目: /project/list.html || code
 
 # Enable/Disable menu icons.
 menu_icons:
