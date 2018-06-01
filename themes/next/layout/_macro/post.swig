@@ -335,12 +335,18 @@
     {#####################}
 
     <!-- CanftIn config -->
+    <div>
+      {% if not is_index %}
+        {% include 'passage-end-tag.swig' %}
+      {% endif %}
+    </div>
+
     {% if not is_index %}
       <div>
       {% include 'my-copyright.swig' %}
       </div>
     {% endif %}
-    
+    <!-- CanftIn config end -->
 
     {% if theme.wechat_subscriber.enabled and not is_index %}
       <div>
