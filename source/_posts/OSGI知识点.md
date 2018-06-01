@@ -1,7 +1,8 @@
 ---
 title: OSGI知识点
 date: 2018-04-11 20:33:30
-tags:
+tags: OSGI
+categories: Java
 ---
 # 使用OSGI优缺点
 
