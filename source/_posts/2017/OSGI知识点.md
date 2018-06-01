@@ -1,6 +1,7 @@
 ---
 title: OSGI知识点
-date: 2018-04-11 20:33:30
+date: 2017-10-25
+copyright: true
 tags: OSGI
 categories: Java
 ---
@@ -22,13 +23,13 @@ categories: Java
 3、采用OSGI作为规范的模块开发、部署方式自然给现有开发人员提出了新的要求，需要学习新的基于OSGI的开发方式。
 
 
-# 三、OSGI具体实现
+# OSGI具体实现
 
 OSGI是OSGi Alliance组织制定的Java模块化规范，但是该组织并没有给出OSGI容器的实现，具体实现由第三方厂商完成，目前使用较多的OSGI容器有 Apache Felix和Equinox。
 [osgi企业应用开发](http://m.blog.csdn.net/Rongbo_J/article/details/53711964)
 
 
-# 一、OSGi基本概念
+# OSGi基本概念
 ### **1.	Bundle**
 
 >    Bundle是OSGi中的模块，其生命周期被OSGi所管理，可以被动态的安装、启动、停止和卸载。通过OSGi框架将多个Bundle组织在一起就形成了系统。每一个Bundle有独立于其他Bundle的ClassLoader，所以每个Bundle的内部实现都是隔离的。
@@ -140,7 +141,7 @@ graph BT
 
 
 
-# 二、OSGi通信方式
+# OSGi通信方式
 
 **osgi中每个Bundle都有自己独立于其他Bundle的classloader，因此各个Bundle内部的类是隔离的。**
 
@@ -153,7 +154,7 @@ graph BT
 - **经典做法，通过BundleContext上下文进行提供和获取**
 - **另一种是使用Declaration Service**
 
-# 三、OSGi规范
+# OSGi规范
 - 执行环境
 - 安全层
 - 模块层

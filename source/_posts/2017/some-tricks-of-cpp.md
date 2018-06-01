@@ -1,7 +1,11 @@
 ---
 title: some tricks of cpp
-date: 2018-04-12 17:33:03
+date: 2017-11-30 
+copyright: true
 tags:
+- c++
+categories:
+- c++
 ---
 # Some Tricks Of C Plus Plus
 

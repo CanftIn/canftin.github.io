@@ -1,7 +1,10 @@
 ---
 title: How to install SLIME+SBCL+Quicklisp into Emacs
-date: 2018-04-11 20:34:56
+date: 2018-02-11 
 tags:
+- lisp
+categories:
+- c++
 ---
 # How to install SLIME+SBCL+Quicklisp into Emacs
 SLIME – SLIME is a Emacs mode for Common Lisp development. Inspired by existing systems such Emacs Lisp and ILISP, we are working to create an environment for hacking Common Lisp in. (https://common-lisp.net/project/slime/)
