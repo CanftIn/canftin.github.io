@@ -334,6 +334,14 @@
     {### END POST BODY ###}
     {#####################}
 
+    <!-- CanftIn config -->
+    {% if not is_index %}
+      <div>
+      {% include 'my-copyright.swig' %}
+      </div>
+    {% endif %}
+    
+
     {% if theme.wechat_subscriber.enabled and not is_index %}
       <div>
         {% include 'wechat-subscriber.swig' %}
