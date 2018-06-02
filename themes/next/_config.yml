@@ -434,9 +434,9 @@ gitment:
 # This plugin is more useful in China, make sure you known how to use it.
 # And you can find the use guide at official webiste: http://www.jiathis.com/.
 # Warning: JiaThis does not support https.
-jiathis: false
+#jiathis: false
   ##uid: Get this uid from http://www.jiathis.com/
-#add_this_id:
+add_this_id: ra-5b121e4989eacc70
 
 # Share
 #duoshuo_share: true
