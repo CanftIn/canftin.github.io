@@ -2,6 +2,7 @@
 title: 关于
 date: 2018-04-20 19:17:22
 comments: false
+sidebar display: hide
 ---
 
 # 关于本站
