@@ -83,3 +83,10 @@ deploy:
   type: git
   repository: git@github.com:CanftIn/canftin.github.io.git
   branch: master
+
+#添加搜索
+algolia:
+  applicationID: 'RJD0K93BAI'
+  apiKey: '497b2b25879f603e1c963b232065ab6d'
+  indexName: 'mysite'
+  chunkSize: 5000
