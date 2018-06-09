@@ -1,1 +1,38 @@
-"use strict";var gEngine=gEngine||{};gEngine.Physics={collision:function(){var e,n,t,g,o=new CollisionInfo;for(e=0;e<gEngine.Core.mAllObjects.length;e++)for(n=e+1;n<gEngine.Core.mAllObjects.length;n++)gEngine.Core.mAllObjects[e].boundTest(gEngine.Core.mAllObjects[n])&&gEngine.Core.mAllObjects[e].collisionTest(gEngine.Core.mAllObjects[n],o)&&(o.getNormal().dot(gEngine.Core.mAllObjects[n].mCenter.subtract(gEngine.Core.mAllObjects[e].mCenter))<0&&o.changeDir(),t=o,(g=gEngine.Core.mContext).beginPath(),g.moveTo(t.mStart.x,t.mStart.y),g.lineTo(t.mEnd.x,t.mEnd.y),g.closePath(),g.strokeStyle="orange",g.stroke())}};
+"use strict";
+
+var gEngine = gEngine || {};
+
+gEngine.Physics = (function () {
+    var drawCollisionInfo = function (collisionInfo, context) {
+        context.beginPath();
+        context.moveTo(collisionInfo.mStart.x, collisionInfo.mStart.y);
+        context.lineTo(collisionInfo.mEnd.x, collisionInfo.mEnd.y);
+        context.closePath();
+        context.strokeStyle = "orange";
+        context.stroke();
+    };
+    var collision = function () {
+        var i, j;
+        var collisionInfo = new CollisionInfo();
+        for (i = 0; i < gEngine.Core.mAllObjects.length; i++) {
+            for (j = i + 1; j < gEngine.Core.mAllObjects.length; j++) {
+                if (gEngine.Core.mAllObjects[i].boundTest(gEngine.Core.mAllObjects[j])) {
+                    if (gEngine.Core.mAllObjects[i].collisionTest(gEngine.Core.mAllObjects[j], collisionInfo)) {
+                        //make sure the normal is always from object[i] to object[j]
+                        if (collisionInfo.getNormal().dot(gEngine.Core.mAllObjects[j].mCenter.subtract(gEngine.Core.mAllObjects[i].mCenter)) < 0) {
+                            collisionInfo.changeDir();
+                        }
+                        //draw collision info (a black line that shows normal)
+                        drawCollisionInfo(collisionInfo, gEngine.Core.mContext);
+                    }
+                }
+            }
+        }
+    };
+
+    var mPublic = {
+        collision: collision
+    };
+
+    return mPublic;
+}());
