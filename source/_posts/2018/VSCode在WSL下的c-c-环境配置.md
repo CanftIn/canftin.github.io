@@ -14,11 +14,11 @@ categories:
 我在windows上使用wsl（Windows Subsystem for Linux）做为VScode的内置终端，借以使用gcc的工具链和linux的环境，但是实际上配置还是有一些问题，我把这些问题的解决办法写在这篇文章中。
 
 # 配置VSCode的terminal为bash
-首先在windows的文件管理器下可以找到```C:/Users/<user>/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_<...>/LocalState/rootfs```这样一个目录，这个目录貌似是windows版本更新之后有所变动，我目前的系统发布版本是windows10 1803 Version 10.0.17134.48，该目录中```<user>```为你的用户名，```<...>```为根据安装得到的一串随机字符串。
+首先在windows的文件管理器下可以找到`C:/Users/<user>/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_<...>/LocalState/rootfs`这样一个目录，这个目录貌似是windows版本更新之后有所变动，我目前的系统发布版本是windows10 1803 Version 10.0.17134.48，该目录中`<user>`为你的用户名，`<...>`为根据安装得到的一串随机字符串。
 
 找到这个路径之后，可先在VSCode的setting中配置
 
-```JSON
+```json
 {
     "terminal.integrated.shell.windows": "bash.exe",
     "terminal.integrated.shellArgs.windows": [
@@ -34,6 +34,7 @@ categories:
 打开terminal，可以先更新wsl的镜像源到阿里云，因为Ubuntu自带的源很慢，而且软件包不一定最新。至于怎么配源这里不做介绍。
 
 由于WSL中没有任何开发环境（如果你是刚刚装上WSL的话），镜像源配好后安装gcc-7
+
 ```sh
 $ sudo apt-get update
 $ sudo apt-get install build-essential
@@ -58,7 +59,7 @@ $ gcc -xc++ -E -v -
 End of search list.
 ```
 
-然后设置配置文件```.vscode/c_cpp_properties.json```
+然后设置配置文件`.vscode/c_cpp_properties.json`
 
 ```JSON
 {
@@ -87,6 +88,7 @@ End of search list.
 # 测试
 
 测试一段c代码，文件在和.vscode同级的目录下，文件名test.c
+
 ```c
 #include <stdio.h>
 
@@ -107,6 +109,7 @@ int main(int argc, char **argv)
 ```
 
 在VSCode的terminal中测试，这是后环境应该为bash了
+
 ```sh
 $ gcc -c test.c -o test.exe
 ```
