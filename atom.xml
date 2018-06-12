@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://canftin.com/"/>
-  <updated>2018-06-10T09:56:23.017Z</updated>
+  <updated>2018-06-12T15:56:33.238Z</updated>
   <id>http://canftin.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>我在配置zsh时碰到的问题</title>
+    <link href="http://canftin.com/2018/%E6%88%91%E5%9C%A8%E9%85%8D%E7%BD%AEzsh%E6%97%B6%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://canftin.com/2018/我在配置zsh时碰到的问题/</id>
+    <published>2018-06-12T15:55:17.000Z</published>
+    <updated>2018-06-12T15:56:33.238Z</updated>
+    
+    <content type="html"><![CDATA[<p>上一篇文章提到了如何在VSCode中配置bash环境，这篇文章则记录我在配置zsh时的问题。</p><h1 id="缘由"><a href="#缘由" class="headerlink" title="缘由"></a>缘由</h1><p>虽然bash虽然比windows上的一堆shell好看了许多，但是zsh搭载oh-my-zsh会更好看，使用agnoster主题配上emacs写lisp和scheme会非常舒服。<br>一个好看的terminal界面会增加操作的可读性。</p><h1 id="配置zsh-amp-amp-oh-my-zsh"><a href="#配置zsh-amp-amp-oh-my-zsh" class="headerlink" title="配置zsh &amp;&amp; oh-my-zsh"></a>配置zsh &amp;&amp; oh-my-zsh</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install zsh</span><br></pre></td></tr></table></figure><p>在oh-my-zsh的官方github上给出安装oh-my-zsh的方法</p><p>via curl</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></span><br></pre></td></tr></table></figure><p>via wget</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">"<span class="variable">$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>"</span></span><br></pre></td></tr></table></figure><p>未完…</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;上一篇文章提到了如何在VSCode中配置bash环境，这篇文章则记录我在配置zsh时的问题。&lt;/p&gt;
+&lt;h1 id=&quot;缘由&quot;&gt;&lt;a href=&quot;#缘由&quot; class=&quot;headerlink&quot; title=&quot;缘由&quot;&gt;&lt;/a&gt;缘由&lt;/h1&gt;&lt;p&gt;虽然bash虽然比windows
+      
+    
+    </summary>
+    
+      <category term="未分类" scheme="http://canftin.com/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/"/>
+    
+    
+      <category term="问题" scheme="http://canftin.com/tags/%E9%97%AE%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>VSCode在WSL下的c/c++环境配置</title>
@@ -40,9 +66,9 @@
       <category term="c++" scheme="http://canftin.com/categories/vscode/c/"/>
     
     
-      <category term="c++" scheme="http://canftin.com/tags/c/"/>
-    
       <category term="vscode" scheme="http://canftin.com/tags/vscode/"/>
+    
+      <category term="c++" scheme="http://canftin.com/tags/c/"/>
     
       <category term="c" scheme="http://canftin.com/tags/c/"/>
     
