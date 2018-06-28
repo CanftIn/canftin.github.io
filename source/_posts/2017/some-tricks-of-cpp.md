@@ -4,8 +4,10 @@ date: 2017-11-30
 copyright: true
 tags:
 - c++
+- c++笔记系列
 categories:
 - c++
+- c++笔记系列
 ---
 # Some Tricks Of C Plus Plus
 
