@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://canftin.com/"/>
-  <updated>2018-06-12T15:56:33.238Z</updated>
+  <updated>2018-06-28T09:37:56.771Z</updated>
   <id>http://canftin.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>c++笔记系列（零）：基础知识整理</title>
+    <link href="http://canftin.com/2018/c++%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97%EF%BC%88%E9%9B%B6%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/"/>
+    <id>http://canftin.com/2018/c++笔记系列（零）：基础知识整理/</id>
+    <published>2018-06-28T08:54:34.000Z</published>
+    <updated>2018-06-28T09:37:56.771Z</updated>
+    
+    <content type="html"><![CDATA[<p>本系列<strong>c++笔记系列</strong>文章主要记录一些我碰到的c++的问题以及需要注意的内容。<br>本文作为开篇，收纳c++的部分基础知识的小tips。<br>可能对读者阅读不友好…因为暂时是我自己的一些小收集。</p><ul><li>相同类的各个objects互为友元。</li><li>数据一定要放在private里。</li><li>参数尽可能以reference处理（const看状况）</li><li>返回值尽可能以reference处理（为什么：传递者无需知道接受者是以reference接收）<br>  如果返回内容是函数内部新创建的对象（即local object），返回不能by reference而要by value。</li><li>该加const一定要加</li><li>构造函数尽量用initialize_list作参数</li></ul><p>关于操作符重载：<br>代码：<br><code>complex&amp; operator+= (this, const complex&amp; r){    ...}</code><br>上面其中一个参数<code>const complex&amp; r</code>，这里可以传值也可以传指针。<br>使用时<code>c2 += c1</code>，这里c2就是this，所有的成员函数都含有一个隐含参数this，这里写不写这个参数都行，c1则是<code>const complex&amp; r</code>。<br>返回为<code>complex&amp;</code>，如果返回用reference接收，那么速度会快，用value接收，则要再复制一次，产生出一个临时对象，速度慢。<br>这里返回类型若为void的话，<code>c2 += c1</code>可以通过编译，<code>c3 += c2 += c1</code>这样的连串赋值无法通过编译。</p><p>另一个有特点的操作符重载<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ostream&amp; operator &lt;&lt; (ostream&amp; os, const complex&amp; x)</span><br><span class="line">&#123;</span><br><span class="line">    return os &lt;&lt; &apos;(&apos; &lt;&lt; real(x) &lt;&lt; &apos;,&apos; &lt;&lt; imag(x) &lt;&lt; &apos;)&apos;;</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">    complex c1(2, 1);</span><br><span class="line">    cout &lt;&lt; c1 &lt;&lt; c1;   // 返回值不能为void，而是ostream&amp;，cout作为os这参数传入函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;本系列&lt;strong&gt;c++笔记系列&lt;/strong&gt;文章主要记录一些我碰到的c++的问题以及需要注意的内容。&lt;br&gt;本文作为开篇，收纳c++的部分基础知识的小tips。&lt;br&gt;可能对读者阅读不友好…因为暂时是我自己的一些小收集。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;相同类的各个ob
+      
+    
+    </summary>
+    
+      <category term="c++笔记系列" scheme="http://canftin.com/categories/c-%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97/"/>
+    
+    
+      <category term="c++笔记系列" scheme="http://canftin.com/tags/c-%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97/"/>
+    
+  </entry>
   
   <entry>
     <title>我在配置zsh时碰到的问题</title>
@@ -66,9 +93,9 @@
       <category term="c++" scheme="http://canftin.com/categories/vscode/c/"/>
     
     
-      <category term="vscode" scheme="http://canftin.com/tags/vscode/"/>
-    
       <category term="c++" scheme="http://canftin.com/tags/c/"/>
+    
+      <category term="vscode" scheme="http://canftin.com/tags/vscode/"/>
     
       <category term="c" scheme="http://canftin.com/tags/c/"/>
     
