@@ -230,3 +230,86 @@ operator delete(ps); // -> 内部调用free(ps);
 上面是在debug环境下，整个块的大小为8+(32+4)+(4*2) = 52，
 而在vc的环境下动态分配的内存块都得是16的倍数，所以这里分配的实际大小应该为64。
 我们看cookie，64的16进制为40，而cookie是41，这里的1是代表“获得”，对于操作系统而言，这个块就是给出去给程序使用了，若为0，则代表“收回”，也就是说回收这一块内存。
+
+
+## explicit关键字
+举例：
+```c++
+struct Complex
+{
+    int real, imag;
+    Complex(int re, int im = 0) : real(re), imag(im)
+    {}
+    Complex operator+(const Complex& x)
+    {
+        return Complex((real + x.real),
+                        (imag + x.imag));
+    }
+}
+{
+    Complex c1(12, 5);
+    Complex c2 = c1 + 5; // ? 虚部应该是+5i，但是隐式转化了
+}
+```
+
+```c++
+struct Complex
+{
+    int real, imag;
+    explicit Complex(int re, int im = 0) : real(re), imag(im)
+    {}
+    Complex operator+(const Complex& x)
+    {
+        return Complex((real + x.real),
+                        (imag + x.imag));
+    }
+}
+{
+    Complex c1(12, 5);
+    Complex c2 = c1 + 5; // 报错
+}
+```
+
+## 范围for循环
+```c++
+vector<double> vec;
+for (auto elem : vec)
+{
+    cout << elem << endl;
+}
+for (auto& elem : vec)
+{
+    elem * = 3; // reference，改变内容
+}
+```
+for loop 只能对容器使用，什么原生数组是绝对不能用的。
+for loop 在拿到了元素之后再做赋值动作的时候要做转换，如果源头的地方用了explicit的话，那这个转化过程会出错。
+```c++
+class C
+{
+public:
+    explicit C(const string& s);
+};
+vector<string> vs;
+for (const C& elem : vs)    // error
+{
+    cout << elem << endl;
+}
+```
+
+## =default和=delete
+关于=default，在构造函数/拷贝构造/拷贝赋值/搬移赋值后加上=default之后，编译器就不会生成默认的函数。
+```c++
+class Zoo
+{
+public:
+    Zoo(int i1, int i2) : d1(i1), d2(i2) {}
+    Zoo(const Zoo&) = delete;
+    Zoo(Zoo&&) = default;
+    Zoo& operator=(const Zoo&) = default;
+    Zoo& operator=(const Zoo&&) = delete;
+    virtual ~Zoo() {}
+private:
+    int d1, d2;
+}
+```
