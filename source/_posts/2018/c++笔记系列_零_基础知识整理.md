@@ -25,6 +25,8 @@ categories:
 - 该加const一定要加
 - 构造函数尽量用initialize_list作参数
 
+<!--more-->
+
 ## 关于操作符重载
 以下为复数的实现
 ```c++

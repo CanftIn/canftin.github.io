@@ -14,7 +14,7 @@ SBCL – Steel Bank Common Lisp (SBCL) is a high performance Common Lisp compile
 Quicklisp – Quicklisp is a library manager for Common Lisp. It works with your existing Common Lisp implementation to download, install, and load any of over 1,200 libraries with a few simple commands. (https://www.quicklisp.org/beta/)
 
 This article is a simple instruction for installing SLIME, SBCL and Quicklisp into Emacs, which is the environment I recommend for learning Common Lisp.
-
+<!--more-->
 ## Step 1 – Install SLIME
 
 Firstly, you need to install the SLIME by MELPA or Git. Basically, the package in MELPA is always stable, while the files in official Git repository are newest.

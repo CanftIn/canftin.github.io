@@ -26,6 +26,7 @@ categories:
     ],
 }
 ```
+<!--more-->
 
 其中"-i"命令是集成bash到VSCode自带终端环境中。
 

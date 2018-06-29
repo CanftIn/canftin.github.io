@@ -33,6 +33,8 @@ fxxk->shit(); //fxxk is a dangling pointer, the memory will be leaked.
 ```
 so we need to:
 
+<!--more-->
+
 ```
 {
     shared_ptr<FXXK> fxxk(new FXXK("Shit"));    //count = 1
