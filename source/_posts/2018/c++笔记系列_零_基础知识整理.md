@@ -75,14 +75,14 @@ ostream& operator << (ostream& os, const complex& x)
 }
 ```
 
-## 拷贝构造
+## 拷贝构造&&拷贝赋值
 
 **什么时候需要拷贝构造？**
 以上的complex实现里就没有写类似 `complex(const complex& x);`这样的拷贝构造函数，原因是编译器内部给了一个拷贝构造，而这个默认的拷贝构造功能则是按位copy，即**浅拷贝**。
 
 而编译器给的这一套在类内部有指针数据的情况下则不够用，比如有一个对象有一个指针指向一个地方，当需要拷贝的时候，新对象的指针还是指向这个地方，那么这个拷贝是内部默认拷贝构造的能力范围内，某些情况下不满足我们实际的需要，有时候我们实际上就是需要完完全全的两个内容，而不是两个指针指向一块相同的内容，这个时候我们就需要**深拷贝**。
 
-以下为字符串内的实现：
+以下为字符串的实现：
 ```c++
 class String
 {
@@ -108,4 +108,125 @@ String::String(const char* cstr = 0)
     }
 }
 ```
+当我们创建对象的时候，有一下几种方式：
+```c++
+String s1();
+String s2("hello");
+String *p = new String("hello"); // 用new从堆中创建对象，最后需要手动delete掉指针，不然会内存泄漏
+delete p;
+```
 
+**再说为什么有指针的类一定要写拷贝构造和拷贝赋值：**
+
+假设有两个String对象：`String a("hello"); String b("world");`
+这个时候a指向"hello"，b指向"world"，而当我们使用默认的编译器创建出来的拷贝构造和拷贝赋值时，即当使用`b = a`语句时，a和b同时指向"hello"，也就是发生了浅拷贝，原来的"world"没有释放，造成资源泄漏，而两个指针指向同一个地方也非常危险，如果改动其中一个指针，另一个也会随之发生改动。
+
+那么开始写我们的拷贝构造：
+```c++
+String::String(const String& str)
+{
+    m_data = new char[strlen(str.m_data) + 1];
+    strcpy(m_data, str.m_data);
+}
+// 使用
+{
+    String s1("hello");
+    String s2(s1);
+}
+```
+
+再来写我们的拷贝赋值：
+```c++
+String& String::operator=(const String& str)
+{
+    if(this == &str)
+        return *this;
+    delete[] m_data;
+    m_data = new char[strlen(str.m_data) + 1];
+    strcpy(m_data, str.m_data);
+    return *this;
+}
+// 使用
+{
+    String s1("hello");
+    String s2(s1);
+    s2 = s1;
+}
+```
+这里有个要说的点就是这个if判断this和&str是否相等的**检测自我赋值**的语句一定要写，原因有一下几点：
+1. 若this和str一样，直接返回this，保证程序效率。
+2. 因为假设this指针和传入的参数str在一开始就指向同一块位置，如果没有这一个自我赋值的检测，直接开始后面的拷贝，`delete[] m_data;`拷贝的第一行代码就是delete掉这块他们指向的这个位置，之后我们再new的时候，这个位置已经没有了，程序会报错。
+
+## 对象生命周期
+
+```c++
+Complex c1(2, 1);   // 析构函数释放
+Complex *c2 = new Complex(); // 需要手动释放指针，是heap object，若未delete，作用域之外还存在该指针，再想delete就访问不到了，造成泄漏
+{
+    static Complex c3(1, 2); // 静态对象，在作用域结束之后仍然存在，直至程序结束才释放
+}
+```
+
+## 内存管理
+
+这里必须要看一看cppreference了：[en.cppreference.com/w/cpp/memory/new/operator_new](https://en.cppreference.com/w/cpp/memory/new/operator_new)
+
+关于内存分配必须掌握的就是operator new
+`Complex *pc = new Complex(1, 2);`
+编译器将上述代码转化为：
+```c++
+Complex *pc;
+void *mem = operator new(sizeof(Complex));
+pc = static_cast<Complex*>(mem);
+pc->Complex::Complex(1, 2);
+```
+以上代码很清晰，operator new内部是调用malloc进行内存分配。
+接着是operator delete：
+```c++
+String *ps = new String("hello");
+delete ps;
+```
+转化为：
+```c++
+String::~String(ps);
+operator delete(ps); // -> 内部调用free(ps);
+```
+
+关于动态分配所得到的内存块：
+
+```
++-----------------------------------+
+|            00000041               |   <- Cookie
++-----------------------------------+
+|            00790c20               |
++-----------------------------------+
+|            00790b80               |
++-----------------------------------+
+|              ...                  |
++-----------------------------------+
+|            00000002               |
++-----------------------------------+
+|            00000004               |
++-----------------------------------+
+|            4个0xfd                |
++-----------------------------------+
+|                                   |
+|          Complex                  |
+|           object                  |
+|            (8h)                   |
+|                                   |
++-----------------------------------+
+|            4个0xfd                |
++-----------------------------------+
+|         00000000(pad)             |
++-----------------------------------+
+|         00000000(pad)             |
++-----------------------------------+
+|         00000000(pad)             |
++-----------------------------------+
+|           00000041                |   <- Cookie
++-----------------------------------+
+```
+上面是在debug环境下，整个块的大小为8+(32+4)+(4*2) = 52，
+而在vc的环境下动态分配的内存块都得是16的倍数，所以这里分配的实际大小应该为64。
+我们看cookie，64的16进制为40，而cookie是41，这里的1是代表“获得”，对于操作系统而言，这个块就是给出去给程序使用了，若为0，则代表“收回”，也就是说回收这一块内存。
