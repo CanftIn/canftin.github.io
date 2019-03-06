@@ -1,5 +1,5 @@
 ---
-title: c++
+title: c++笔记系列（二）：标准库
 copyright: true
 date: 2018-06-30 23:50:16
 tags:
@@ -17,7 +17,7 @@ categories:
 
 呃。。。这篇暂时是篇奇葩文章。
 <!--more-->
-![1](../../pictures/c++笔记系列_二_标准库/3.jpg)
-![1](../../pictures/c++笔记系列_二_标准库/1.jpg)
+![1](https://github.com/CanftIn/canftin.github.io/tree/master/pictures/c%2B%2B笔记系列_二_标准库/3.jpg)
+![1](https://github.com/CanftIn/canftin.github.io/tree/master/pictures/c%2B%2B笔记系列_二_标准库/1.jpg)
 
-![1](../../pictures/c++笔记系列_二_标准库/2.jpg)
+![1](https://github.com/CanftIn/canftin.github.io/tree/master/pictures/c%2B%2B笔记系列_二_标准库/2.jpg)
