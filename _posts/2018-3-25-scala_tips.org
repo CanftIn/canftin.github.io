@@ -1,0 +1,14 @@
+---
+layout: post
+title: scala tips
+category: PL
+tags: scala
+keywords: scala
+description: scala tips
+---
+* scala tips
+- util 方法返回一个不包含上限的区间
+# +BEGIN_SRC scala
+for(i <- 0 util s.length)
+# +END_SRC
+- scala 除了方法还支持函数，方法对对象进行操作，函数不是。
