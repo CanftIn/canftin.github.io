@@ -1,0 +1,148 @@
+---
+layout: page
+permalink: /lagda/PathToHigherInductiveTypes.html
+inline_latex: true
+agda: true
+---
+<body>
+{% raw %}<h1 id="路漫漫其区间兮-吾将归纳而求索">路漫漫其区间兮, 吾将归纳而求索</h1>
+<p>看到这个编译器选项，是不是有些兴♂奋？</p>
+<pre class="Agda"><a id="50" class="Symbol">{-#</a> <a id="54" class="Keyword">OPTIONS</a> <a id="62" class="Pragma">--cubical</a> <a id="72" class="Symbol">#-}</a>
+<a id="76" class="Keyword">module</a> <a id="83" href="PathToHigherInductiveTypes.html" class="Module">PathToHigherInductiveTypes</a> <a id="110" class="Keyword">where</a>
+
+<a id="117" class="Keyword">open</a> <a id="122" class="Keyword">import</a> <a id="129" href="Cubical.Foundations.Prelude.html" class="Module">Cubical.Foundations.Prelude</a>
+<a id="157" class="Keyword">open</a> <a id="162" class="Keyword">import</a> <a id="169" href="Cubical.Core.Everything.html" class="Module">Cubical.Core.Everything</a>
+
+<a id="194" class="Keyword">open</a> <a id="199" class="Keyword">import</a> <a id="206" href="Cubical.Data.Nat.html" class="Module">Cubical.Data.Nat</a>
+</pre>
+<p>老规矩：</p>
+<pre class="Agda"><a id="242" class="Keyword">variable</a>
+  <a id="253" href="PathToHigherInductiveTypes.html#253" class="Generalizable">ℓ</a> <a id="255" class="Symbol">:</a> <a id="257" href="Agda.Primitive.html#408" class="Postulate">Level</a>
+  <a id="265" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a> <a id="267" href="PathToHigherInductiveTypes.html#267" class="Generalizable">B</a> <a id="269" class="Symbol">:</a> <a id="271" class="PrimitiveType">Set</a> <a id="275" href="PathToHigherInductiveTypes.html#253" class="Generalizable">ℓ</a>
+  <a id="279" href="PathToHigherInductiveTypes.html#279" class="Generalizable">F</a> <a id="281" class="Symbol">:</a> <a id="283" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a> <a id="285" class="Symbol">-&gt;</a> <a id="288" class="PrimitiveType">Set</a> <a id="292" href="PathToHigherInductiveTypes.html#253" class="Generalizable">ℓ</a>
+</pre>
+<p>我用打油诗重命名了一些最近的 lagda 文章，感觉现在这样要文艺一些。</p>
+<p>这篇文章是写给魔理沙（并感谢 review）和 Parker Liu 看的，但理论上任何会 CH 同构和 Dependent Type 的人都可以看（不需要前置的 Cubical Type Theory 知识）。 本文假定读者熟悉以下知识：</p>
+<ul>
+<li>Dependent Type</li>
+<li>GADT</li>
+<li>模式匹配</li>
+<li>CH 同构</li>
+</ul>
+<p>我曾经在浙大的一个地下社团 ZJU Lambda （社团活动主要是膜人和复读）进行过一次小分享，大致介绍了 Dependent Type 的出现原因、细节实现和一些扩展的内容（比如 <code>Dec</code>，Coinduction，Termination 等有趣的东西）。在这个分享中，我简要介绍了一个很酷炫的概念——高阶归纳类型（Higher Inductive Types）。这是一种全新的描述数据的思路（甚至获得了社长龙先生的赞许，可以说是人间一大奇迹，无上的荣耀了），但当时限于我根本没学过 Cubical Type Theory，没法把这个东西讲的很清楚。现在我大概入了点门，对这个东西有一定完整的了解了。Parker Liu 在朋友圈让我写一篇文章，于是我就奉命行事。</p>
+<h2 id="点线面五块钱一碗">点线面五块钱一碗</h2>
+<h3 id="motivation有理数">Motivation：有理数</h3>
+<p>熟悉各种 Proof Assistant 的同学，应该都想过定义如下的『有理数』定义（目前暂不考虑分母为零的情况，后面再说）：</p>
+<pre class="Agda"><a id="940" class="Keyword">module</a> <a id="Simpleℚ"></a><a id="947" href="PathToHigherInductiveTypes.html#947" class="Module">Simpleℚ</a> <a id="955" class="Keyword">where</a>
+  <a id="963" class="Keyword">data</a> <a id="Simpleℚ.ℚ"></a><a id="968" href="PathToHigherInductiveTypes.html#968" class="Datatype">ℚ</a> <a id="970" class="Symbol">:</a> <a id="972" class="PrimitiveType">Set</a> <a id="976" class="Keyword">where</a>
+    <a id="Simpleℚ.ℚ._÷_"></a><a id="986" href="PathToHigherInductiveTypes.html#986" class="InductiveConstructor Operator">_÷_</a> <a id="990" class="Symbol">:</a> <a id="992" href="Agda.Builtin.Nat.html#165" class="Datatype">ℕ</a> <a id="994" class="Symbol">-&gt;</a> <a id="997" href="Agda.Builtin.Nat.html#165" class="Datatype">ℕ</a> <a id="999" class="Symbol">-&gt;</a> <a id="1002" href="PathToHigherInductiveTypes.html#968" class="Datatype">ℚ</a>
+</pre>
+<p>我们需要一个公理——任何有理数，分子分母同时乘以一个数，得到的有理数和原本的有理数相等。这直接就是数学上的有理数的一部分，但是我们上面的定义则无法表示。事实上，那个沙雕定义只是一个自然数的二元组而已。</p>
+<p>那么我们应该怎么描述这一公理呢？我在一百年前写的小证明库里面使用 <code>TrustMe</code> 『假设』了这个公理，并完成了有理数上的一些运算律。这令人感到憋屈，因为我们把原本应该是定义一部分的公理假设出来了，但『假设』是一个不安全的特性，而且不能参与运算。所以，我们给出这样一种操作：允许在 GADT 里面定义除了数据的<strong>构造器</strong>之外的另一种东西——数据的<strong>关系</strong>。</p>
+<pre class="Agda">    <a id="Simpleℚ.ℚ.frac"></a><a id="1308" href="PathToHigherInductiveTypes.html#1308" class="InductiveConstructor">frac</a> <a id="1313" class="Symbol">:</a> <a id="1315" class="Symbol">∀</a> <a id="1317" href="PathToHigherInductiveTypes.html#1317" class="Bound">a</a> <a id="1319" href="PathToHigherInductiveTypes.html#1319" class="Bound">b</a> <a id="1321" href="PathToHigherInductiveTypes.html#1321" class="Bound">c</a> <a id="1323" class="Symbol">-&gt;</a> <a id="1326" class="Symbol">(</a><a id="1327" href="PathToHigherInductiveTypes.html#1317" class="Bound">a</a> <a id="1329" href="Agda.Builtin.Nat.html#501" class="Primitive Operator">*</a> <a id="1331" href="PathToHigherInductiveTypes.html#1321" class="Bound">c</a><a id="1332" class="Symbol">)</a> <a id="1334" href="PathToHigherInductiveTypes.html#986" class="InductiveConstructor Operator">÷</a> <a id="1336" class="Symbol">(</a><a id="1337" href="PathToHigherInductiveTypes.html#1319" class="Bound">b</a> <a id="1339" href="Agda.Builtin.Nat.html#501" class="Primitive Operator">*</a> <a id="1341" href="PathToHigherInductiveTypes.html#1321" class="Bound">c</a><a id="1342" class="Symbol">)</a> <a id="1344" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="1346" href="PathToHigherInductiveTypes.html#1317" class="Bound">a</a> <a id="1348" href="PathToHigherInductiveTypes.html#986" class="InductiveConstructor Operator">÷</a> <a id="1350" href="PathToHigherInductiveTypes.html#1319" class="Bound">b</a>
+</pre>
+<p>于是，根据定义，我们可以轻易地证明 <code>4 ÷ 2 ≡ 2 ÷ 1</code>：</p>
+<pre class="Agda">  <a id="Simpleℚ.4÷2≡2÷1"></a><a id="1403" href="PathToHigherInductiveTypes.html#1403" class="Function">4÷2≡2÷1</a> <a id="1411" class="Symbol">:</a> <a id="1413" class="Number">4</a> <a id="1415" href="PathToHigherInductiveTypes.html#986" class="InductiveConstructor Operator">÷</a> <a id="1417" class="Number">2</a> <a id="1419" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="1421" class="Number">2</a> <a id="1423" href="PathToHigherInductiveTypes.html#986" class="InductiveConstructor Operator">÷</a> <a id="1425" class="Number">1</a>
+  <a id="1429" href="PathToHigherInductiveTypes.html#1403" class="Function">4÷2≡2÷1</a> <a id="1437" class="Symbol">=</a> <a id="1439" href="PathToHigherInductiveTypes.html#1308" class="InductiveConstructor">frac</a> <a id="1444" class="Number">2</a> <a id="1446" class="Number">1</a> <a id="1448" class="Number">2</a>
+</pre>
+<p>仔细阅读的读者可能已经发现了，我们此处使用的相等运算符 <code>≡</code> 其实并不是我们之前知道的那个可以用 congruence 和 transitivity 进行证明的相等关系，而是另一个类型的别名—— <code>Path</code>。我们先不管这个 <code>Path</code> 类型，来看另一个更简单的例子——整数（有理数本身较为复杂，整数讲起来更简单）。</p>
+<h3 id="application整数">Application：整数</h3>
+<p>相信大家都已经见识过这个混乱邪恶的沙雕 <code>ℤ</code> 了：</p>
+<pre class="Agda"><a id="1673" class="Keyword">module</a> <a id="Stupidℤ"></a><a id="1680" href="PathToHigherInductiveTypes.html#1680" class="Module">Stupidℤ</a> <a id="1688" class="Keyword">where</a>
+  <a id="1696" class="Keyword">data</a> <a id="Stupidℤ.ℤ"></a><a id="1701" href="PathToHigherInductiveTypes.html#1701" class="Datatype">ℤ</a> <a id="1703" class="Symbol">:</a> <a id="1705" class="PrimitiveType">Set</a> <a id="1709" class="Keyword">where</a>
+    <a id="Stupidℤ.ℤ.+_"></a><a id="1719" href="PathToHigherInductiveTypes.html#1719" class="InductiveConstructor Operator">+_</a>      <a id="1727" class="Symbol">:</a> <a id="1729" href="Agda.Builtin.Nat.html#165" class="Datatype">ℕ</a> <a id="1731" class="Symbol">-&gt;</a> <a id="1734" href="PathToHigherInductiveTypes.html#1701" class="Datatype">ℤ</a>
+    <a id="Stupidℤ.ℤ.-[1+"></a><a id="1740" href="PathToHigherInductiveTypes.html#1740" class="InductiveConstructor">-[1+</a> <a id="Stupidℤ.ℤ._]"></a><a id="1745" href="PathToHigherInductiveTypes.html#1745" class="InductiveConstructor Operator">_]</a> <a id="1748" class="Symbol">:</a> <a id="1750" href="Agda.Builtin.Nat.html#165" class="Datatype">ℕ</a> <a id="1752" class="Symbol">-&gt;</a> <a id="1755" href="PathToHigherInductiveTypes.html#1701" class="Datatype">ℤ</a>
+</pre>
+<p>在这个上面定义的整数<a href="https://github.com/agda/agda/blob/2680cb86ab5720eb9a391335c57a9f01e975437f/examples/lib/Data/Integer.agda">加减法</a>和<a href="http://agda.github.io/agda-stdlib/Data.Integer.Properties.html#8213">交换律结合律</a>证明起来非常非常的蛋疼，代码无比之长。简单思考一下原因，我们能很轻易地发现问题：<strong>这个整数的正负两部分是不对称的</strong>。</p>
+<p>根据上面介绍的『定义数据的等价关系』，我们可以定义出对称的整数：</p>
+<pre class="Agda"><a id="2066" class="Keyword">data</a> <a id="ℤ"></a><a id="2071" href="PathToHigherInductiveTypes.html#2071" class="Datatype">ℤ</a> <a id="2073" class="Symbol">:</a> <a id="2075" class="PrimitiveType">Set</a> <a id="2079" class="Keyword">where</a>
+  <a id="ℤ.pos"></a><a id="2087" href="PathToHigherInductiveTypes.html#2087" class="InductiveConstructor">pos</a> <a id="2091" class="Symbol">:</a> <a id="2093" class="Symbol">(</a><a id="2094" href="PathToHigherInductiveTypes.html#2094" class="Bound">n</a> <a id="2096" class="Symbol">:</a> <a id="2098" href="Agda.Builtin.Nat.html#165" class="Datatype">ℕ</a><a id="2099" class="Symbol">)</a> <a id="2101" class="Symbol">-&gt;</a> <a id="2104" href="PathToHigherInductiveTypes.html#2071" class="Datatype">ℤ</a>
+  <a id="ℤ.neg"></a><a id="2108" href="PathToHigherInductiveTypes.html#2108" class="InductiveConstructor">neg</a> <a id="2112" class="Symbol">:</a> <a id="2114" class="Symbol">(</a><a id="2115" href="PathToHigherInductiveTypes.html#2115" class="Bound">n</a> <a id="2117" class="Symbol">:</a> <a id="2119" href="Agda.Builtin.Nat.html#165" class="Datatype">ℕ</a><a id="2120" class="Symbol">)</a> <a id="2122" class="Symbol">-&gt;</a> <a id="2125" href="PathToHigherInductiveTypes.html#2071" class="Datatype">ℤ</a>
+  <a id="ℤ.posneg"></a><a id="2129" href="PathToHigherInductiveTypes.html#2129" class="InductiveConstructor">posneg</a> <a id="2136" class="Symbol">:</a> <a id="2138" href="PathToHigherInductiveTypes.html#2087" class="InductiveConstructor">pos</a> <a id="2142" class="Number">0</a> <a id="2144" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="2146" href="PathToHigherInductiveTypes.html#2108" class="InductiveConstructor">neg</a> <a id="2150" class="Number">0</a>
+</pre>
+<p>直接给出『正』和『负』的构造器，然后定义『正的零等于负的零』。这看起来很美好，比如它的 <code>succ</code> 应该是非常符合直觉（加减因为<a href="https://github.com/agda/agda/issues/3314">一个 bug</a>暂时写不出来）的：</p>
+<pre class="Agda"><a id="succ"></a><a id="2291" href="PathToHigherInductiveTypes.html#2291" class="Function">succ</a> <a id="2296" class="Symbol">:</a> <a id="2298" href="PathToHigherInductiveTypes.html#2071" class="Datatype">ℤ</a> <a id="2300" class="Symbol">-&gt;</a> <a id="2303" href="PathToHigherInductiveTypes.html#2071" class="Datatype">ℤ</a>
+<a id="2305" href="PathToHigherInductiveTypes.html#2291" class="Function">succ</a> <a id="2310" class="Symbol">(</a><a id="2311" href="PathToHigherInductiveTypes.html#2087" class="InductiveConstructor">pos</a> <a id="2315" href="PathToHigherInductiveTypes.html#2315" class="Bound">n</a><a id="2316" class="Symbol">)</a> <a id="2318" class="Symbol">=</a> <a id="2320" href="PathToHigherInductiveTypes.html#2087" class="InductiveConstructor">pos</a> <a id="2324" class="Symbol">(</a><a id="2325" href="Agda.Builtin.Nat.html#196" class="InductiveConstructor">suc</a> <a id="2329" href="PathToHigherInductiveTypes.html#2315" class="Bound">n</a><a id="2330" class="Symbol">)</a>
+<a id="2332" href="PathToHigherInductiveTypes.html#2291" class="Function">succ</a> <a id="2337" class="Symbol">(</a><a id="2338" href="PathToHigherInductiveTypes.html#2108" class="InductiveConstructor">neg</a> <a id="2342" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">zero</a><a id="2346" class="Symbol">)</a> <a id="2348" class="Symbol">=</a> <a id="2350" href="PathToHigherInductiveTypes.html#2087" class="InductiveConstructor">pos</a> <a id="2354" class="Number">1</a>
+<a id="2356" href="PathToHigherInductiveTypes.html#2291" class="Function">succ</a> <a id="2361" class="Symbol">(</a><a id="2362" href="PathToHigherInductiveTypes.html#2108" class="InductiveConstructor">neg</a> <a id="2366" class="Symbol">(</a><a id="2367" href="Agda.Builtin.Nat.html#196" class="InductiveConstructor">suc</a> <a id="2371" href="PathToHigherInductiveTypes.html#2371" class="Bound">n</a><a id="2372" class="Symbol">))</a> <a id="2375" class="Symbol">=</a> <a id="2377" href="PathToHigherInductiveTypes.html#2108" class="InductiveConstructor">neg</a> <a id="2381" href="PathToHigherInductiveTypes.html#2371" class="Bound">n</a>
+</pre>
+<p>等等……我们似乎漏掉了一个情况。我们还有一个构造器 <code>posneg</code> 没有被模式匹配！对于一个等价关系要怎么模式匹配啊？这是个等价关系，这根本不是一个数据。使用我们一贯的思路，是无法处理这种情况的。因为我们一直就在犯规——数据构造器构造的就应该是数据，关系怎么能是数据的一部分呢？现在好了，我们把关系和数据放在了一起，函数写不出来了吧？傻了吧？面对音乐吧？哈哈哈。</p>
+<p>这时我们就要详细介绍一下这个相等关系具体是什么东西了。剧透一下，对于这种情况，可以使用 Agda 的自动填写函数实现的功能填出来。对于这种情况，Agda 选择直接返回 <code>pos 1</code>。</p>
+<pre class="Agda"><a id="2674" href="PathToHigherInductiveTypes.html#2291" class="Function">succ</a> <a id="2679" class="Symbol">(</a><a id="2680" href="PathToHigherInductiveTypes.html#2129" class="InductiveConstructor">posneg</a> <a id="2687" class="Symbol">_)</a> <a id="2690" class="Symbol">=</a> <a id="2692" href="PathToHigherInductiveTypes.html#2087" class="InductiveConstructor">pos</a> <a id="2696" class="Number">1</a>
+</pre>
+<h2 id="山重水复疑无路">山重水复疑无路</h2>
+<p><code>Path</code> 这个东西呢，说来也简单，不过还得结合一个叫 <code>Interval</code> 的类型来讲。实现上来说，<code>Interval</code> 是一个只有两个实例 <code>i0</code> 和 <code>i1</code> 的数据类型，分别表达一条线段的两个端点。知道这一事实可以辅助我们理解一些概念，但我们并不能在编程上这么想。</p>
+<p>想象一条线段，连接两个点。</p>
+<pre class="text"><code>a         b
+&lt;---------&gt;</code></pre>
+<p>我们使用代码描述它：这是一个 Lambda 表达式，接收一个 <code>Interval</code> 类型的变量，返回它对应的端点。然后，我们给出这样的定义，或者说规则：</p>
+<ul>
+<li><code>Interval</code> 不能被判断，因为它不仅有端点，还有整条线段上的所有点</li>
+<li>接收 <code>Interval</code> 返回任意对象的函数叫做 <code>PathP</code>，几何意义是『根据点，取出线段上的值』</li>
+</ul>
+<p>我们可以轻松地得到如下极为重要的推论：</p>
+<ul>
+<li>不能对 <code>Interval</code> 进行模式匹配</li>
+<li>但 <code>Interval</code> 和 <code>PathP</code> 都是有两个<strong>端点</strong>的</li>
+</ul>
+<p>和这些不算极为重要但是非常重要的推论：</p>
+<ul>
+<li>不知道当前在 <code>PathP</code> 的哪个地方，因此我们一般只能不管这个 <code>Interval</code> 参数</li>
+<li><code>PathP</code> 类型看似有四个参数——两个端点的类型，以及两个端点的值
+<ul>
+<li>实际上，两个端点的类型也应该被表达为一个 <code>PathP</code>
+<ul>
+<li>之所以我们<em>可以</em>这么做，是因为我们有 Dependent Type</li>
+<li>之所以我们<em>需要</em>这么做，是因为我们不能只写出『端点』上的类型，这条线段上所有的点都有类型</li>
+</ul></li>
+<li>因此 <code>PathP</code> 有三个参数：另一个 <code>PathP</code>，以及两个端点的值</li>
+</ul></li>
+<li>如果两个端点的值类型相同，就正好对应 Homogeneous Equality，不同则正好对应 Heterogeneous Equality
+<ul>
+<li>我们给 Homogeneous Equality 起别名，为 <code>Path</code></li>
+</ul></li>
+</ul>
+<p>因此，我们可以很轻易地得到自反性—— <code>reflexivity</code> 在 <code>Path</code> 下的定义：</p>
+<pre class="Agda"><a id="reflexivity"></a><a id="3615" href="PathToHigherInductiveTypes.html#3615" class="Function">reflexivity</a> <a id="3627" class="Symbol">:</a> <a id="3629" class="Symbol">{</a><a id="3630" href="PathToHigherInductiveTypes.html#3630" class="Bound">a</a> <a id="3632" class="Symbol">:</a> <a id="3634" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a><a id="3635" class="Symbol">}</a> <a id="3637" class="Symbol">-&gt;</a> <a id="3640" href="Cubical.Core.Primitives.html#1694" class="Function">Path</a> <a id="3645" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a> <a id="3647" href="PathToHigherInductiveTypes.html#3630" class="Bound">a</a> <a id="3649" href="PathToHigherInductiveTypes.html#3630" class="Bound">a</a>
+<a id="3651" href="PathToHigherInductiveTypes.html#3615" class="Function">reflexivity</a> <a id="3663" class="Symbol">{</a><a id="3664" class="Argument">a</a> <a id="3666" class="Symbol">=</a> <a id="3668" href="PathToHigherInductiveTypes.html#3668" class="Bound">a</a><a id="3669" class="Symbol">}</a> <a id="3671" class="Symbol">=</a> <a id="3673" class="Symbol">λ</a> <a id="3675" href="PathToHigherInductiveTypes.html#3675" class="Bound">i</a> <a id="3677" class="Symbol">-&gt;</a> <a id="3680" href="PathToHigherInductiveTypes.html#3668" class="Bound">a</a>
+</pre>
+<p>它就是这样的线段：</p>
+<pre class="text"><code>a         a
+&lt;---------&gt;</code></pre>
+<p>然后，我们要引入一个新操作（其实还有好几个，但是本文并不准备介绍一维以上的几何，可能以后会出文章）——取反。它把一个区间变量反转。因此，我们可以定义出对称性—— <code>symmetry</code> 在 <code>Path</code> 下的定义：</p>
+<pre class="Agda"><a id="symmetry"></a><a id="3851" href="PathToHigherInductiveTypes.html#3851" class="Function">symmetry</a> <a id="3860" class="Symbol">:</a> <a id="3862" class="Symbol">{</a><a id="3863" href="PathToHigherInductiveTypes.html#3863" class="Bound">a</a> <a id="3865" href="PathToHigherInductiveTypes.html#3865" class="Bound">b</a> <a id="3867" class="Symbol">:</a> <a id="3869" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a><a id="3870" class="Symbol">}</a> <a id="3872" class="Symbol">-&gt;</a> <a id="3875" href="Cubical.Core.Primitives.html#1694" class="Function">Path</a> <a id="3880" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a> <a id="3882" href="PathToHigherInductiveTypes.html#3863" class="Bound">a</a> <a id="3884" href="PathToHigherInductiveTypes.html#3865" class="Bound">b</a> <a id="3886" class="Symbol">-&gt;</a> <a id="3889" href="Cubical.Core.Primitives.html#1694" class="Function">Path</a> <a id="3894" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a> <a id="3896" href="PathToHigherInductiveTypes.html#3865" class="Bound">b</a> <a id="3898" href="PathToHigherInductiveTypes.html#3863" class="Bound">a</a>
+<a id="3900" href="PathToHigherInductiveTypes.html#3851" class="Function">symmetry</a> <a id="3909" href="PathToHigherInductiveTypes.html#3909" class="Bound">p</a> <a id="3911" class="Symbol">=</a> <a id="3913" class="Symbol">λ</a> <a id="3915" href="PathToHigherInductiveTypes.html#3915" class="Bound">i</a> <a id="3917" class="Symbol">-&gt;</a> <a id="3920" href="PathToHigherInductiveTypes.html#3909" class="Bound">p</a> <a id="3922" class="Symbol">(</a><a id="3923" href="Agda.Primitive.Cubical.html#276" class="Primitive Operator">~</a> <a id="3925" href="PathToHigherInductiveTypes.html#3915" class="Bound">i</a><a id="3926" class="Symbol">)</a>
+</pre>
+<p>我们现在已经能逐渐接受这样的 <code>Path</code> 类型作为相等关系了（因为我们目前好像也就能凭空构造自反性、相等性……传递性需要其他基础定义，暂时不说啦）。因此，我们把相等关系的符号 <code>≡</code> 定义为 <code>Path</code> 的别名（避免命名冲突，下面只是展示 <code>≡</code> 的实际定义）：</p>
+<pre class="Agda"><a id="Equivalence"></a><a id="4076" href="PathToHigherInductiveTypes.html#4076" class="Function">Equivalence</a> <a id="4088" class="Symbol">:</a> <a id="4090" class="Symbol">{</a><a id="4091" href="PathToHigherInductiveTypes.html#4091" class="Bound">A</a> <a id="4093" class="Symbol">:</a> <a id="4095" class="PrimitiveType">Set</a> <a id="4099" href="PathToHigherInductiveTypes.html#253" class="Generalizable">ℓ</a><a id="4100" class="Symbol">}</a> <a id="4102" class="Symbol">-&gt;</a> <a id="4105" class="Symbol">(</a><a id="4106" href="PathToHigherInductiveTypes.html#4106" class="Bound">a</a> <a id="4108" href="PathToHigherInductiveTypes.html#4108" class="Bound">b</a> <a id="4110" class="Symbol">:</a> <a id="4112" href="PathToHigherInductiveTypes.html#4091" class="Bound">A</a><a id="4113" class="Symbol">)</a> <a id="4115" class="Symbol">-&gt;</a> <a id="4118" class="PrimitiveType">Set</a> <a id="4122" href="PathToHigherInductiveTypes.html#253" class="Generalizable">ℓ</a>
+<a id="4124" href="PathToHigherInductiveTypes.html#4076" class="Function">Equivalence</a> <a id="4136" class="Symbol">{</a><a id="4137" class="Argument">A</a> <a id="4139" class="Symbol">=</a> <a id="4141" href="PathToHigherInductiveTypes.html#4141" class="Bound">A</a><a id="4142" class="Symbol">}</a> <a id="4144" href="PathToHigherInductiveTypes.html#4144" class="Bound">a</a> <a id="4146" href="PathToHigherInductiveTypes.html#4146" class="Bound">b</a> <a id="4148" class="Symbol">=</a> <a id="4150" href="Cubical.Core.Primitives.html#1694" class="Function">Path</a> <a id="4155" href="PathToHigherInductiveTypes.html#4141" class="Bound">A</a> <a id="4157" href="PathToHigherInductiveTypes.html#4144" class="Bound">a</a> <a id="4159" href="PathToHigherInductiveTypes.html#4146" class="Bound">b</a>
+</pre>
+<h2 id="回到高阶归纳类型">回到高阶归纳类型</h2>
+<p>根据我们之前的讨论：类型为 <code>A</code> 的两个变量 <code>a b</code> 之间的相等关系（<code>Path A a b</code>）是一个函数，参数是 <code>Interval</code>，返回 <code>A</code> 的实例。</p>
+<p>那么，<strong>既然是返回 <code>A</code> 实例的函数，为什么不可以是一个数据构造器呢</strong>？</p>
+<p>是不是有一种醍醐灌顶的感觉。所以说，如果我们把 <code>zeroEq : pos 0 ≡ neg 0</code> 这个『高阶』构造器写成函数，就是：</p>
+<pre class="text"><code>  zeroEq : Interval -&gt; ℤ</code></pre>
+<p>返回的两个可能的实例 <code>pos 0</code> 和 <code>neg 0</code> 都是 0，那么在模式匹配到这里的时候，自然也就应该返回 <code>succ 0</code> aka <code>pos 1</code> 啦。</p>
+<p>在理解了这一点之后，我们可以写出更多有趣的证明，比如一个更完善的 <code>ℚ</code>，把 <code>nan</code> 单独处理出来:</p>
+<pre class="Agda"><a id="4555" class="Keyword">data</a> <a id="ℚ"></a><a id="4560" href="PathToHigherInductiveTypes.html#4560" class="Datatype">ℚ</a> <a id="4562" class="Symbol">:</a> <a id="4564" class="PrimitiveType">Set</a> <a id="4568" class="Keyword">where</a>
+  <a id="ℚ._÷_"></a><a id="4576" href="PathToHigherInductiveTypes.html#4576" class="InductiveConstructor Operator">_÷_</a>  <a id="4581" class="Symbol">:</a> <a id="4583" href="Agda.Builtin.Nat.html#165" class="Datatype">ℕ</a> <a id="4585" class="Symbol">-&gt;</a> <a id="4588" href="Agda.Builtin.Nat.html#165" class="Datatype">ℕ</a> <a id="4590" class="Symbol">-&gt;</a> <a id="4593" href="PathToHigherInductiveTypes.html#4560" class="Datatype">ℚ</a>
+  <a id="ℚ.frac"></a><a id="4597" href="PathToHigherInductiveTypes.html#4597" class="InductiveConstructor">frac</a> <a id="4602" class="Symbol">:</a> <a id="4604" class="Symbol">∀</a> <a id="4606" href="PathToHigherInductiveTypes.html#4606" class="Bound">a</a> <a id="4608" href="PathToHigherInductiveTypes.html#4608" class="Bound">b</a> <a id="4610" href="PathToHigherInductiveTypes.html#4610" class="Bound">c</a> <a id="4612" class="Symbol">-&gt;</a> <a id="4615" class="Symbol">(</a><a id="4616" href="PathToHigherInductiveTypes.html#4606" class="Bound">a</a> <a id="4618" href="Agda.Builtin.Nat.html#501" class="Primitive Operator">*</a> <a id="4620" href="PathToHigherInductiveTypes.html#4610" class="Bound">c</a><a id="4621" class="Symbol">)</a> <a id="4623" href="PathToHigherInductiveTypes.html#4576" class="InductiveConstructor Operator">÷</a> <a id="4625" class="Symbol">(</a><a id="4626" href="PathToHigherInductiveTypes.html#4608" class="Bound">b</a> <a id="4628" href="Agda.Builtin.Nat.html#501" class="Primitive Operator">*</a> <a id="4630" href="PathToHigherInductiveTypes.html#4610" class="Bound">c</a><a id="4631" class="Symbol">)</a> <a id="4633" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="4635" href="PathToHigherInductiveTypes.html#4606" class="Bound">a</a> <a id="4637" href="PathToHigherInductiveTypes.html#4576" class="InductiveConstructor Operator">÷</a> <a id="4639" href="PathToHigherInductiveTypes.html#4608" class="Bound">b</a>
+  <a id="ℚ.nan"></a><a id="4643" href="PathToHigherInductiveTypes.html#4643" class="InductiveConstructor">nan</a>  <a id="4648" class="Symbol">:</a> <a id="4650" class="Symbol">∀</a> <a id="4652" href="PathToHigherInductiveTypes.html#4652" class="Bound">a</a> <a id="4654" href="PathToHigherInductiveTypes.html#4654" class="Bound">b</a> <a id="4656" class="Symbol">-&gt;</a> <a id="4659" href="PathToHigherInductiveTypes.html#4652" class="Bound">a</a> <a id="4661" href="PathToHigherInductiveTypes.html#4576" class="InductiveConstructor Operator">÷</a> <a id="4663" class="Number">0</a> <a id="4665" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="4667" href="PathToHigherInductiveTypes.html#4654" class="Bound">b</a> <a id="4669" href="PathToHigherInductiveTypes.html#4576" class="InductiveConstructor Operator">÷</a> <a id="4671" class="Number">0</a>
+</pre>
+<p>这样，我们就不再是『构造不出来除数为零的有理数』，而是『除数为零的有理数都是 <code>NaN</code>』了，带来了更多的灵活性（我们可以编写能够处理 <code>NaN</code> 的函数）。</p>
+<h2 id="简单应用">简单应用</h2>
+<p>函数的外延性就是 <code>flip</code> （下面这是依赖函数的函数外延性）：</p>
+<pre class="Agda"><a id="flip"></a><a id="4811" href="PathToHigherInductiveTypes.html#4811" class="Function">flip</a> <a id="4816" class="Symbol">:</a> <a id="4818" class="Symbol">{</a><a id="4819" href="PathToHigherInductiveTypes.html#4819" class="Bound">f</a> <a id="4821" href="PathToHigherInductiveTypes.html#4821" class="Bound">g</a> <a id="4823" class="Symbol">:</a> <a id="4825" class="Symbol">(</a><a id="4826" href="PathToHigherInductiveTypes.html#4826" class="Bound">a</a> <a id="4828" class="Symbol">:</a> <a id="4830" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a><a id="4831" class="Symbol">)</a> <a id="4833" class="Symbol">-&gt;</a> <a id="4836" href="PathToHigherInductiveTypes.html#279" class="Generalizable">F</a> <a id="4838" href="PathToHigherInductiveTypes.html#4826" class="Bound">a</a><a id="4839" class="Symbol">}</a> <a id="4841" class="Symbol">-&gt;</a>
+       <a id="4851" class="Symbol">(∀</a> <a id="4854" href="PathToHigherInductiveTypes.html#4854" class="Bound">a</a> <a id="4856" class="Symbol">-&gt;</a> <a id="4859" href="PathToHigherInductiveTypes.html#4819" class="Bound">f</a> <a id="4861" href="PathToHigherInductiveTypes.html#4854" class="Bound">a</a> <a id="4863" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="4865" href="PathToHigherInductiveTypes.html#4821" class="Bound">g</a> <a id="4867" href="PathToHigherInductiveTypes.html#4854" class="Bound">a</a><a id="4868" class="Symbol">)</a> <a id="4870" class="Symbol">-&gt;</a>
+       <a id="4880" class="Symbol">(</a><a id="4881" href="PathToHigherInductiveTypes.html#4819" class="Bound">f</a> <a id="4883" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="4885" href="PathToHigherInductiveTypes.html#4821" class="Bound">g</a><a id="4886" class="Symbol">)</a>
+<a id="4888" href="PathToHigherInductiveTypes.html#4811" class="Function">flip</a> <a id="4893" href="PathToHigherInductiveTypes.html#4893" class="Bound">f</a> <a id="4895" href="PathToHigherInductiveTypes.html#4895" class="Bound">i</a> <a id="4897" href="PathToHigherInductiveTypes.html#4897" class="Bound">a</a> <a id="4899" class="Symbol">=</a> <a id="4901" href="PathToHigherInductiveTypes.html#4893" class="Bound">f</a> <a id="4903" href="PathToHigherInductiveTypes.html#4897" class="Bound">a</a> <a id="4905" href="PathToHigherInductiveTypes.html#4895" class="Bound">i</a>
+</pre>
+<p>如果你看不懂依赖函数，试试非依赖的：</p>
+<pre class="Agda"><a id="flip′"></a><a id="4940" href="PathToHigherInductiveTypes.html#4940" class="Function">flip′</a> <a id="4946" class="Symbol">:</a> <a id="4948" class="Symbol">{</a><a id="4949" href="PathToHigherInductiveTypes.html#4949" class="Bound">f</a> <a id="4951" href="PathToHigherInductiveTypes.html#4951" class="Bound">g</a> <a id="4953" class="Symbol">:</a> <a id="4955" href="PathToHigherInductiveTypes.html#265" class="Generalizable">A</a> <a id="4957" class="Symbol">-&gt;</a> <a id="4960" href="PathToHigherInductiveTypes.html#267" class="Generalizable">B</a><a id="4961" class="Symbol">}</a> <a id="4963" class="Symbol">-&gt;</a>
+       <a id="4973" class="Symbol">(∀</a> <a id="4976" href="PathToHigherInductiveTypes.html#4976" class="Bound">a</a> <a id="4978" class="Symbol">-&gt;</a> <a id="4981" href="PathToHigherInductiveTypes.html#4949" class="Bound">f</a> <a id="4983" href="PathToHigherInductiveTypes.html#4976" class="Bound">a</a> <a id="4985" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="4987" href="PathToHigherInductiveTypes.html#4951" class="Bound">g</a> <a id="4989" href="PathToHigherInductiveTypes.html#4976" class="Bound">a</a><a id="4990" class="Symbol">)</a> <a id="4992" class="Symbol">-&gt;</a>
+       <a id="5002" class="Symbol">(</a><a id="5003" href="PathToHigherInductiveTypes.html#4949" class="Bound">f</a> <a id="5005" href="Agda.Builtin.Cubical.Path.html#353" class="Function Operator">≡</a> <a id="5007" href="PathToHigherInductiveTypes.html#4951" class="Bound">g</a><a id="5008" class="Symbol">)</a>
+<a id="5010" href="PathToHigherInductiveTypes.html#4940" class="Function">flip′</a> <a id="5016" href="PathToHigherInductiveTypes.html#5016" class="Bound">f</a> <a id="5018" href="PathToHigherInductiveTypes.html#5018" class="Bound">i</a> <a id="5020" href="PathToHigherInductiveTypes.html#5020" class="Bound">a</a> <a id="5022" class="Symbol">=</a> <a id="5024" href="PathToHigherInductiveTypes.html#5016" class="Bound">f</a> <a id="5026" href="PathToHigherInductiveTypes.html#5020" class="Bound">a</a> <a id="5028" href="PathToHigherInductiveTypes.html#5018" class="Bound">i</a>
+</pre>
+<p>再看不懂就是你撒谎啦。</p>
+<p><a href="https://cs.stackexchange.com/q/103146/79971">这个问题</a>的<a href="https://cs.stackexchange.com/a/103151/79971">这个回答</a> 给了我很大帮助。</p>
+<p>dram 吐槽我没介绍 <code>comp</code>，但介绍这个东西又涉及 <code>Partial</code>, <code>hcomp</code>, <code>fill</code> 之类的一大堆定义以及 <code>Path</code> 的几何意义，我还没做好那个准备啦。</p>{% endraw %}</body>

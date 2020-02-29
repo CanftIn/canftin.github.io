@@ -1,0 +1,23 @@
+.hll { background-color: #2B2B2B }
+.c { color: rgb(128,128,128); font-style: italic } /* Comment */
+.cd { color: rgb(128,128,128); font-style: italic } /* Doc comment */
+.err { border: 1px solid #FF0000 } /* Error */
+.k { /*color: rgb(204,120,50);*/ font-weight: bold } /* Keyword */
+.kw { /*color: rgb(204,120,50);*/ font-weight: bold } /* Keyword */
+.kr { /*color: rgb(204,120,50);*/ font-weight: bold } /* Keyword */
+.kt { color: rgb(51, 56, 60); font-weight: bold } /* Keyword.Type */
+.kc { color: rgb(68, 137, 128); font-weight: bold } /* Keywords.Constant */
+.kn { font-weight: bold }
+.kd { font-weight: bold }
+.o { color: rgb(51, 56, 60); } /* Operator */
+.nt { color: rgb(159, 99, 16); } /* Xml tag */
+.m { color: rgb(104,151,187); } /* Literal.Number */
+.dv { color: rgb(104,151,187); } /* Literal.Number */
+.mi { color: rgb(104,151,187); } /* Literal.Int */
+.s { color: rgb(106, 135, 89); } /* Literal.String */
+.se { color: rgb(106, 135, 89); } /* Literal.?? */
+.sc { color: rgb(106, 135, 89); } /* Literal.Characters */
+.cm { color: rgb(128,128,128); font-style: italic } /* Comment.Multiline */
+.cp { color: rgb(98,151,85); } /* Comment.Preproc */
+.cs { color: rgb(98,151,85); font-style: italic } /* Comment.Special */
+.c1 { color: rgb(128,128,128); font-style: italic } /* Comment */

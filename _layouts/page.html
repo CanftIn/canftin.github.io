@@ -1,0 +1,12 @@
+---
+layout: default
+---
+<div class="post" style="margin-top: 40px">
+	<article class="post-content article-content markdown-body container">
+		<h1 class="post-title">{{ page.title }}</h1>
+		{{ content }}
+	</article>
+	<div class="comment">
+		{% include comments.html %}
+	</div>
+</div>

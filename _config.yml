@@ -1,0 +1,22 @@
+# Site settings
+title: NoWhere
+email: wwc7033@gmail.com
+author: CanftIn
+description: A blog by CanftIn
+baseurl: ""
+url: "https://CanftIn.com"
+favicon: /favicon.jpg
+twitter: CanftIn
+github_username: CanftIn
+permalink: /:year/:month-:day-:title.html
+domain: CanftIn.com
+# Build settings
+markdown: kramdown
+exclude:
+  - '*.lagda.md'
+  - '*.agdai'
+  - '.idea'
+  - '.vscode'
+  - '_posts/_build'
+highlighter: rouge
+repository_name: CanftIn.github.io

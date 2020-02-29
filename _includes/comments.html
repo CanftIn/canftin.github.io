@@ -1,0 +1,65 @@
+<br/><br/>
+
+{% if page.issue_id %}
+
+<div class="wrapper">
+	<div id=comments>
+		<h2>Comments</h2>
+	</div>
+</div>
+
+<script>
+	let getJSON = function (url, successHandler, errorHandler) {
+		const xhr = typeof XMLHttpRequest !== 'undefined'
+			? new XMLHttpRequest()
+			: new ActiveXObject('Microsoft.XMLHTTP');
+		xhr.open('get', url, true);
+		xhr.onreadystatechange = function () {
+			let status;
+			let data;
+			if (xhr.readyState === 4) {
+				status = xhr.status;
+				if (status === 200) {
+					data = JSON.parse(xhr.responseText);
+					successHandler && successHandler(data);
+				}
+			}
+		};
+		xhr.send();
+	};
+
+	getJSON('https://api.github.com/repos/{{site.github_username}}/{{site.repository_name}}/issues/{{page.issue_id}}/comments',
+		function (data) {
+			let comments = "";
+			for (let i = 0; i < data.length; i++) {
+				//add avatar
+				comments += '<a href="' + data[i].user.html_url + '" target="_blank"><img class="comment" src="' + data[i].user.avatar_url + '"></a>';
+				//add username and link to profile page
+				comments += '  <a href="' + data[i].html_url + '" target="_blank">' + data[i].user.login + ' - ' + data[i].updated_at + '</a>';
+				//add comment
+				comments += '<p>' + data[i].body.replace('\n', '<br/>') + '</p>';
+			}
+			comments += `
+		<div id="header">
+			Want to leave a comment? Leave your comment at <a
+				href="https://github.com/{{site.github_username}}/{{site.repository_name}}/issues/{{page.issue_id}}#new_comment_field">
+			this post's issue page</a>.
+			<br/>
+		</div>`;
+			document.getElementById('comments').innerHTML += comments;
+		}
+	);
+
+</script>
+
+{% else %}
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/{{site.github_username}}/{{site.repository_name}}/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+{% endif %}

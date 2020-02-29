@@ -1,0 +1,152 @@
+---
+layout: page
+permalink: /lagda/Typeclassopedia.html
+inline_latex: true
+agda: true
+---
+<body>
+{% raw %}<h1 id="record-坦荡荡-typeclass-常戚戚">Record 坦荡荡， Typeclass 常戚戚</h1>
+<p>前排提醒：你或许需要一个<a href="https://baike.baidu.com/item/%E6%B8%B8%E6%A0%87%E5%8D%A1%E5%B0%BA">游标卡尺</a>。</p>
+<p>这是一个类型类教程，尝试使用我改进过的 Literate Agda 后端生成网页 （如果想使用我改进的功能，请拉取 master 分支的 Agda 编译器然后 <code>cabal install</code> 编译。 我加的功能的使用说明见<a href="https://agda.readthedocs.io/en/latest/tools/generating-html.html">这个网页</a>）。</p>
+<p>为了让我能用我的手机正常显示自己的文章里的字符，本文会尽量使用非 Unicode 定义。</p>
+<p>首先我们定义模块：</p>
+<pre class="Agda"><a id="468" class="Symbol">{-#</a> <a id="472" class="Keyword">OPTIONS</a> <a id="480" class="Pragma">--no-unicode</a> <a id="493" class="Symbol">#-}</a>
+<a id="497" class="Symbol">{-#</a> <a id="501" class="Keyword">OPTIONS</a> <a id="509" class="Pragma">--without-K</a>  <a id="522" class="Symbol">#-}</a>
+<a id="526" class="Symbol">{-#</a> <a id="530" class="Keyword">OPTIONS</a> <a id="538" class="Pragma">--cubical</a>    <a id="551" class="Symbol">#-}</a>
+<a id="555" class="Keyword">module</a> <a id="562" href="Typeclassopedia.html" class="Module">Typeclassopedia</a> <a id="578" class="Keyword">where</a>
+</pre>
+<p>为了强迫自己事先熟悉 HoTT 的 Agda 实现， 我已经开始全面使用 <a href="https://github.com/HoTT/HoTT-Agda/tree/master/core/lib">HoTT-Agda</a> 作为编程基础库（和标准库基本一致）。</p>
+<p><strong>（编辑于 2019 年 4 月：由于依赖冲突，现已改为对一个我自己写的基础库的使用）。</strong></p>
+<pre class="Agda"><a id="726" class="Keyword">open</a> <a id="731" class="Keyword">import</a> <a id="738" href="HoTT-Agda.html" class="Module">HoTT-Agda</a>
+</pre>
+<p>比较自然数大小：</p>
+<pre class="Agda"><a id="natEq"></a><a id="771" href="Typeclassopedia.html#771" class="Function">natEq</a> <a id="777" class="Symbol">:</a> <a id="779" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a> <a id="783" class="Symbol">-&gt;</a> <a id="786" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a> <a id="790" class="Symbol">-&gt;</a> <a id="793" href="Agda.Builtin.Bool.html#135" class="Datatype">Bool</a>
+<a id="798" href="Typeclassopedia.html#771" class="Function">natEq</a>  <a id="805" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a>     <a id="811" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a>    <a id="816" class="Symbol">=</a> <a id="818" href="Agda.Builtin.Bool.html#160" class="InductiveConstructor">true</a>
+<a id="823" href="Typeclassopedia.html#771" class="Function">natEq</a> <a id="829" class="Symbol">(</a><a id="830" href="Agda.Builtin.Nat.html#196" class="InductiveConstructor">S</a> <a id="832" class="Symbol">_)</a>  <a id="836" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a>    <a id="841" class="Symbol">=</a> <a id="843" href="Agda.Builtin.Bool.html#154" class="InductiveConstructor">false</a>
+<a id="849" href="Typeclassopedia.html#771" class="Function">natEq</a>  <a id="856" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a>    <a id="861" class="Symbol">(</a><a id="862" href="Agda.Builtin.Nat.html#196" class="InductiveConstructor">S</a> <a id="864" class="Symbol">_)</a> <a id="867" class="Symbol">=</a> <a id="869" href="Agda.Builtin.Bool.html#154" class="InductiveConstructor">false</a>
+<a id="875" href="Typeclassopedia.html#771" class="Function">natEq</a> <a id="881" class="Symbol">(</a><a id="882" href="Agda.Builtin.Nat.html#196" class="InductiveConstructor">S</a> <a id="884" href="Typeclassopedia.html#884" class="Bound">n</a><a id="885" class="Symbol">)</a> <a id="887" class="Symbol">(</a><a id="888" href="Agda.Builtin.Nat.html#196" class="InductiveConstructor">S</a> <a id="890" href="Typeclassopedia.html#890" class="Bound">m</a><a id="891" class="Symbol">)</a> <a id="893" class="Symbol">=</a> <a id="895" href="Typeclassopedia.html#771" class="Function">natEq</a> <a id="901" href="Typeclassopedia.html#884" class="Bound">n</a> <a id="903" href="Typeclassopedia.html#890" class="Bound">m</a>
+<a id="905" class="Comment">-- {-# BUILTIN NATEQUALS natEq #-}</a>
+</pre>
+<p>不熟悉这个库的读者不必担心，本文用到的定义都属于看名字就知道的那种 （基本上在标准库或者内置库里面都有一个名字一样的，另外 <code>idp</code> 是 identity path，在代码上和 <code>refl</code> 的定义是一样的）。</p>
+<p>泛化一个阶变量（Girard 悖论你好），免得到处写隐式参数：</p>
+<pre class="Agda"><a id="1094" class="Keyword">variable</a> <a id="1103" href="Typeclassopedia.html#1103" class="Generalizable">i</a> <a id="1105" class="Symbol">:</a> <a id="1107" href="Agda.Primitive.html#408" class="Postulate">Level</a>
+</pre>
+<p>有个函数 <code>of-type</code> 和 Idris 的函数 <code>the</code> 语义一致：先传入一个类型，再传入这个类型的实例:</p>
+<pre class="Agda"><a id="1185" href="Typeclassopedia.html#1185" class="Function">_</a> <a id="1187" class="Symbol">:</a> <a id="1189" class="Symbol">(</a><a id="1190" href="Typeclassopedia.html#1190" class="Bound">A</a> <a id="1192" class="Symbol">:</a> <a id="1194" href="Cubical.Core.Primitives.html#957" class="Function">Type</a> <a id="1199" href="Typeclassopedia.html#1103" class="Generalizable">i</a><a id="1200" class="Symbol">)</a> <a id="1202" class="Symbol">(</a><a id="1203" href="Typeclassopedia.html#1203" class="Bound">u</a> <a id="1205" class="Symbol">:</a> <a id="1207" href="Typeclassopedia.html#1190" class="Bound">A</a><a id="1208" class="Symbol">)</a> <a id="1210" class="Symbol">-&gt;</a> <a id="1213" href="Typeclassopedia.html#1190" class="Bound">A</a>
+<a id="1215" class="Symbol">_</a> <a id="1217" class="Symbol">=</a> <a id="1219" href="HoTT-Agda.html#628" class="Function">of-type</a>
+</pre>
+<p>HoTT-Agda 提供了这种便利的语法来间接使用 <code>of-type</code>:</p>
+<pre class="Agda"><a id="1278" href="Typeclassopedia.html#1278" class="Function">_</a> <a id="1280" class="Symbol">=</a> <a id="1282" class="Number">233</a> <a id="1286" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="1289" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+<a id="1293" href="Typeclassopedia.html#1293" class="Function">_</a> <a id="1295" class="Symbol">=</a> <a id="1297" href="Agda.Primitive.html#575" class="Primitive">lzero</a> <a id="1303" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="1306" href="Agda.Primitive.html#408" class="Postulate">ULevel</a>
+<a id="1313" href="Typeclassopedia.html#1313" class="Function">_</a> <a id="1315" class="Symbol">=</a> <a id="1317" href="Agda.Builtin.Unit.html#174" class="InductiveConstructor">unit</a> <a id="1322" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="1325" href="Agda.Builtin.Unit.html#137" class="Record">Unit</a>
+<a id="1330" href="Typeclassopedia.html#1330" class="Function">_</a> <a id="1332" class="Symbol">=</a> <a id="1334" href="Agda.Builtin.Equality.html#182" class="InductiveConstructor">idp</a> <a id="1338" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="1341" class="Symbol">(</a><a id="1342" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a> <a id="1344" href="Agda.Builtin.Equality.html#125" class="Datatype Operator">==</a> <a id="1347" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a><a id="1348" class="Symbol">)</a>
+</pre>
+<h2 id="实例参数">实例参数</h2>
+<pre class="Agda"><a id="1372" class="Keyword">module</a> <a id="InstanceArgument"></a><a id="1379" href="Typeclassopedia.html#1379" class="Module">InstanceArgument</a> <a id="1396" class="Keyword">where</a>
+</pre>
+<p>注：我的第一册书里译作<em>即时</em>参数，因为在英语中这个名字是一语双关的（ 因为查找实例使用的算法比较快，所以 instance 此处有<em>即时</em>之意。 但这个特性又用于查找类型实例，所以 instance 又有<em>实例</em>之意）， 现在决定改为取相对来说更内涵的含义。</p>
+<p>实例参数类似隐式参数，只不过它们使用两层大括号：</p>
+<pre class="Agda">  <a id="1575" class="Keyword">postulate</a> <a id="InstanceArgument.f"></a><a id="1585" href="Typeclassopedia.html#1585" class="Postulate">f</a> <a id="1587" class="Symbol">:</a> <a id="1589" class="Symbol">{{</a> <a id="1592" href="Typeclassopedia.html#1592" class="Bound">x</a> <a id="1594" class="Symbol">:</a> <a id="1596" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a> <a id="1600" class="Symbol">}}</a> <a id="1603" class="Symbol">-&gt;</a> <a id="1606" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+</pre>
+<p>手动传值也是两层：</p>
+<pre class="Agda">  <a id="1636" href="Typeclassopedia.html#1636" class="Function">_</a> <a id="1638" class="Symbol">=</a> <a id="1640" href="Typeclassopedia.html#1585" class="Postulate">f</a> <a id="1642" class="Symbol">{{</a> <a id="1645" class="Number">233</a> <a id="1649" class="Symbol">}}</a> <a id="1652" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="1655" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+</pre>
+<p>隐式参数一般是通过后面的参数往前推导得到的，实例参数则使用另一种方式： <strong>直接在上下文里查找变量。</strong></p>
+<p>听起来很暴力，但其实也没有那么暴力啦，只有：</p>
+<ul>
+<li>放在 <code>instance</code> 代码块里的定义</li>
+<li>局部变量</li>
+</ul>
+<p>才属于被查找的对象，我们称之为实例。 Agda wiki 说构造器也会，但目前看编译器的行为应该是不允许了。</p>
+<p>放在 <code>instance</code> 代码块里的定义的例子：</p>
+<pre class="Agda">  <a id="1867" class="Comment">-- instance 代码块定义</a>
+  <a id="1887" class="Keyword">instance</a> <a id="InstanceArgument.rua"></a><a id="1896" href="Typeclassopedia.html#1896" class="Function">rua</a> <a id="1900" class="Symbol">:</a> <a id="1902" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+           <a id="1917" href="Typeclassopedia.html#1896" class="Function">rua</a> <a id="1921" class="Symbol">=</a> <a id="1923" class="Number">233</a>
+  <a id="1929" class="Comment">-- 喏，自动传入啦</a>
+  <a id="1942" href="Typeclassopedia.html#1942" class="Function">_</a> <a id="1944" class="Symbol">=</a> <a id="1946" href="Typeclassopedia.html#1585" class="Postulate">f</a> <a id="1948" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="1951" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+</pre>
+<p>局部变量：</p>
+<pre class="Agda">  <a id="1977" href="Typeclassopedia.html#1977" class="Function">_</a> <a id="1979" class="Symbol">=</a> <a id="1981" class="Keyword">let</a> <a id="1985" href="Typeclassopedia.html#1985" class="Bound">jojo</a> <a id="1990" class="Symbol">=</a> <a id="1992" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a> <a id="1994" class="Keyword">in</a> <a id="1997" href="Typeclassopedia.html#1585" class="Postulate">f</a> <a id="1999" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="2002" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+  <a id="2008" href="Typeclassopedia.html#2008" class="Function">_</a> <a id="2010" class="Symbol">=</a> <a id="2012" href="Typeclassopedia.html#1585" class="Postulate">f</a> <a id="2014" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="2017" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a> <a id="2021" class="Keyword">where</a> <a id="2027" href="Typeclassopedia.html#2027" class="Function">jojo</a> <a id="2032" class="Symbol">=</a> <a id="2034" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a>
+</pre>
+<p>如果作用域内有两个满足需求的实例，就会报错。</p>
+<h2 id="依赖记录">依赖记录</h2>
+<pre class="Agda"><a id="2082" class="Keyword">module</a> <a id="DependentRecord"></a><a id="2089" href="Typeclassopedia.html#2089" class="Module">DependentRecord</a> <a id="2105" class="Keyword">where</a>
+</pre>
+<p>这里<em>依赖</em>是形容词，不是动词。英文原文是 dependent record ， 表示后面成员的类型可以依赖前面成员的 <code>record</code> 。</p>
+<p>Haskell 中的类型类使用 <code>class</code> 关键字定义，比如 <code>Eq</code> 类型类：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">class</span> <span class="dt">Eq</span> t <span class="kw">where</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ot">  (==) ::</span> t <span class="ot">-&gt;</span> t <span class="ot">-&gt;</span> <span class="dt">Bool</span></span></code></pre></div>
+<p>立即使用 <code>record</code> 表达：</p>
+<pre class="Agda">  <a id="2319" class="Keyword">record</a> <a id="DependentRecord.Eq"></a><a id="2326" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="2329" class="Symbol">{</a><a id="2330" href="Typeclassopedia.html#2330" class="Bound">a</a><a id="2331" class="Symbol">}</a> <a id="2333" class="Symbol">(</a><a id="2334" href="Typeclassopedia.html#2334" class="Bound">A</a> <a id="2336" class="Symbol">:</a> <a id="2338" href="Cubical.Core.Primitives.html#957" class="Function">Type</a> <a id="2343" href="Typeclassopedia.html#2330" class="Bound">a</a><a id="2344" class="Symbol">)</a> <a id="2346" class="Symbol">:</a> <a id="2348" href="Cubical.Core.Primitives.html#957" class="Function">Type</a> <a id="2353" href="Typeclassopedia.html#2330" class="Bound">a</a> <a id="2355" class="Keyword">where</a>
+    <a id="2365" class="Keyword">field</a> <a id="DependentRecord.Eq._===_"></a><a id="2371" href="Typeclassopedia.html#2371" class="Field Operator">_===_</a> <a id="2377" class="Symbol">:</a> <a id="2379" href="Typeclassopedia.html#2334" class="Bound">A</a> <a id="2381" class="Symbol">-&gt;</a> <a id="2384" href="Typeclassopedia.html#2334" class="Bound">A</a> <a id="2386" class="Symbol">-&gt;</a> <a id="2389" href="Agda.Builtin.Bool.html#135" class="Datatype">Bool</a>
+    <a id="2398" class="Keyword">infixl</a> <a id="2405" class="Number">32</a> <a id="2408" href="Typeclassopedia.html#2371" class="Field Operator">_===_</a>
+</pre>
+<p>由于 Agda 的 <code>record</code> 就是带参数的 <code>module</code> ，我们可以把它的成员定义 <code>open</code> 出来：</p>
+<pre class="Agda">  <a id="2489" class="Keyword">module</a> <a id="EqAsExplicitArgument"></a><a id="2496" href="Typeclassopedia.html#2496" class="Module">EqAsExplicitArgument</a> <a id="2517" class="Keyword">where</a>
+    <a id="2527" class="Keyword">open</a> <a id="2532" href="Typeclassopedia.html#2326" class="Module">Eq</a>
+</pre>
+<p>可以简单地看出，被 <code>open</code> 出来的 <code>_===_</code> 的类型：</p>
+<pre class="Agda">    <a id="2587" href="Typeclassopedia.html#2587" class="Function">_</a> <a id="2589" class="Symbol">=</a> <a id="2591" href="Typeclassopedia.html#2371" class="Field Operator">_===_</a> <a id="2597" href="HoTT-Agda.html#628" class="Function">:&gt;</a> <a id="2600" class="Symbol">(</a><a id="2601" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="2604" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a> <a id="2608" class="Symbol">-&gt;</a> <a id="2611" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a> <a id="2615" class="Symbol">-&gt;</a> <a id="2618" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a> <a id="2622" class="Symbol">-&gt;</a> <a id="2625" href="Agda.Builtin.Bool.html#135" class="Datatype">Bool</a><a id="2629" class="Symbol">)</a>
+</pre>
+<p>要使用的话，先搞个实例，然后 Haskell 里当成 constraint 用的情况改成参数就是了：</p>
+<pre class="Agda">    <a id="DependentRecord.EqAsExplicitArgument.natEqInstance"></a><a id="2700" href="Typeclassopedia.html#2700" class="Function">natEqInstance</a> <a id="2714" class="Symbol">:</a> <a id="2716" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="2719" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+    <a id="2727" href="Typeclassopedia.html#2700" class="Function">natEqInstance</a> <a id="2741" class="Symbol">=</a> <a id="2743" class="Keyword">record</a> <a id="2750" class="Symbol">{</a> <a id="2752" href="Typeclassopedia.html#2371" class="Field Operator">_===_</a> <a id="2758" class="Symbol">=</a> <a id="2760" href="Typeclassopedia.html#771" class="Function">natEq</a> <a id="2766" class="Symbol">}</a>
+</pre>
+<p>我们还可以使用优美的余模式（copattern）：</p>
+<pre class="Agda">    <a id="DependentRecord.EqAsExplicitArgument.natEqInstance&#39;"></a><a id="2812" href="Typeclassopedia.html#2812" class="Function">natEqInstance&#39;</a> <a id="2827" class="Symbol">:</a> <a id="2829" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="2832" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+    <a id="2840" href="Typeclassopedia.html#2371" class="Field Operator">_===_</a> <a id="2846" href="Typeclassopedia.html#2812" class="Function">natEqInstance&#39;</a> <a id="2861" class="Symbol">=</a> <a id="2863" href="Typeclassopedia.html#771" class="Function">natEq</a>
+</pre>
+<p>根据 <code>Eq</code> 类型类，定义不等于（就不 point-free 了，怕伤害不精通各种 arrow 操作的萌新）：</p>
+<pre class="Agda">    <a id="DependentRecord.EqAsExplicitArgument.natNeq&#39;"></a><a id="2944" href="Typeclassopedia.html#2944" class="Function">natNeq&#39;</a> <a id="2952" class="Symbol">:</a> <a id="2954" class="Symbol">{</a><a id="2955" href="Typeclassopedia.html#2955" class="Bound">A</a> <a id="2957" class="Symbol">:</a> <a id="2959" href="Cubical.Core.Primitives.html#957" class="Function">Type</a> <a id="2964" href="Typeclassopedia.html#1103" class="Generalizable">i</a><a id="2965" class="Symbol">}</a> <a id="2967" class="Symbol">-&gt;</a> <a id="2970" class="Symbol">(</a><a id="2971" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="2974" href="Typeclassopedia.html#2955" class="Bound">A</a><a id="2975" class="Symbol">)</a> <a id="2977" class="Symbol">-&gt;</a> <a id="2980" href="Typeclassopedia.html#2955" class="Bound">A</a> <a id="2982" class="Symbol">-&gt;</a> <a id="2985" href="Typeclassopedia.html#2955" class="Bound">A</a> <a id="2987" class="Symbol">-&gt;</a> <a id="2990" href="Agda.Builtin.Bool.html#135" class="Datatype">Bool</a>
+    <a id="2999" href="Typeclassopedia.html#2944" class="Function">natNeq&#39;</a> <a id="3007" href="Typeclassopedia.html#3007" class="Bound">eq</a> <a id="3010" href="Typeclassopedia.html#3010" class="Bound">a</a> <a id="3012" href="Typeclassopedia.html#3012" class="Bound">b</a> <a id="3014" class="Symbol">=</a> <a id="3016" href="Cubical.Data.Bool.Base.html#359" class="Function">not</a> <a id="3020" href="HoTT-Agda.html#1795" class="Function Operator">$</a> <a id="3022" href="Typeclassopedia.html#2371" class="Field Operator">_===_</a> <a id="3028" href="Typeclassopedia.html#3007" class="Bound">eq</a> <a id="3031" href="Typeclassopedia.html#3010" class="Bound">a</a> <a id="3033" href="Typeclassopedia.html#3012" class="Bound">b</a>
+</pre>
+<p>使用一下这个不等于：</p>
+<pre class="Agda">    <a id="3064" href="Typeclassopedia.html#3064" class="Function">_</a> <a id="3066" class="Symbol">:</a> <a id="3068" href="Agda.Builtin.Bool.html#154" class="InductiveConstructor">false</a> <a id="3074" href="Agda.Builtin.Equality.html#125" class="Datatype Operator">==</a> <a id="3077" href="Typeclassopedia.html#2944" class="Function">natNeq&#39;</a> <a id="3085" href="Typeclassopedia.html#2700" class="Function">natEqInstance</a> <a id="3099" class="Number">0</a> <a id="3101" class="Number">0</a>
+    <a id="3107" class="Symbol">_</a> <a id="3109" class="Symbol">=</a> <a id="3111" href="Agda.Builtin.Equality.html#182" class="InductiveConstructor">idp</a>
+
+    <a id="3120" href="Typeclassopedia.html#3120" class="Function">_</a> <a id="3122" class="Symbol">:</a> <a id="3124" href="Agda.Builtin.Bool.html#160" class="InductiveConstructor">true</a> <a id="3129" href="Agda.Builtin.Equality.html#125" class="Datatype Operator">==</a> <a id="3132" href="Typeclassopedia.html#2944" class="Function">natNeq&#39;</a> <a id="3140" href="Typeclassopedia.html#2700" class="Function">natEqInstance</a> <a id="3154" class="Number">1</a> <a id="3156" class="Number">2</a>
+    <a id="3162" class="Symbol">_</a> <a id="3164" class="Symbol">=</a> <a id="3166" href="Agda.Builtin.Equality.html#182" class="InductiveConstructor">idp</a>
+</pre>
+<p>嗯，非常妙。</p>
+<p>我们现在已经实现了一个非常不优美（不优美的原因是，我们要手动传入类型实例） 但比 Haskell 版本更灵活的类型类，并给它创建类型实例了！</p>
+<pre class="Agda">  <a id="3265" class="Keyword">module</a> <a id="EqAsInstanceArgument"></a><a id="3272" href="Typeclassopedia.html#3272" class="Module">EqAsInstanceArgument</a> <a id="3293" class="Keyword">where</a>
+</pre>
+<p>在这个基础上，我们如果把那个 <code>(Eq A)</code> 做成实例参数，就可以让编译器自己去找类型实例， 实现 Haskell 中 <code>=&gt;</code> 一样的效果了！</p>
+<p>我们需要做两个手脚，首先 <code>open</code> 出来的 <code>_===_</code> 中的 <code>(Eq A)</code> 需要变成实例参数 <code>{{ Eq A }}</code>：</p>
+<pre class="Agda">    <a id="3459" class="Keyword">open</a> <a id="3464" href="Typeclassopedia.html#2326" class="Module">Eq</a> <a id="3467" class="Symbol">{{</a> <a id="3470" class="Symbol">...</a> <a id="3474" class="Symbol">}}</a>
+</pre>
+<p>没错，这个需求有点复杂，所以 Agda 专门做了个语法来简化这个流程。 当然，不代表我们不能手动实现这个语法糖实现的功能：</p>
+<pre class="Agda">    <a id="3557" class="Keyword">module</a> <a id="StupidImplementation"></a><a id="3564" href="Typeclassopedia.html#3564" class="Module">StupidImplementation</a>
+           <a id="3596" class="Symbol">{</a><a id="3597" href="Typeclassopedia.html#3597" class="Bound">i</a><a id="3598" class="Symbol">}</a> <a id="3600" class="Symbol">{</a><a id="3601" href="Typeclassopedia.html#3601" class="Bound">A</a> <a id="3603" class="Symbol">:</a> <a id="3605" href="Cubical.Core.Primitives.html#957" class="Function">Type</a> <a id="3610" href="Typeclassopedia.html#3597" class="Bound">i</a><a id="3611" class="Symbol">}</a> <a id="3613" class="Symbol">{{</a> <a id="3616" href="Typeclassopedia.html#3616" class="Bound">eq</a> <a id="3619" class="Symbol">:</a> <a id="3621" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="3624" href="Typeclassopedia.html#3601" class="Bound">A</a> <a id="3626" class="Symbol">}}</a> <a id="3629" class="Keyword">where</a>
+      <a id="3641" class="Keyword">open</a> <a id="3646" class="Keyword">module</a> <a id="EqInstances"></a><a id="3653" href="Typeclassopedia.html#3653" class="Module">EqInstances</a> <a id="3665" class="Symbol">=</a> <a id="3667" href="Typeclassopedia.html#2326" class="Module">Eq</a> <a id="3670" href="Typeclassopedia.html#3616" class="Bound">eq</a> <a id="3673" class="Keyword">public</a>
+</pre>
+<p>其次我们的类型实例需要被 <code>instance</code> 修饰：</p>
+<pre class="Agda">    <a id="3726" class="Keyword">instance</a>
+      <a id="DependentRecord.EqAsInstanceArgument.natEqInstance"></a><a id="3741" href="Typeclassopedia.html#3741" class="Function">natEqInstance</a> <a id="3755" class="Symbol">:</a> <a id="3757" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="3760" href="Agda.Builtin.Nat.html#165" class="Datatype">Nat</a>
+      <a id="3770" href="Typeclassopedia.html#3741" class="Function">natEqInstance</a> <a id="3784" class="Symbol">=</a> <a id="3786" class="Keyword">record</a> <a id="3793" class="Symbol">{</a> <a id="3795" href="Typeclassopedia.html#2371" class="Field Operator">_===_</a> <a id="3801" class="Symbol">=</a> <a id="3803" href="Typeclassopedia.html#771" class="Function">natEq</a> <a id="3809" class="Symbol">}</a>
+</pre>
+<p>嗯，由于我们已经把 <code>Eq</code> 以实例参数形式 <code>open</code> 出来，就用不了余模式了 QAQ。</p>
+<p>然后再试试用这个类型类实现不等于。先显式传入，找找感觉（ 实例参数必须 introduce 一个变量，不知道为什么。如果不想写，命名为下划线就是）：</p>
+<pre class="Agda">    <a id="DependentRecord.EqAsInstanceArgument.natNeq&#39;"></a><a id="3952" href="Typeclassopedia.html#3952" class="Function">natNeq&#39;</a> <a id="3960" class="Symbol">:</a> <a id="3962" class="Symbol">{</a><a id="3963" href="Typeclassopedia.html#3963" class="Bound">A</a> <a id="3965" class="Symbol">:</a> <a id="3967" href="Cubical.Core.Primitives.html#957" class="Function">Type</a> <a id="3972" href="Typeclassopedia.html#1103" class="Generalizable">i</a><a id="3973" class="Symbol">}</a> <a id="3975" class="Symbol">-&gt;</a> <a id="3978" class="Symbol">{{</a><a id="3980" href="Typeclassopedia.html#3980" class="Bound">_</a> <a id="3982" class="Symbol">:</a> <a id="3984" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="3987" href="Typeclassopedia.html#3963" class="Bound">A</a><a id="3988" class="Symbol">}}</a> <a id="3991" class="Symbol">-&gt;</a> <a id="3994" href="Typeclassopedia.html#3963" class="Bound">A</a> <a id="3996" class="Symbol">-&gt;</a> <a id="3999" href="Typeclassopedia.html#3963" class="Bound">A</a> <a id="4001" class="Symbol">-&gt;</a> <a id="4004" href="Agda.Builtin.Bool.html#135" class="Datatype">Bool</a>
+    <a id="4013" href="Typeclassopedia.html#3952" class="Function">natNeq&#39;</a> <a id="4021" class="Symbol">{{</a><a id="4023" href="Typeclassopedia.html#4023" class="Bound">eq</a><a id="4025" class="Symbol">}}</a> <a id="4028" href="Typeclassopedia.html#4028" class="Bound">a</a> <a id="4030" href="Typeclassopedia.html#4030" class="Bound">b</a> <a id="4032" class="Symbol">=</a> <a id="4034" href="Cubical.Data.Bool.Base.html#359" class="Function">not</a> <a id="4038" href="HoTT-Agda.html#1795" class="Function Operator">$</a> <a id="4040" href="Typeclassopedia.html#2371" class="Field Operator">_===_</a> <a id="4046" class="Symbol">{{</a><a id="4048" href="Typeclassopedia.html#4023" class="Bound">eq</a><a id="4050" class="Symbol">}}</a> <a id="4053" href="Typeclassopedia.html#4028" class="Bound">a</a> <a id="4055" href="Typeclassopedia.html#4030" class="Bound">b</a>
+</pre>
+<p>自动传入（终于能用上运算符语法了，嘤嘤嘤）：</p>
+<pre class="Agda">    <a id="DependentRecord.EqAsInstanceArgument.natNeq"></a><a id="4098" href="Typeclassopedia.html#4098" class="Function">natNeq</a> <a id="4105" class="Symbol">:</a> <a id="4107" class="Symbol">{</a><a id="4108" href="Typeclassopedia.html#4108" class="Bound">A</a> <a id="4110" class="Symbol">:</a> <a id="4112" href="Cubical.Core.Primitives.html#957" class="Function">Type</a> <a id="4117" href="Typeclassopedia.html#1103" class="Generalizable">i</a><a id="4118" class="Symbol">}</a> <a id="4120" class="Symbol">-&gt;</a> <a id="4123" class="Symbol">{{</a><a id="4125" href="Typeclassopedia.html#4125" class="Bound">_</a> <a id="4127" class="Symbol">:</a> <a id="4129" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="4132" href="Typeclassopedia.html#4108" class="Bound">A</a><a id="4133" class="Symbol">}}</a> <a id="4136" class="Symbol">-&gt;</a> <a id="4139" href="Typeclassopedia.html#4108" class="Bound">A</a> <a id="4141" class="Symbol">-&gt;</a> <a id="4144" href="Typeclassopedia.html#4108" class="Bound">A</a> <a id="4146" class="Symbol">-&gt;</a> <a id="4149" href="Agda.Builtin.Bool.html#135" class="Datatype">Bool</a>
+    <a id="4158" href="Typeclassopedia.html#4098" class="Function">natNeq</a> <a id="4165" href="Typeclassopedia.html#4165" class="Bound">a</a> <a id="4167" href="Typeclassopedia.html#4167" class="Bound">b</a> <a id="4169" class="Symbol">=</a> <a id="4171" href="Cubical.Data.Bool.Base.html#359" class="Function">not</a> <a id="4175" href="HoTT-Agda.html#1795" class="Function Operator">$</a> <a id="4177" href="Typeclassopedia.html#4165" class="Bound">a</a> <a id="4179" href="Typeclassopedia.html#2371" class="Field Operator">===</a> <a id="4183" href="Typeclassopedia.html#4167" class="Bound">b</a>
+</pre>
+<p>运算符重载了解一下，自定义优先级结合性了解一下：</p>
+<pre class="Agda">    <a id="4228" class="Keyword">infixl</a> <a id="4235" class="Number">32</a> <a id="4238" href="Typeclassopedia.html#4248" class="Function Operator">_=/=_</a>
+    <a id="DependentRecord.EqAsInstanceArgument._=/=_"></a><a id="4248" href="Typeclassopedia.html#4248" class="Function Operator">_=/=_</a> <a id="4254" class="Symbol">:</a> <a id="4256" class="Symbol">{</a><a id="4257" href="Typeclassopedia.html#4257" class="Bound">A</a> <a id="4259" class="Symbol">:</a> <a id="4261" href="Cubical.Core.Primitives.html#957" class="Function">Type</a> <a id="4266" href="Typeclassopedia.html#1103" class="Generalizable">i</a><a id="4267" class="Symbol">}</a> <a id="4269" class="Symbol">-&gt;</a> <a id="4272" class="Symbol">{{</a><a id="4274" href="Typeclassopedia.html#4274" class="Bound">_</a> <a id="4276" class="Symbol">:</a> <a id="4278" href="Typeclassopedia.html#2326" class="Record">Eq</a> <a id="4281" href="Typeclassopedia.html#4257" class="Bound">A</a><a id="4282" class="Symbol">}}</a> <a id="4285" class="Symbol">-&gt;</a> <a id="4288" href="Typeclassopedia.html#4257" class="Bound">A</a> <a id="4290" class="Symbol">-&gt;</a> <a id="4293" href="Typeclassopedia.html#4257" class="Bound">A</a> <a id="4295" class="Symbol">-&gt;</a> <a id="4298" href="Agda.Builtin.Bool.html#135" class="Datatype">Bool</a>
+    <a id="4307" href="Typeclassopedia.html#4307" class="Bound">a</a> <a id="4309" href="Typeclassopedia.html#4248" class="Function Operator">=/=</a> <a id="4313" href="Typeclassopedia.html#4313" class="Bound">b</a> <a id="4315" class="Symbol">=</a> <a id="4317" href="Cubical.Data.Bool.Base.html#359" class="Function">not</a> <a id="4321" href="HoTT-Agda.html#1795" class="Function Operator">$</a> <a id="4323" href="Typeclassopedia.html#4307" class="Bound">a</a> <a id="4325" href="Typeclassopedia.html#2371" class="Field Operator">===</a> <a id="4329" href="Typeclassopedia.html#4313" class="Bound">b</a>
+</pre>
+<p>相信此时浏览器等宽字体设置为 Fira Code 的读者已经被爽到了（噫）。</p>
+<p>简单地调用，证明一下性质：</p>
+<pre class="Agda">    <a id="4403" href="Typeclassopedia.html#4403" class="Function">_</a> <a id="4405" class="Symbol">:</a> <a id="4407" href="Agda.Builtin.Bool.html#154" class="InductiveConstructor">false</a> <a id="4413" href="Agda.Builtin.Equality.html#125" class="Datatype Operator">==</a> <a id="4416" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a> <a id="4418" href="Typeclassopedia.html#4248" class="Function Operator">=/=</a> <a id="4422" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a>
+    <a id="4428" class="Symbol">_</a> <a id="4430" class="Symbol">=</a> <a id="4432" href="Agda.Builtin.Equality.html#182" class="InductiveConstructor">idp</a>
+
+    <a id="4441" href="Typeclassopedia.html#4441" class="Function">_</a> <a id="4443" class="Symbol">:</a> <a id="4445" href="Agda.Builtin.Bool.html#160" class="InductiveConstructor">true</a> <a id="4450" href="Agda.Builtin.Equality.html#125" class="Datatype Operator">==</a> <a id="4453" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a> <a id="4455" href="Typeclassopedia.html#4248" class="Function Operator">=/=</a> <a id="4459" href="Agda.Builtin.Nat.html#196" class="InductiveConstructor">S</a> <a id="4461" href="Agda.Builtin.Nat.html#183" class="InductiveConstructor">O</a>
+    <a id="4467" class="Symbol">_</a> <a id="4469" class="Symbol">=</a> <a id="4471" href="Agda.Builtin.Equality.html#182" class="InductiveConstructor">idp</a>
+</pre>
+<p>完美！我们有类型类了！</p>
+<p>嗯，数学作业要写不完了 QAQ</p>{% endraw %}</body>

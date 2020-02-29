@@ -1,0 +1,53 @@
+a,
+a:visited {
+	text-decoration: none;
+}
+
+article a,
+article a:visited {
+	padding-bottom: 1px;
+	border-bottom: 1px dashed #009492;
+}
+
+article a:hover,
+article a:visited:hover {
+	padding-bottom: 1px;
+	border-bottom: 1px solid #009492;
+}
+
+footer a,
+footer a:visited,
+p a,
+p a:visited {
+	color: #800080;
+	padding-bottom: 1px;
+	border-bottom: 1px dashed #009492;
+}
+
+.Agda a,
+.Agda a:visited,
+.Agda a:hover {
+	border-bottom: 0;
+}
+
+.sourceCode a,
+.sourceCode a:visited,
+.sourceCode a:hover {
+	border-bottom: 0;
+}
+
+footer a:hover,
+footer a:visited:hover,
+p a:hover,
+p a:visited:hover {
+	border-bottom-style: solid;
+}
+
+footer a:active,
+footer a:visited:active,
+p a:active,
+p a:visited:active {
+	background: #009492;
+	color: #fff;
+	border-bottom: 1px solid #009492;
+}
