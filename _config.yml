@@ -5,7 +5,7 @@ author: CanftIn
 description: A blog by CanftIn
 baseurl: ""
 url: "https://CanftIn.com"
-favicon: /favicon.jpg
+favicon: /favicon.png
 twitter: CanftIn
 github_username: CanftIn
 permalink: /:year/:month-:day-:title.html
