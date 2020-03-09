@@ -33,7 +33,7 @@ description: Magit QuickStart
 - `d` `r` to show a diff of the range of commits
 
 ## Checkout a local branch
-- `SPC g s` show Magit status view
+- `SPC` `g` `s` show Magit status view
 - `b` `b` checkout a branch
 - select or enter the branch name and hit ENTER
 
@@ -48,7 +48,7 @@ description: Magit QuickStart
 - `l` `l` show log view
 - move point to the commit you want to checkout (using `j` and `k`)
 - `O` (capital letter O) `f` reset a file
-- hit `ENTER` to select the default revision selected above. (it will look something like - master~4)
+- hit `ENTER` to select the default revision selected above. (it will look something like - master)
 - select a file
 - `q` to close the log view and see the file at the selected revision is staged
 
@@ -78,7 +78,7 @@ description: Magit QuickStart
 - `SPC` `g` `s` show Magit status view
 - use `j` and `k` to position the cursor on a file
 - `TAB` to show and hide the diff for the file
-- `s` to stage a file (`u` to unstage a file and x to discard changes to a file)
+- `s` to stage a file (`u` to unstage a file and `x` to discard changes to a file)
 - `c` `c` to commit
 - write a commit message and save with `SPC` `f` `s`
 - `,` `c` to finish the commit message
@@ -92,7 +92,7 @@ description: Magit QuickStart
 - `s` / `u` to stage or unstange hunks
 - `x` to discard a hunk
 - `c` `c` to commit
-- Enter a commit message and save with `SPC` `f` s`
+- Enter a commit message and save with `SPC` `f` `s`
 - `,` `c` to finish the commit
 
 ## Merge master into the current branch
@@ -111,7 +111,7 @@ description: Magit QuickStart
 - use `j` and `k` to position the cursor on a commit
 - `r` `i` to start the interactive rebase
 - use `j` and `k` to position the cursor on a commit to squash
-- `s` to mark the commit as to be squashed. (use s multiple times to squash multiple commits.- )
+- `s` to mark the commit as to be squashed. (use `s` multiple times to squash multiple commits)
 - `,` `c` to make it happen
 - edit the new squashed commit message and save with `SPC` `f` `s`
 - `,` `c` to finish
@@ -138,7 +138,7 @@ description: Magit QuickStart
 - `l` `l` show log view
 - use `j` and `k` to position the cursor one commit before the last one
 - `O` (capital letter O) `s` to soft reset
-- the selected commit should be e.g. master~1. Hit `ENTER`
+- the selected commit should be e.g. master. Hit `ENTER`
 
 ## Stash changes
 - `SPC` `g` `s` show Magit status view
@@ -154,7 +154,7 @@ description: Magit QuickStart
 - `SPC` `g` `s` show Magit status view
 - `l` `l` show log view
 - use `j` and `k` to position the cursor on a commit
-- `y` s copy the git commit SHA
+- `y` `s` copy the git commit SHA
 
 ## Copy text from a Magit buffer
 - `SPC` `g` `s` show Magit status view
@@ -169,7 +169,7 @@ description: Magit QuickStart
 
 - ## List all branches
 - `SPC` `g` `s` show Magit status view
-- `y` `r`show refs
+- `y` `r` show refs
 
 ## Jump to the next/prev section in the status view
 - `SPC` `g` `s` show Magit status view
