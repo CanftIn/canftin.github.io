@@ -7,6 +7,7 @@ keywords: Magit, git, spacemacs
 description: Magit QuickStart
 ---
 # Contents
+*  contents
 {:toc}
 
 ## Show git status
