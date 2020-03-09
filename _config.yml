@@ -12,6 +12,7 @@ permalink: /:year/:month-:day-:title.html
 domain: CanftIn.com
 # Build settings
 markdown: kramdown
+toc_levels: 1..2
 exclude:
   - '*.lagda.md'
   - '*.agdai'
