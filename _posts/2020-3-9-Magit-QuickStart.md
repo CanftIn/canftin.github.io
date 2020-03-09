@@ -44,7 +44,7 @@ description: Magit QuickStart
 - `b` `b` ENTER to checkout that commit
 
 ## Checkout a different revision of a file
-- `SPC` `g `s` show Magit status view
+- `SPC` `g` `s` show Magit status view
 - `l` `l` show log view
 - move point to the commit you want to checkout (using `j` and `k`)
 - `O` (capital letter O) `f` reset a file
@@ -83,7 +83,7 @@ description: Magit QuickStart
 - write a commit message and save with `SPC` `f` `s`
 - `,` `c` to finish the commit message
 
-## Stage specific hunks 2 
+## Stage specific hunks
 - `SPC` `g` `s` show Magit status view
 - `M-n` / `M-p` to move to the "Unstaged changes" section
 - `j` / `k` to move to the desired file
