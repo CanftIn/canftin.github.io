@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Some Tricks Of C Plus Plus</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/2018/02-22-Some_Tricks_Of_C_Plus_Plus.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">Some Tricks Of C Plus Plus</h1>
+	<p class="date">
+		<span itemprop="datePublished" content="2018-02-22 00:00:00 +0800">2018, Feb 22</span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<h1 id="some-tricks-of-c-plus-plus">Some Tricks Of C Plus Plus</h1>
+
+<p>[TOC]</p>
+
+<h2 id="shared_ptr">shared_ptr</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class FXXK
+{
+    string shit_;
+public:
+    FXXK(string shit) : shit_(shit) { cout &lt;&lt; "FXXK-shit is created: " &lt;&lt; shit &lt;&lt; endl; }
+    FXXK() { cout &lt;&lt; "Smelly FXXK created. " &lt;&lt; endl; shit_ = "Smelly"; }
+    ~FXXK() { cout &lt;&lt; "FXXK is destroyed: " &lt;&lt; shit_ &lt;&lt; endl; }
+    void shit() { cout &lt;&lt; "FXXK " &lt;&lt; shit_ &lt;&lt; "...." &lt;&lt; endl; }
+};
+</code></pre></div></div>
+<p>case:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FXXK* fxxk = new FXXK("shit");
+fxxk-&gt;shit(); //fxxk is a dangling pointer, the memory will be leaked.
+</code></pre></div></div>
+<p>so we need to:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    shared_ptr&lt;FXXK&gt; fxxk(new FXXK("Shit"));    //count = 1
+    cout &lt;&lt; fxxk.use_count() &lt;&lt; endl;   	//count = 1
+    {
+        shared_ptr&lt;FXXK&gt; fxxk2 = fxxk;          //count = 2
+        cout &lt;&lt; fxxk.use_count() &lt;&lt; endl;	//count = 2
+        cout &lt;&lt; fxxk2.use_count() &lt;&lt; endl;	//count = 2
+        fxxk2-&gt;shit();                          //FXXK Shit....
+        cout &lt;&lt; fxxk.use_count() &lt;&lt; endl;	//count = 2
+        cout &lt;&lt; fxxk2.use_count() &lt;&lt; endl;	//count = 2
+    }
+    cout &lt;&lt; fxxk.use_count() &lt;&lt; endl;	        //count = 1
+    //count = 1
+    fxxk-&gt;shit();				//FXXK Shit....
+    cout &lt;&lt; fxxk.use_count() &lt;&lt; endl;
+}   //count = 0 &amp;&amp; FXXK is destroyed : Shit
+</code></pre></div></div>
+<p>but something like that:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//an object should be assigned to a smart pointer as soon as it's created. Raw pointer should not be used again.
+FXXK* fxxk = new FXXK("shit");
+shared_ptr&lt;FXXK&gt; fxxk_sp(fxxk);
+shared_ptr&lt;FXXK&gt; fxxk_sp2(fxxk);    //error, there is no object to be released.
+</code></pre></div></div>
+<p>and we still have the method:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FXXK* fxxk = new FXXK("shit");
+shared_ptr&lt;FXXK&gt; fxxk_sp = make_shared&lt;FXXK&gt;("shit");
+</code></pre></div></div>
+<p>make_shared is faster. It includes two operations: creating an object named “shit” and giving this to fxxk_sp. In addtion it is safer, because if memory allocation failure happened, it means “shit” is maked successfully but fxxk_sp is not.If we make shared_ptr object first and then make assignment, memory will be leaked.But When we use <strong>“make_shared”</strong>, these thing will not happen.</p>
+
+<p><strong>btw:</strong> shared_ptr can be used by raw pointer.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(*fxxk_sp).shit();  //FXXK shit....    so it works.
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="exception-in-destructor">Exception in Destructor</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class FXXK
+{
+    string shit_;
+public:
+    FXXK(string shit) : shit_(shit) { cout &lt;&lt; "FXXK-shit is created: " &lt;&lt; shit &lt;&lt; endl; }
+    FXXK() { cout &lt;&lt; "Smelly FXXK created. " &lt;&lt; endl; shit_ = "Smelly"; }
+    ~FXXK() { cout &lt;&lt; "FXXK is destroyed: " &lt;&lt; shit_ &lt;&lt; endl; }
+    void shit() { cout &lt;&lt; "FXXK " &lt;&lt; shit_ &lt;&lt; "...." &lt;&lt; endl; }
+};
+</code></pre></div></div>
+<p>case:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>try
+{
+    FXXK fxxk1("shit1");
+    FXXK fxxk2("shit2");
+    throw 20;
+    fxxk1.shit();
+    fxxk2.shit();
+}
+catch (int e)
+{
+    cout &lt;&lt; e &lt;&lt; " is caught" &lt;&lt; endl;
+}
+
+//FXXK-shit is created: shit1
+//FXXK-shit is created: shit2
+//FXXK shit1....
+//FXXK shit2....
+//FXXK is destroyed: shit2
+//FXXK is destroyed: shit1
+//20 is caught
+</code></pre></div></div>
+<p>the object created first and it will distroyed first. Because the object are stored on stack.
+If you put <strong><em>throw</em> 20;</strong> into <strong><em>~FXXK()</em></strong> like that:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~FXXK() { cout &lt;&lt; "FXXK is destroyed: " &lt;&lt; shit_ &lt;&lt; endl; throw 20;}
+</code></pre></div></div>
+<p>It will abort in just running. This is why we should not throw exception out of a destructor.
+So there are some solutions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//first one solution: Destructor swallow the exception.
+~FXXK(){
+    try{
+        //Enclose all the exception prone code here.
+    } catch (Exception&amp; e) {
+        //catch exceptino
+    } catch (...) {
+        //others
+    }
+}
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//Second solution: Move the exception prone code to a different function.
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="virtual-function-in-constructor-or-destructor">Virtual Function in Constructor or Destructor</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class FXXK
+{
+public:
+    FXXK() { cout &lt;&lt; "FXXK created. " &lt;&lt; endl; }
+    ~FXXK() { cout &lt;&lt; "FXXK is destroyed " &lt;&lt; endl; }
+    void hehe() { cout &lt;&lt; "FXXK hehe " &lt;&lt; "...." &lt;&lt; endl; }
+    void findShit() { hehe(); }
+};
+
+class Shit : public FXXK
+{
+public:
+    Shit() { cout &lt;&lt; "Shit created. " &lt;&lt; endl; }
+    void hehe() { cout &lt;&lt; "Shit hehe " &lt;&lt; "...." &lt;&lt; endl; }
+};
+</code></pre></div></div>
+<p>case:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Shit s;
+s.findShit();
+//FXXK created.
+//Shit created.
+//FXXK hehe ....
+//FXXK is destroyed
+</code></pre></div></div>
+<p>case:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class FXXK
+{
+public:
+    FXXK() { cout &lt;&lt; "FXXK created. " &lt;&lt; endl; }
+    ~FXXK() { cout &lt;&lt; "FXXK is destroyed " &lt;&lt; endl; }
+    virtual void hehe() { cout &lt;&lt; "FXXK hehe " &lt;&lt; "...." &lt;&lt; endl; }
+    void findShit() { hehe(); }
+};
+
+class Shit : public FXXK
+{
+public:
+    Shit() { cout &lt;&lt; "Shit created. " &lt;&lt; endl; }
+    virtual void hehe() { cout &lt;&lt; "Shit hehe " &lt;&lt; "...." &lt;&lt; endl; }
+};
+
+Shit s;
+s.findShit();
+//FXXK created.
+//Shit created.
+//Shit hehe ....
+//FXXK is destroye
+</code></pre></div></div>
+<hr />
+<h2 id="logic-constness-and-bitwise-constness">Logic Constness and Bitwise Constness</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Fxxk
+{
+    vector&lt;int&gt; v;
+    int shitCounter;
+public:
+    int getItem(int index) const 
+    {
+        shitCounter++;  //error, if it work, make shitCounter to be mutable type
+        //or const_cast&lt;Fxxk*&gt;(this)-&gt;shitCounter++;
+        return v[index];
+    }
+};
+</code></pre></div></div>
+<hr />
+<h2 id="assignment-to-self-in-assignment-operator">Assignment to Self in Assignment Operator</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Shit
+{
+    Shit() = delete;
+    Shit(Shit* shit) = delete;
+};
+class Fxxk
+{
+    Shit* shit;
+    Fxxk&amp; operator=(const Fxxk&amp; rhs)
+    {
+        if (this == &amp;rhs)
+            return *this;
+
+        //unsafe:
+        //delete shit;
+        //shit = new Shit(*rhs.shit);
+        Shit* pOrigShit = shit;
+        shit = new Shit(*rhs.shit);
+        delete pOrigShit;
+        return *this;
+    }
+};
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="auto关键字">auto关键字</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void func(auto a = 1);  //error:auto不能用于函数参数
+
+struct Foo
+{
+	auto var1_ = 0;  //error:auto不能用于非静态成员变量
+	static const auto var2_ = 0;
+};
+
+template &lt;typename T&gt;
+struct Bar {};
+
+int main(void)
+{
+	int arr[10] = {0};
+	auto aa = arr;  //OK: aa -&gt; int *
+	auto rr[10] = arr;  //error:auto无法定义数组
+	Bar&lt;int&gt; bar;
+	Bar&lt;auto&gt; bb = bar;  //error:auto无法推导出模板参数
+
+	system("pause");
+	return 0;
+}
+</code></pre></div></div>
+
+<p><strong><em>This paper is Copyrighted @2017 by CanftIn(Wancan Wang), you can contact him by</em></strong> www.canftin.com <strong><em>or</em></strong> <a href="https://weibo.com/u/5632002270">weibo</a></p>
+
+<hr />
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=Some Tricks Of C Plus Plus by @CanftIn http://localhost:4000/2018/02-22-Some_Tricks_Of_C_Plus_Plus.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=Some Tricks Of C Plus Plus by @CanftIn http://localhost:4000/2018/02-22-Some_Tricks_Of_C_Plus_Plus.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2018/02-22-Some_Tricks_Of_C_Plus_Plus.html" property="cc:attributionName"
+				  rel="cc:attributionURL">Some Tricks Of C Plus Plus</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+</footer>
+
+</body>
+</html>

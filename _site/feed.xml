@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MatrixWood</title>
+    <description>A blog by CanftIn</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Fri, 13 Mar 2020 18:05:53 +0800</pubDate>
+    <lastBuildDate>Fri, 13 Mar 2020 18:05:53 +0800</lastBuildDate>
+    <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>Magit-QuickStart</title>
+        <description>&lt;h1 id=&quot;contents&quot;&gt;Contents&lt;/h1&gt;
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#contents&quot; id=&quot;markdown-toc-contents&quot;&gt;Contents&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#show-git-status&quot; id=&quot;markdown-toc-show-git-status&quot;&gt;Show git status&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sh...</description>
+        <pubDate>Mon, 09 Mar 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/03-09-Magit-QuickStart.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/03-09-Magit-QuickStart.html</guid>
+        
+        <category>Magit，git,</category>
+        
+        <category>spacemacs</category>
+        
+        
+        <category>TOOL</category>
+        
+      </item>
+    
+      <item>
+        <title>About Emacs</title>
+        <description>&lt;p&gt;Emacs is powered by its own lisp implementation called
+Emacs Lisp or just elisp. Many are put off or intimidated by
+this esoteric language; that’s a shame, because it’s a practical
+and fun way to learn lisp in an editor built up around the
+idea...</description>
+        <pubDate>Mon, 09 Mar 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/03-09-About-Emacs.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/03-09-About-Emacs.html</guid>
+        
+        <category>lisp,</category>
+        
+        <category>Emacs</category>
+        
+        
+        <category>TOOL</category>
+        
+      </item>
+    
+      <item>
+        <title>Quick Clojure Review</title>
+        <description>&lt;h1 id=&quot;what-is-clojure&quot;&gt;What Is Clojure?&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://clojure.org/&quot;&gt;Clojure&lt;/a&gt; is a functional, symbiotic, and homoiconic programming language.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Functional: where functions are first-class citizens and mutating
+state is...</description>
+        <pubDate>Sun, 01 Mar 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/03-01-Quick-Clojure-Review.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/03-01-Quick-Clojure-Review.html</guid>
+        
+        <category>lisp,</category>
+        
+        <category>Clojure</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>elisp 知识整理</title>
+        <description>&lt;h2 id=&quot;列表处理&quot;&gt;列表处理&lt;/h2&gt;
+
+&lt;h2 id=&quot;函数定义&quot;&gt;函数定义&lt;/h2&gt;
+&lt;div class=&quot;language-lisp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;defun&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;function-name&lt;/span&gt; &lt;span cla...</description>
+        <pubDate>Thu, 11 Apr 2019 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2019/04-11-elisp%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/04-11-elisp%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86.html</guid>
+        
+        <category>lisp,</category>
+        
+        <category>eslip,</category>
+        
+        <category>emacs</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>js note</title>
+        <description>&lt;h2 id=&quot;运算符&quot;&gt;运算符&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;严格相等（===）和严格不等（!==）要求比较的值必须是相同的类型。&lt;/li&gt;
+  &lt;li&gt;普通（或者”宽松“）相等（==）和不等（!=）会先尝试将两个不同类型的值进行转换，再使用严格相等进行比较。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;陷阱：NaN&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;特殊数字NaN和本身不相等。&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-ro...</description>
+        <pubDate>Wed, 03 Apr 2019 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2019/04-03-js_notes.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/04-03-js_notes.html</guid>
+        
+        <category>javascript</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>编译期计算迭代和递归</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;参考《modern C++ design》 3.5节
+** 在编译器不存在mutable entities，无法实现迭代，只能以递归的方式。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 09 Mar 2019 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2019/03-09-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/03-09-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92.html</guid>
+        
+        
+        <category>problem</category>
+        
+      </item>
+    
+      <item>
+        <title>UTC和GMT时间区别</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;UTC 是协调世界时，以原子时长为基础，这套时间系统被应用于互联网的标准中。&lt;/li&gt;
+  &lt;li&gt;GMT 是旧的时间计量标准，根据地球的自传和公转来计算时间。&lt;/li&gt;
+  &lt;li&gt;UTC更加精确，在服务段程序使用UTC作为时间计量标准。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 04 Jul 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/07-04-UTC%E5%92%8CGMT%E6%97%B6%E9%97%B4%E5%8C%BA%E5%88%AB.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/07-04-UTC%E5%92%8CGMT%E6%97%B6%E9%97%B4%E5%8C%BA%E5%88%AB.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>c++笔记-2</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本系列&lt;strong&gt;c++笔记系列&lt;/strong&gt;文章主要记录一些我碰到的c++的问题以及需要注意的内容。
+本文承接上一篇&lt;a href=&quot;https://www.canftin.com/2018/c++笔记系列_零_基础知识整理/&quot;&gt;c++笔记系列（零）：基础知识整理&lt;/a&gt;，主要讲述c++的模板部分。
+可能对读者阅读不友好…因为暂时是我自己的一些小整理，本文内容大部分整理自侯捷老师的课程。
+曾经写过一些cpp的tricks： &lt;a href=&quot;h...</description>
+        <pubDate>Fri, 29 Jun 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/06-29-c++-knowledge-2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/06-29-c++-knowledge-2.html</guid>
+        
+        <category>C++</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>c++笔记-1</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;本系列&lt;strong&gt;c++笔记系列&lt;/strong&gt;文章主要记录一些我碰到的c++的问题以及需要注意的内容。
+本文作为开篇，收纳c++的部分基础知识的小tips。
+可能对读者阅读不友好…因为暂时是我自己的一些小整理，本文内容大部分整理自侯捷老师的课程。
+曾经写过一些cpp的tricks： &lt;a href=&quot;https://www.canftin.com/2017/some-tricks-of-cpp/&quot;&gt;some tricks of cpp&lt;/a&gt;&lt;/...</description>
+        <pubDate>Fri, 29 Jun 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/06-29-c++-knowledge-1.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/06-29-c++-knowledge-1.html</guid>
+        
+        <category>C++</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>车牌识别项目接手--使用opencv手动实现算法</title>
+        <description>&lt;p&gt;最近接手了一个毕业生学长的项目，一个车牌识别的项目。项目还有点问题，前不久跟学长交流过。&lt;/p&gt;
+
+&lt;p&gt;写篇文章记录一下学长的实现思路以及我后续需要做的内容。&lt;/p&gt;
+
+&lt;p&gt;感觉基本图像处理部分是手动实现完了，并没有用深度学习调模型这样先进的方式，完全手动实现算法处理的貌似。学长做了一个服务端和客户端，服务端做图像接收，客户端做图像处理。有趣的一个点是刚开始我以为服务端就是放在摄像头上然后捕捉视频流一帧一帧发个客户端处理，但是他做出来的是客户端放在摄像头上，直接在摄像头上处理完了...</description>
+        <pubDate>Thu, 28 Jun 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/06-28-%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE%E6%8E%A5%E6%89%8B_%E4%BD%BF%E7%94%A8opencv%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/06-28-%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE%E6%8E%A5%E6%89%8B_%E4%BD%BF%E7%94%A8opencv%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95.html</guid>
+        
+        <category>opencv</category>
+        
+        
+        <category>Project</category>
+        
+      </item>
+    
+      <item>
+        <title>Haskell</title>
+        <description>&lt;h2 id=&quot;什么情况下该用元组而什么情况下又该用代数数据类型&quot;&gt;什么情况下该用元组，而什么情况下又该用代数数据类型？&lt;/h2&gt;
+&lt;p&gt;代数数据类型使得我们可以在结构相同但类型不同的数据之间进行区分。然而，对于元组来说，只要元素的结构和类型都一致，那么元组的类型就是相同的。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 04 Jun 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/06-04-Haskell_tips.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/06-04-Haskell_tips.html</guid>
+        
+        <category>Haskell</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>解决了个大问题</title>
+        <description>&lt;p&gt;git的多用户问题。&lt;/p&gt;
+
+&lt;p&gt;关于ssh，我的配置：&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; Directory of D:&lt;span class=&quot;se&quot;&gt;\l&lt;/span&gt;inux_home&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;ssh
+
+04/12/2018  03:12 PM    &amp;lt;DIR&amp;...</description>
+        <pubDate>Thu, 12 Apr 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/04-12-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%AA%E5%A4%A7%E9%97%AE%E9%A2%98.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/04-12-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%AA%E5%A4%A7%E9%97%AE%E9%A2%98.html</guid>
+        
+        <category>ssh,</category>
+        
+        <category>git</category>
+        
+        
+        <category>problem</category>
+        
+      </item>
+    
+      <item>
+        <title>scala tips</title>
+        <description>* scala tips
+- util 方法返回一个不包含上限的区间
+# +BEGIN_SRC scala
+for(i &lt;- 0 util s.length)
+# +END_SRC
+- scala 除了方法还支持函数，方法对对象进行操作，函数不是。
+</description>
+        <pubDate>Sun, 25 Mar 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/03-25-scala_tips.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/03-25-scala_tips.html</guid>
+        
+        <category>scala</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>Some Tricks Of C Plus Plus</title>
+        <description>&lt;h1 id=&quot;some-tricks-of-c-plus-plus&quot;&gt;Some Tricks Of C Plus Plus&lt;/h1&gt;
+
+&lt;p&gt;[TOC]&lt;/p&gt;
+
+&lt;h2 id=&quot;shared_ptr&quot;&gt;shared_ptr&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class FXXK
+{
+    string shit_;
+public:
+    F...</description>
+        <pubDate>Thu, 22 Feb 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/02-22-Some_Tricks_Of_C_Plus_Plus.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/02-22-Some_Tricks_Of_C_Plus_Plus.html</guid>
+        
+        <category>C++</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>C++ 私有继承</title>
+        <description>&lt;h1 id=&quot;c-私有继承&quot;&gt;C++ 私有继承&lt;/h1&gt;
+
+&lt;p&gt;私有继承的第一个规则：和公有继承相反，如果两个类之间的继承关系为私有，编译器一般不会将派生类对象转换成基类对象。
+第二个规则: 从私有基类继承而来的成员都成为了派生类的私有成员，即使它们在基类中是保护或公有成员。&lt;/p&gt;
+
+&lt;p&gt;私有继承的含义：私有继承意味着 “用…来实现”。
+如果使类D私有继承于类B，这样做是因为你想利用类B中已经存在的某些代码，而不是因为类型B的对象和类型D的对象之间有什么概念上的关系。
+因而，私有继...</description>
+        <pubDate>Thu, 02 Nov 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/11-02-c++%E7%A7%81%E6%9C%89%E7%BB%A7%E6%89%BF.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11-02-c++%E7%A7%81%E6%9C%89%E7%BB%A7%E6%89%BF.html</guid>
+        
+        <category>C++</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>内存中常见异常值的解释</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;0xcccccccc : Used by Microsoft’s C++ debugging runtime library to mark uninitialised stack memory&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;0xcdcdcdcd : Used by Microsoft’s C++ debugging runtime library to mark uninitialised heap memory&lt;/p&gt;
+  &lt;...</description>
+        <pubDate>Thu, 11 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05-11-%E5%86%85%E5%AD%98%E4%B8%AD%E5%B8%B8%E8%A7%81%E5%BC%82%E5%B8%B8%E5%80%BC%E7%9A%84%E8%A7%A3%E9%87%8A-%E6%AF%94%E5%A6%820xcccccccc-0xcdcdcdcd%E5%92%8C0xfeeefeee%E5%BC%82%E5%B8%B8%E5%80%BC.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05-11-%E5%86%85%E5%AD%98%E4%B8%AD%E5%B8%B8%E8%A7%81%E5%BC%82%E5%B8%B8%E5%80%BC%E7%9A%84%E8%A7%A3%E9%87%8A-%E6%AF%94%E5%A6%820xcccccccc-0xcdcdcdcd%E5%92%8C0xfeeefeee%E5%BC%82%E5%B8%B8%E5%80%BC.html</guid>
+        
+        <category>memory</category>
+        
+        
+        <category>problem</category>
+        
+      </item>
+    
+      <item>
+        <title>Boost.Asio knowledge</title>
+        <description>&lt;h1 id=&quot;boostasio&quot;&gt;Boost.Asio&lt;/h1&gt;
+
+&lt;p&gt;[TOC]&lt;/p&gt;
+
+&lt;h2 id=&quot;boostasio中线程&quot;&gt;Boost.Asio中线程&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;io_service是线程安全的。几个线程可以同时调用io_service::run()&lt;/li&gt;
+  &lt;li&gt;socket类不是线程安全的。要避免在某个线程里读一个socket时，同时在另外一个线程里面对其进行写入操作。&lt;/li&gt;
+  &lt;li&gt;utility不是线程安全的。&lt;/li&gt;
+&lt;...</description>
+        <pubDate>Wed, 22 Feb 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/02-22-Boost.Asio-knowledge.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/02-22-Boost.Asio-knowledge.html</guid>
+        
+        <category>Boost,</category>
+        
+        <category>Asio</category>
+        
+        
+        <category>lib</category>
+        
+      </item>
+    
+      <item>
+        <title>move object</title>
+        <description>&lt;h2 id=&quot;what-can-i-do-with-a-moved-from-object&quot;&gt;&lt;a href=&quot;https://stackoverflow.com/questions/7027523/what-can-i-do-with-a-moved-from-object&quot;&gt;What can I do with a moved-from object?&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Q：&lt;/strong&gt;是否标准准确定义了我可以在一个已经移动的对象上的一些操作？我常常在想...</description>
+        <pubDate>Sat, 05 Nov 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/11-05-SO.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/11-05-SO.html</guid>
+        
+        <category>stackoverflow</category>
+        
+        
+        <category>problem</category>
+        
+      </item>
+    
+      <item>
+        <title>OSGI knowledge</title>
+        <description>&lt;h1 id=&quot;使用osgi优缺点&quot;&gt;使用OSGI优缺点&lt;/h1&gt;
+
+&lt;p&gt;使用OSGI构建Java应用优点比较明显，主要体现在以下几个方面：&lt;/p&gt;
+
+&lt;p&gt;1、基于OSGI的应用程序可动态更改运行状态和行为。在OSGI框架中，每一个Bundle实际上都是可热插拔的，因此，对一个特定的Bundle进行修改不会影响到容器中的所有应用，运行的大部分应用还是可以照常工作。当你将修改后的Bundle再部署上去的时候，容器从来没有重新启过。这种可动态更改状态的特性在一些及时性很强的系统中比较重要，...</description>
+        <pubDate>Sat, 24 Sep 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/09-24-OSGI.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/09-24-OSGI.html</guid>
+        
+        <category>OSGI</category>
+        
+        
+        <category>unarrange</category>
+        
+      </item>
+    
+      <item>
+        <title>elisp 知识整理</title>
+        <description>&lt;h1 id=&quot;how-to-install-slimesbclquicklisp-into-emacs&quot;&gt;How to install SLIME+SBCL+Quicklisp into Emacs&lt;/h1&gt;
+&lt;p&gt;SLIME – SLIME is a Emacs mode for Common Lisp development. Inspired by existing systems such Emacs Lisp and ILISP, we are working to creat...</description>
+        <pubDate>Tue, 05 Jul 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/07-05-How_to_install_SLIME_SBCL_Quicklisp_into_Emacs.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/07-05-How_to_install_SLIME_SBCL_Quicklisp_into_Emacs.html</guid>
+        
+        <category>lisp,</category>
+        
+        <category>eslip,</category>
+        
+        <category>emacs</category>
+        
+        
+        <category>PL</category>
+        
+      </item>
+    
+      <item>
+        <title>Git和github连接</title>
+        <description>&lt;h1 id=&quot;git和github连接&quot;&gt;Git和Github连接&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;本地配置用户名和邮箱（如果已经设置好，跳过该步）：
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git config --global user.name &quot;你的用户名&quot;&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;...</description>
+        <pubDate>Mon, 23 May 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/05-23-Git%E5%92%8CGithub%E8%BF%9E%E6%8E%A5.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/05-23-Git%E5%92%8CGithub%E8%BF%9E%E6%8E%A5.html</guid>
+        
+        <category>git,</category>
+        
+        <category>github</category>
+        
+        
+        <category>unarrange</category>
+        
+      </item>
+    
+  </channel>
+</rss>

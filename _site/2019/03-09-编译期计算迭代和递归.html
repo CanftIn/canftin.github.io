@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>编译期计算迭代和递归</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/2019/03-09-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">编译期计算迭代和递归</h1>
+	<p class="date">
+		<span itemprop="datePublished" content="2019-03-09 00:00:00 +0800">2019, Mar 9</span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<ul>
+  <li>参考《modern C++ design》 3.5节
+** 在编译器不存在mutable entities，无法实现迭代，只能以递归的方式。</li>
+</ul>
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=编译期计算迭代和递归 by @CanftIn http://localhost:4000/2019/03-09-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=编译期计算迭代和递归 by @CanftIn http://localhost:4000/2019/03-09-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2019/03-09-%E7%BC%96%E8%AF%91%E6%9C%9F%E8%AE%A1%E7%AE%97%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92.html" property="cc:attributionName"
+				  rel="cc:attributionURL">编译期计算迭代和递归</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>OSGI knowledge</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/2016/09-24-OSGI.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">OSGI knowledge</h1>
+	<p class="date">
+		<span itemprop="datePublished" content="2016-09-24 00:00:00 +0800">2016, Sep 24</span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<h1 id="使用osgi优缺点">使用OSGI优缺点</h1>
+
+<p>使用OSGI构建Java应用优点比较明显，主要体现在以下几个方面：</p>
+
+<p>1、基于OSGI的应用程序可动态更改运行状态和行为。在OSGI框架中，每一个Bundle实际上都是可热插拔的，因此，对一个特定的Bundle进行修改不会影响到容器中的所有应用，运行的大部分应用还是可以照常工作。当你将修改后的Bundle再部署上去的时候，容器从来没有重新启过。这种可动态更改状态的特性在一些及时性很强的系统中比较重要，尤其是在Java Web项目中，无需重启应用服务器就可以做到应用的更新。</p>
+
+<p>2、OSGI是一个微核的系统，所谓微核是指其核心只有为数不多的几个jar包。基于OSGI框架的系统可分可合，其结构的优势性导致具体的Bundle不至于影响到全局，不会因为局部的错误导致全局系统的崩溃。例如Java EE项目中可能会因为某个Bean的定义或注入有问题，而导致整个应用跑不起来，而使用OSGI则不会有这种问题，顶多相关的几个Bundle无法启动。</p>
+
+<p>3、可复用性强，OSGI框架本身可复用性极强，很容易构建真正面向接口的程序架构，每一个Bundle 都是一个独立可复用的单元。</p>
+
+<p>使用OSGI的缺点如下： 
+1、每个Bundle都由单独的类加载器加载，与一些Java EE项目中使用比较多的框架整合比较困难。</p>
+
+<p>2、目前OSGI框架提供的管理端不够强大，现在的管理端中仅提供了基本的Bundle状态管理、日志查看等功能，像动态修改系统级别的配置(config.ini)、动态修改Bundle的配置(Manifest.mf)、启动级别等功能都尚未提供，而这些在实际的项目或产品中都是非常有必要的。</p>
+
+<p>3、采用OSGI作为规范的模块开发、部署方式自然给现有开发人员提出了新的要求，需要学习新的基于OSGI的开发方式。</p>
+
+<h1 id="osgi具体实现">OSGI具体实现</h1>
+
+<p>OSGI是OSGi Alliance组织制定的Java模块化规范，但是该组织并没有给出OSGI容器的实现，具体实现由第三方厂商完成，目前使用较多的OSGI容器有 Apache Felix和Equinox。
+<a href="http://m.blog.csdn.net/Rongbo_J/article/details/53711964">osgi企业应用开发</a></p>
+
+<h1 id="osgi基本概念">OSGi基本概念</h1>
+<h3 id="1-bundle"><strong>1.	Bundle</strong></h3>
+
+<blockquote>
+  <p>Bundle是OSGi中的模块，其生命周期被OSGi所管理，可以被动态的安装、启动、停止和卸载。通过OSGi框架将多个Bundle组织在一起就形成了系统。每一个Bundle有独立于其他Bundle的ClassLoader，所以每个Bundle的内部实现都是隔离的。</p>
+</blockquote>
+
+<p><strong>状态转换关系如下:</strong></p>
+
+<p><img src="C:\Users\CanftIn\Desktop\osgithinking\osgi.png" alt="" /></p>
+
+<p>在toast项目中，开始先常规建立Gps，Airbag，emergency等类，全部放在Toast项目下Toast包中，再加入Main类作为启动项。</p>
+
+<p>然后将Toast项目划分为各个Bundle，将其模块化为下图：</p>
+<h3 id="bundle依赖">bundle依赖</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>graph TD
+    A[紧急情况监视器] --&gt; B[安全气囊]
+    A[紧急情况监视器] --&gt; C[GPS]
+</code></pre></div></div>
+<p>将原项目中的类全部映射到各个Bundle中去，在Gps、Airbag中导出所包供emergency使用。</p>
+
+<p>在Bundle中服务的注册是在Activator中的start和stop里使用org.osgi.framework.ServiceRegistration包，调用registerService()和unregister()。</p>
+
+<h3 id="2-service"><strong>2.	Service</strong></h3>
+<blockquote>
+  <p>OSGi服务就是注册到OSGi框架当中的Java对象。在注册时可以设置这个Service的属性。在获取Service是可以根据属性进行过滤。Bundle可以根据Bundle的上下文去注册Service或查询Service。</p>
+</blockquote>
+
+<h3 id="交互过程">交互过程：</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>graph BT
+    A[Bundle Service Consumer] --&gt; |getService|B[OSGi FrameWork] 
+    C[Bundle Service Provider] --&gt; |register|B[OSGi FrameWork]
+    A[Bundle Service Consumer] --&gt; |invoke|C[Bundle Service Provider]
+</code></pre></div></div>
+
+<h3 id="3-socm"><strong>3.	SOCM</strong></h3>
+<h3 id="4-ds"><strong>4.	DS</strong></h3>
+<blockquote>
+  <p>三种处理服务动态特性的机制：OSGi服务追踪器（Service Tracker），服务激活器工具包（Service Activator Toolkit， SAT）的第三方处理机制，以及OSGi的声明式服务（Declaration Services，DS)即这里说的DS。</p>
+</blockquote>
+
+<ul>
+  <li>服务追踪器（Service Tracker）
+    <blockquote>
+
+      <p>private ServiceTrackerCustomizer createAirbagCustomizer() {
+      return new ServiceTrackerCustomizer() {</p>
+    </blockquote>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      @Override
+      public Object addingService(ServiceReference reference) {
+          Object service = context.getService(reference);
+          synchronized(Activator.this) {
+              if(Activator.this.airbag == null) {
+                  Activator.this.airbag = (IAirbag)service;
+                  Activator.this.bind();
+              }
+          }
+          return service;
+      }
+
+      @Override
+      public void modifiedService(ServiceReference reference, Object service) {
+			
+      }
+
+      @Override
+      public void removedService(ServiceReference reference, Object service) {
+          synchronized(Activator.this) {
+              if(service != Activator.this.airbag)
+                  return;
+              Activator.this.unbind();
+              Activator.this.bind();
+          }
+      }
+  };   }
+</code></pre></div>    </div>
+
+    <p>private ServiceTrackerCustomizer createGpsCustomizer() {
+      return new ServiceTrackerCustomizer() {
+          public Object addingService(ServiceReference reference) {
+              Object service = context.getService(reference);
+              synchronized(Activator.this) {
+                  if(Activator.this.gps == null) {
+                      Activator.this.gps = (IGps)service;
+                      Activator.this.bind();
+                  }
+              }
+              return service;
+          }</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      @Override
+      public void modifiedService(ServiceReference reference, Object service) {
+      }
+
+      @Override
+      public void removedService(ServiceReference reference, Object service) {
+          synchronized(Activator.this) {
+              if(service != Activator.this.airbag)
+                  return;
+              Activator.this.unbind();
+              Activator.this.bind();
+          }				
+      }
+  };
+</code></pre></div>    </div>
+
+    <p>}</p>
+  </li>
+  <li>SAT
+    <blockquote>
+      <p>略</p>
+    </blockquote>
+  </li>
+  <li>DS
+    <blockquote>
+      <p>声明式服务不需要加载Bundle的代码来判断Bundle所需要的条件是否满足。DS以组件的方式进行工作，一个组件以两个部分构成，一个是xml文件(一般component.xml)，一个是类(用于实现组件所提供的服务并接收所引用的服务)。</p>
+    </blockquote>
+  </li>
+</ul>
+
+<blockquote>
+  <p>在DS中定义了另外一套模型：Service Component模型，每个提供服务的对象被称为一个服务组件（Service Component），所有的组件均受服务组件运行时SCR（Service Component Runtime）的管理。</p>
+</blockquote>
+
+<h1 id="osgi通信方式">OSGi通信方式</h1>
+
+<p><strong>osgi中每个Bundle都有自己独立于其他Bundle的classloader，因此各个Bundle内部的类是隔离的。</strong></p>
+
+<p><strong>而一个Bundle用到另外的Bundle的类，Bundle之间交互通信的实现方式有两种：</strong></p>
+
+<p><strong>1、通过Package的导入和导出来实现，即提供类的Bundle对外暴露自己的一个或者多个Package，而使用方需要导入这些package</strong></p>
+
+<p><strong>2、通过Service的方式。一个Bundle作为Service的提供方，对外提供Service，使用者查询到提供的Service并使用。而Service又有两种方式：</strong></p>
+
+<ul>
+  <li><strong>经典做法，通过BundleContext上下文进行提供和获取</strong></li>
+  <li><strong>另一种是使用Declaration Service</strong></li>
+</ul>
+
+<h1 id="osgi规范">OSGi规范</h1>
+<ul>
+  <li>执行环境</li>
+  <li>安全层</li>
+  <li>模块层
+模块层主要做的就是导包。
+动态模块化实现的是模块间的引用与隔离和模块的动态启动与停用。
+关键在于类加载架构。
+osgi中类加载器分为三类:
+ 父类加载器:</li>
+  <li>生命周期层
+在生命周期层的停止过程中，osgi会自动调用Activator的stop方法，执行完stop方法后，其他的bundle就不能再使用该bundle的上下文状态，即bundlecontext对象。
+而即使bundle已经停止，它导出的package仍然是可以使用的，其他的bundle仍然可以执行停止的bundle中的代码。
+只是开始bundle安装和解析的过程一定要加入所有所需bundle（未确定）</li>
+  <li>服务层
+ 服务层包括:
+1、service
+服务不能孤立存在，每个服务从属并运行于提供服务的bundle上。
+首先要把服务注册到所有bundle共享的服务注册表（service registry）中。其他bundle使用服务只需从注册表里查找所需服务而不与提供服务的bundle进行交互
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>graph TB
+A[bundle1] --&gt; B[服务注册表]
+C[bundle2] --&gt; B[服务注册表]
+</code></pre></div>    </div>
+    <p>2、service registry
+服务注册表
+3、service reference
+4、service registration
+5、service event
+6、service listener</p>
+  </li>
+  <li>框架API</li>
+</ul>
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=OSGI knowledge by @CanftIn http://localhost:4000/2016/09-24-OSGI.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=OSGI knowledge by @CanftIn http://localhost:4000/2016/09-24-OSGI.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2016/09-24-OSGI.html" property="cc:attributionName"
+				  rel="cc:attributionURL">OSGI knowledge</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+</footer>
+
+</body>
+</html>

@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Quick Clojure review
+title: Quick Clojure Review
 category: PL
 tags: lisp, Clojure
 keywords: lisp, Clojure
-description: Quick Clojure
+description: Quick Clojure Review
 ---
 # What Is Clojure?
 [Clojure](https://clojure.org/) is a functional, symbiotic, and homoiconic programming language.
@@ -262,6 +262,87 @@ Resolving the problem with the code will require a  process that the else statem
 Remember: #(...) is a shorthand syntax for an anonymous function.
 ## Composability
 The main reason this is such a key aspect of functional programming is that your units of functionality should be generic enough to be reused within many different contexts, rather than being overly specific to one environment and ultimately not being reusable.
+# Sequences
+In Clojure we have many types of collections: lists, vectors, maps, and sets. Each of these collections is also a sequence. 
+```lisp
+;; Example of Triggering Side-effect Only (No Modifications)
+(doseq [element '(:a :b :c)]
+  (prn (str (name element) "!")))
+;; "a!"
+;; "b!"
+;; "c!"
+;; nil
+
+;; Example of for Loop
+(for [element '(:a :b :c)]
+  (prn (str (name element) "!")))
+;; (nil nil nil)
+```
+In the preceding example, the code loops over the given collection with the intention of creating a new list based upon the result of each iteration. But because we’ve not returned anything from the body for each iteration, we end up with (nil nil nil) being returned.
+## List Comprehension
+```lisp
+;; Use of map to Mimic for Example
+(map
+  (fn [element]
+    (prn (str (name element) "!")))
+   '(:a :b :c))
+```
+
+# Functions
+The Clojure programming language is built on the foundation of functional programming, which itself suggests a language rich in functions.
+## Anonymous Function Shorthand
+```lisp
+;; Accessing Function Arguments Within Shorthand Syntax
+(map #(+ (+ 2 %1) 2) [1 2 3])
+;; (5 6 7)
+```
+## Pre and Post Conditions
+One really powerful feature available in Clojure is the ability to execute code just *before* and just *after* the function body itself. This allows us, for example, to validate the function arguments as they come in as well as validate the result of the function is as expected.
+```lisp
+;; Syntax Structure for Pre/Post Conditions
+(defn <fn-name> [<args>]
+    {:pre [<fn1>, <fn2>, ...]
+     :post [<fn1>, <fn2>, ...]}
+    (<fn-body>))
+
+;; Example of Pre/Post Conditions
+(defn my-sum [f, g]
+    {:pre [(integer? f), (integer? g)]
+     :post [(integer? %)]}
+    (+ f g))
+
+;; (my-sum "2" 2))  -->   Exception:
+AssertionError Assert failed: (integer? f) user/my-sum
+(form-init611908878853766826.clj:1)
+
+;; Modified Pre/Post Condition Logic
+(defn my-sum [f, g]
+    {:pre [(integer? f), (integer? g)]
+     :post [(integer? %)]}
+    (str "Result: " (+ f g)))
+
+;; (my-sum "2" 2))  -->   Exception:
+AssertionError Assert failed: (integer? %) user/my-sum
+(form-init611908878853766826.clj:1)
+
+;; Modified Pre/Post Condition Logic to Fix Post Error
+(defn my-sum [f, g]
+    {:pre [(integer? f), (integer? g)]
+     :post [(string? %)]}
+    (str "Result: " (+ f g)))
+;; (my-sum "2" 2))  -->  "Result: 4"
+```
+## clojure.core
+The *clojure.core* namespace contains functions and macros for dealing with all sorts of requirements. 
+
+
+
+
+
+
+
+
+
 
 
 

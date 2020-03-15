@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>c++笔记-1</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/2018/06-29-c++-knowledge-1.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">c++笔记-1</h1>
+	<p class="date">
+		<span itemprop="datePublished" content="2018-06-29 00:00:00 +0800">2018, Jun 29</span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<blockquote>
+  <p>本系列<strong>c++笔记系列</strong>文章主要记录一些我碰到的c++的问题以及需要注意的内容。
+本文作为开篇，收纳c++的部分基础知识的小tips。
+可能对读者阅读不友好…因为暂时是我自己的一些小整理，本文内容大部分整理自侯捷老师的课程。
+曾经写过一些cpp的tricks： <a href="https://www.canftin.com/2017/some-tricks-of-cpp/">some tricks of cpp</a></p>
+</blockquote>
+
+<h2 id="一些小tips">一些小tips</h2>
+
+<ul>
+  <li>相同类的各个objects互为友元。</li>
+  <li>数据一定要放在private里。</li>
+  <li>参数尽可能以reference处理（const看状况）</li>
+  <li>返回值尽可能以reference处理（为什么：传递者无需知道接受者是以reference接收）
+  如果返回内容是函数内部新创建的对象（即local object），返回不能by reference而要by value。</li>
+  <li>该加const一定要加</li>
+  <li>构造函数尽量用initialize_list作参数</li>
+</ul>
+
+<!--more-->
+
+<h2 id="关于操作符重载">关于操作符重载</h2>
+<p>以下为复数的实现</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">complex</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">complex</span><span class="p">(</span><span class="kt">double</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kt">double</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">re</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">im</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{}</span>
+
+    <span class="n">complex</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">+=</span> <span class="p">(</span><span class="k">const</span> <span class="n">complex</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">);</span>
+    <span class="kt">double</span> <span class="n">real</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">re</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">double</span> <span class="n">imag</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">im</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="nl">private:</span>
+    <span class="kt">double</span> <span class="n">re</span><span class="p">,</span> <span class="n">im</span><span class="p">;</span>
+
+    <span class="k">friend</span> <span class="n">complex</span><span class="o">&amp;</span> <span class="n">__doapl</span><span class="p">(</span><span class="n">complex</span><span class="o">*</span> <span class="n">ths</span><span class="p">,</span> <span class="k">const</span> <span class="n">complex</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="n">complex</span><span class="o">&amp;</span> <span class="n">complex</span><span class="o">::</span><span class="k">operator</span><span class="o">+=</span><span class="p">(</span><span class="k">const</span> <span class="n">complex</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">__doapl</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">complex</span><span class="o">&amp;</span> <span class="n">__doapl</span><span class="p">(</span><span class="n">complex</span><span class="o">*</span> <span class="n">ths</span><span class="p">,</span> <span class="k">const</span> <span class="n">complex</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ths</span><span class="o">-&gt;</span><span class="n">re</span> <span class="o">+=</span> <span class="n">x</span><span class="p">.</span><span class="n">re</span><span class="p">;</span>
+    <span class="n">ths</span><span class="o">-&gt;</span><span class="n">im</span> <span class="o">+=</span> <span class="n">x</span><span class="p">.</span><span class="n">im</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">*</span><span class="n">ths</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>代码<code class="highlighter-rouge">complex&amp; operator+= (this, const complex&amp; r){ ... }</code>中一个参数<code class="highlighter-rouge">const complex&amp; r</code>，这里可以传值也可以传指针。使用时<code class="highlighter-rouge">c2 += c1</code>，这里c2就是this，所有的成员函数都含有一个隐含参数this，这里写不写这个参数都行，c1则是<code class="highlighter-rouge">const complex&amp; r</code>。返回为<code class="highlighter-rouge">complex&amp;</code>，如果返回用reference接收，那么速度会快，用value接收，则要再复制一次，产生出一个临时对象，速度慢。
+这里返回类型若为void的话，<code class="highlighter-rouge">c2 += c1</code>可以通过编译，<code class="highlighter-rouge">c3 += c2 += c1</code>这样的连串赋值无法通过编译。</p>
+
+<p><strong>另一个有特点的操作符重载</strong></p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="k">const</span> <span class="n">complex</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="sc">'('</span> <span class="o">&lt;&lt;</span> <span class="n">real</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">','</span> <span class="o">&lt;&lt;</span> <span class="n">imag</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">')'</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="n">complex</span> <span class="n">c1</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c1</span> <span class="o">&lt;&lt;</span> <span class="n">c1</span><span class="p">;</span>   <span class="c1">// 返回值不能为void，而是ostream&amp;，cout作为os这参数传入函数</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="拷贝构造">拷贝构造</h2>
+
+<p><strong>什么时候需要拷贝构造？</strong>
+以上的complex实现里就没有写类似 <code class="highlighter-rouge">complex(const complex&amp; x);</code>这样的拷贝构造函数，原因是编译器内部给了一个拷贝构造，而这个默认的拷贝构造功能则是按位copy，即<strong>浅拷贝</strong>。</p>
+
+<p>而编译器给的这一套在类内部有指针数据的情况下则不够用，比如有一个对象有一个指针指向一个地方，当需要拷贝的时候，新对象的指针还是指向这个地方，那么这个拷贝是内部默认拷贝构造的能力范围内，某些情况下不满足我们实际的需要，有时候我们实际上就是需要完完全全的两个内容，而不是两个指针指向一块相同的内容，这个时候我们就需要<strong>深拷贝</strong>。</p>
+
+<p>以下为字符串的实现：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">String</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">);</span>
+    <span class="n">String</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">);</span>
+    <span class="o">~</span><span class="n">String</span><span class="p">()</span> <span class="p">{</span> <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">get_c_str</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_data</span><span class="p">;</span> <span class="p">}</span>
+<span class="nl">private:</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">m_data</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">String</span><span class="o">::</span><span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">cstr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cstr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">cstr</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+        <span class="n">strcpy</span><span class="p">(</span><span class="n">m_data</span><span class="p">,</span> <span class="n">cstr</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="o">*</span><span class="n">m_data</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>当我们创建对象的时候，有一下几种方式：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">String</span> <span class="nf">s1</span><span class="p">();</span>
+<span class="n">String</span> <span class="nf">s2</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+<span class="n">String</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">String</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span> <span class="c1">// 用new从堆中创建对象，最后需要手动delete掉指针，不然会内存泄漏</span>
+<span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>再说为什么有指针的类一定要写拷贝构造和拷贝赋值：</strong></p>
+
+<p>假设有两个String对象：<code class="highlighter-rouge">String a("hello"); String b("world");</code>
+这个时候a指向”hello”，b指向”world”，而当我们使用默认的编译器创建出来的拷贝构造和拷贝赋值时，即当使用<code class="highlighter-rouge">b = a</code>语句时，a和b同时指向”hello”，也就是发生了浅拷贝，原来的”world”没有释放，造成资源泄漏，而两个指针指向同一个地方也非常危险，如果改动其中一个指针，另一个也会随之发生改动。</p>
+
+<p>那么开始写我们的拷贝构造：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">String</span><span class="o">::</span><span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">.</span><span class="n">m_data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">m_data</span><span class="p">,</span> <span class="n">str</span><span class="p">.</span><span class="n">m_data</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// 使用</span>
+<span class="p">{</span>
+    <span class="n">String</span> <span class="n">s1</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">s2</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>再来写我们的拷贝赋值：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">String</span><span class="o">&amp;</span> <span class="n">String</span><span class="o">::</span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+    <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+    <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">.</span><span class="n">m_data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">m_data</span><span class="p">,</span> <span class="n">str</span><span class="p">.</span><span class="n">m_data</span><span class="p">);</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// 使用</span>
+<span class="p">{</span>
+    <span class="n">String</span> <span class="n">s1</span><span class="p">(</span><span class="s">"hello"</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">s2</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">s1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>这里有个要说的点就是这个if判断this和&amp;str是否相等的<strong>检测自我赋值</strong>的语句一定要写，原因有一下几点：</p>
+<ol>
+  <li>若this和str一样，直接返回this，保证程序效率。</li>
+  <li>因为假设this指针和传入的参数str在一开始就指向同一块位置，如果没有这一个自我赋值的检测，直接开始后面的拷贝，<code class="highlighter-rouge">delete[] m_data;</code>拷贝的第一行代码就是delete掉这块他们指向的这个位置，之后我们再new的时候，这个位置已经没有了，程序会报错。</li>
+</ol>
+
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=c++笔记-1 by @CanftIn http://localhost:4000/2018/06-29-c++-knowledge-1.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=c++笔记-1 by @CanftIn http://localhost:4000/2018/06-29-c++-knowledge-1.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2018/06-29-c++-knowledge-1.html" property="cc:attributionName"
+				  rel="cc:attributionURL">c++笔记-1</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+</footer>
+
+</body>
+</html>

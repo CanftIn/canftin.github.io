@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Magit-QuickStart</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/2020/03-09-Magit-QuickStart.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">Magit-QuickStart</h1>
+	<p class="date">
+		<span itemprop="datePublished" content="2020-03-09 00:00:00 +0800">2020, Mar 9</span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<h1 id="contents">Contents</h1>
+<ul id="markdown-toc">
+  <li><a href="#contents" id="markdown-toc-contents">Contents</a>    <ul>
+      <li><a href="#show-git-status" id="markdown-toc-show-git-status">Show git status</a></li>
+      <li><a href="#show-help" id="markdown-toc-show-help">Show help</a></li>
+      <li><a href="#show-git-log" id="markdown-toc-show-git-log">Show git log</a></li>
+      <li><a href="#show-all-commits-for-the-current-file" id="markdown-toc-show-all-commits-for-the-current-file">Show all commits for the current file</a></li>
+      <li><a href="#diff-a-range-of-commits" id="markdown-toc-diff-a-range-of-commits">Diff a range of commits</a></li>
+      <li><a href="#checkout-a-local-branch" id="markdown-toc-checkout-a-local-branch">Checkout a local branch</a></li>
+      <li><a href="#checkout-a-commit" id="markdown-toc-checkout-a-commit">Checkout a commit</a></li>
+      <li><a href="#checkout-a-different-revision-of-a-file" id="markdown-toc-checkout-a-different-revision-of-a-file">Checkout a different revision of a file</a></li>
+      <li><a href="#open-a-different-revision-of-a-file" id="markdown-toc-open-a-different-revision-of-a-file">Open a different revision of a file</a></li>
+      <li><a href="#create-a-local-branch-from-a-remote-branch" id="markdown-toc-create-a-local-branch-from-a-remote-branch">Create a local branch from a remote branch</a></li>
+      <li><a href="#pull-from-upstream" id="markdown-toc-pull-from-upstream">Pull from upstream</a></li>
+      <li><a href="#push-to-upstream" id="markdown-toc-push-to-upstream">Push to upstream</a></li>
+      <li><a href="#stage-files-and-commit" id="markdown-toc-stage-files-and-commit">Stage files and commit</a></li>
+      <li><a href="#stage-specific-hunks" id="markdown-toc-stage-specific-hunks">Stage specific hunks</a></li>
+      <li><a href="#merge-master-into-the-current-branch" id="markdown-toc-merge-master-into-the-current-branch">Merge master into the current branch</a></li>
+      <li><a href="#rebase-the-current-branch-onto-master" id="markdown-toc-rebase-the-current-branch-onto-master">Rebase the current branch onto master</a></li>
+      <li><a href="#use-interactive-rebase-to-squash-commits" id="markdown-toc-use-interactive-rebase-to-squash-commits">Use interactive rebase to squash commits</a></li>
+      <li><a href="#use-interactive-rebase-to-reorder-commits" id="markdown-toc-use-interactive-rebase-to-reorder-commits">Use interactive rebase to reorder commits</a></li>
+      <li><a href="#revert-a-commit" id="markdown-toc-revert-a-commit">Revert a commit</a></li>
+      <li><a href="#soft-reset-the-last-commit" id="markdown-toc-soft-reset-the-last-commit">(Soft) reset the last commit</a></li>
+      <li><a href="#stash-changes" id="markdown-toc-stash-changes">Stash changes</a></li>
+      <li><a href="#pop-stash" id="markdown-toc-pop-stash">Pop stash</a></li>
+      <li><a href="#copy-git-commit-sha" id="markdown-toc-copy-git-commit-sha">Copy git commit SHA</a></li>
+      <li><a href="#copy-text-from-a-magit-buffer" id="markdown-toc-copy-text-from-a-magit-buffer">Copy text from a Magit buffer</a></li>
+      <li><a href="#run-a-shell-command" id="markdown-toc-run-a-shell-command">Run a shell command</a></li>
+      <li><a href="#list-all-branches" id="markdown-toc-list-all-branches">List all branches</a></li>
+      <li><a href="#jump-to-the-nextprev-section-in-the-status-view" id="markdown-toc-jump-to-the-nextprev-section-in-the-status-view">Jump to the next/prev section in the status view</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="show-git-status">Show git status</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+</ul>
+
+<h2 id="show-help">Show help</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">?</code> get help</li>
+</ul>
+
+<h2 id="show-git-log">Show git log</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+</ul>
+
+<h2 id="show-all-commits-for-the-current-file">Show all commits for the current file</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">f</code> <code class="highlighter-rouge">l</code> show git log for the current file</li>
+</ul>
+
+<h2 id="diff-a-range-of-commits">Diff a range of commits</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on a commit</li>
+  <li><code class="highlighter-rouge">V</code> to select the line</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on another commit</li>
+  <li><code class="highlighter-rouge">d</code> <code class="highlighter-rouge">r</code> to show a diff of the range of commits</li>
+</ul>
+
+<h2 id="checkout-a-local-branch">Checkout a local branch</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">b</code> <code class="highlighter-rouge">b</code> checkout a branch</li>
+  <li>select or enter the branch name and hit ENTER</li>
+</ul>
+
+<h2 id="checkout-a-commit">Checkout a commit</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on a commit</li>
+  <li><code class="highlighter-rouge">b</code> <code class="highlighter-rouge">b</code> ENTER to checkout that commit</li>
+</ul>
+
+<h2 id="checkout-a-different-revision-of-a-file">Checkout a different revision of a file</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>move point to the commit you want to checkout (using <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code>)</li>
+  <li><code class="highlighter-rouge">O</code> (capital letter O) <code class="highlighter-rouge">f</code> reset a file</li>
+  <li>hit <code class="highlighter-rouge">ENTER</code> to select the default revision selected above. (it will look something like - master)</li>
+  <li>select a file</li>
+  <li><code class="highlighter-rouge">q</code> to close the log view and see the file at the selected revision is staged</li>
+</ul>
+
+<h2 id="open-a-different-revision-of-a-file">Open a different revision of a file</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>move point to the commit you want to checkout (using <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code>)</li>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">f</code> <code class="highlighter-rouge">f</code> (magit-find-file) to open a file at a revision</li>
+  <li><code class="highlighter-rouge">ENTER</code> to use the selected commit</li>
+  <li>select the name of the file to open</li>
+</ul>
+
+<h2 id="create-a-local-branch-from-a-remote-branch">Create a local branch from a remote branch</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">b</code> <code class="highlighter-rouge">c</code> create a branch</li>
+  <li>select or enter the remote branch and hit <code class="highlighter-rouge">ENTER</code></li>
+  <li>hit <code class="highlighter-rouge">ENTER</code> to use the same name or enter a new name and hit <code class="highlighter-rouge">ENTER</code></li>
+</ul>
+
+<h2 id="pull-from-upstream">Pull from upstream</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">F</code> <code class="highlighter-rouge">u</code> pull from upstream</li>
+</ul>
+
+<h2 id="push-to-upstream">Push to upstream</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">P</code> <code class="highlighter-rouge">u</code> push to upstream</li>
+</ul>
+
+<h2 id="stage-files-and-commit">Stage files and commit</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on a file</li>
+  <li><code class="highlighter-rouge">TAB</code> to show and hide the diff for the file</li>
+  <li><code class="highlighter-rouge">s</code> to stage a file (<code class="highlighter-rouge">u</code> to unstage a file and <code class="highlighter-rouge">x</code> to discard changes to a file)</li>
+  <li><code class="highlighter-rouge">c</code> <code class="highlighter-rouge">c</code> to commit</li>
+  <li>write a commit message and save with <code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">f</code> <code class="highlighter-rouge">s</code></li>
+  <li><code class="highlighter-rouge">,</code> <code class="highlighter-rouge">c</code> to finish the commit message</li>
+</ul>
+
+<h2 id="stage-specific-hunks">Stage specific hunks</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">M-n</code> / <code class="highlighter-rouge">M-p</code> to move to the “Unstaged changes” section</li>
+  <li><code class="highlighter-rouge">j</code> / <code class="highlighter-rouge">k</code> to move to the desired file</li>
+  <li><code class="highlighter-rouge">TAB</code> to expand the hunks in the file</li>
+  <li><code class="highlighter-rouge">M-n</code> / <code class="highlighter-rouge">M-p</code> to move to different hunks</li>
+  <li><code class="highlighter-rouge">s</code> / <code class="highlighter-rouge">u</code> to stage or unstange hunks</li>
+  <li><code class="highlighter-rouge">x</code> to discard a hunk</li>
+  <li><code class="highlighter-rouge">c</code> <code class="highlighter-rouge">c</code> to commit</li>
+  <li>Enter a commit message and save with <code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">f</code> <code class="highlighter-rouge">s</code></li>
+  <li><code class="highlighter-rouge">,</code> <code class="highlighter-rouge">c</code> to finish the commit</li>
+</ul>
+
+<h2 id="merge-master-into-the-current-branch">Merge master into the current branch</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">m</code> <code class="highlighter-rouge">m</code> merge</li>
+  <li>select or enter master and hit <code class="highlighter-rouge">ENTER</code></li>
+</ul>
+
+<h2 id="rebase-the-current-branch-onto-master">Rebase the current branch onto master</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">r</code> <code class="highlighter-rouge">e</code> rebase</li>
+  <li>select or enter master and hit <code class="highlighter-rouge">ENTER</code></li>
+</ul>
+
+<h2 id="use-interactive-rebase-to-squash-commits">Use interactive rebase to squash commits</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on a commit</li>
+  <li><code class="highlighter-rouge">r</code> <code class="highlighter-rouge">i</code> to start the interactive rebase</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on a commit to squash</li>
+  <li><code class="highlighter-rouge">s</code> to mark the commit as to be squashed. (use <code class="highlighter-rouge">s</code> multiple times to squash multiple commits)</li>
+  <li><code class="highlighter-rouge">,</code> <code class="highlighter-rouge">c</code> to make it happen</li>
+  <li>edit the new squashed commit message and save with <code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">f</code> <code class="highlighter-rouge">s</code></li>
+  <li><code class="highlighter-rouge">,</code> <code class="highlighter-rouge">c</code> to finish</li>
+</ul>
+
+<h2 id="use-interactive-rebase-to-reorder-commits">Use interactive rebase to reorder commits</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s </code>show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on a commit</li>
+  <li><code class="highlighter-rouge">ri</code> to start the interactive rebase</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on a commit to reorder</li>
+  <li>use <code class="highlighter-rouge">M-k</code> or <code class="highlighter-rouge">M-j</code> to move the commit up or down</li>
+  <li><code class="highlighter-rouge">,</code> <code class="highlighter-rouge">c</code> to make it happen</li>
+</ul>
+
+<h2 id="revert-a-commit">Revert a commit</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on the commit you want to revert</li>
+  <li><code class="highlighter-rouge">_</code> <code class="highlighter-rouge">O</code> (capital letter O) to revert the commit</li>
+  <li>edit the commit message and save with <code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">f</code> <code class="highlighter-rouge">s</code></li>
+  <li><code class="highlighter-rouge">,</code> <code class="highlighter-rouge">c</code> to finish</li>
+</ul>
+
+<h2 id="soft-reset-the-last-commit">(Soft) reset the last commit</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor one commit before the last one</li>
+  <li><code class="highlighter-rouge">O</code> (capital letter O) <code class="highlighter-rouge">s</code> to soft reset</li>
+  <li>the selected commit should be e.g. master. Hit <code class="highlighter-rouge">ENTER</code></li>
+</ul>
+
+<h2 id="stash-changes">Stash changes</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">z</code> <code class="highlighter-rouge">z</code> stash changes</li>
+  <li>enter stash message and hit <code class="highlighter-rouge">ENTER</code></li>
+</ul>
+
+<h2 id="pop-stash">Pop stash</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">z</code> <code class="highlighter-rouge">p</code> pop from stash</li>
+  <li>select the stash to pop and hit <code class="highlighter-rouge">ENTER</code></li>
+</ul>
+
+<h2 id="copy-git-commit-sha">Copy git commit SHA</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">l</code> <code class="highlighter-rouge">l</code> show log view</li>
+  <li>use <code class="highlighter-rouge">j</code> and <code class="highlighter-rouge">k</code> to position the cursor on a commit</li>
+  <li><code class="highlighter-rouge">y</code> <code class="highlighter-rouge">s</code> copy the git commit SHA</li>
+</ul>
+
+<h2 id="copy-text-from-a-magit-buffer">Copy text from a Magit buffer</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">\</code> switch to text mode</li>
+  <li>copy text using normal vim keystrokes</li>
+  <li><code class="highlighter-rouge">\</code> switch back to Magit mode</li>
+</ul>
+
+<h2 id="run-a-shell-command">Run a shell command</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">!</code> <code class="highlighter-rouge">s</code> run a shell command</li>
+  <li>
+    <p>enter a command to run and hit <code class="highlighter-rouge">ENTER</code></p>
+  </li>
+  <li>
+    <h2 id="list-all-branches">List all branches</h2>
+  </li>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">y</code> <code class="highlighter-rouge">r</code> show refs</li>
+</ul>
+
+<h2 id="jump-to-the-nextprev-section-in-the-status-view">Jump to the next/prev section in the status view</h2>
+<ul>
+  <li><code class="highlighter-rouge">SPC</code> <code class="highlighter-rouge">g</code> <code class="highlighter-rouge">s</code> show Magit status view</li>
+  <li><code class="highlighter-rouge">g</code> <code class="highlighter-rouge">j</code> jump to the next section</li>
+  <li><code class="highlighter-rouge">g</code> <code class="highlighter-rouge">k</code> jump to the previous section</li>
+</ul>
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=Magit-QuickStart by @CanftIn http://localhost:4000/2020/03-09-Magit-QuickStart.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=Magit-QuickStart by @CanftIn http://localhost:4000/2020/03-09-Magit-QuickStart.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03-09-Magit-QuickStart.html" property="cc:attributionName"
+				  rel="cc:attributionURL">Magit-QuickStart</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+</footer>
+
+</body>
+</html>

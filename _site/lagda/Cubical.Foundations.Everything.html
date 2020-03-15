@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>MatrixWood</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="stylesheet" href="/assets/css/Agda.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/lagda/Cubical.Foundations.Everything.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<div class="post" style="margin-top: 40px">
+	<article class="post-content article-content markdown-body container">
+		<h1 class="post-title"></h1>
+		<body>
+<pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--cubical</a> <a id="23" class="Pragma">--safe</a> <a id="30" class="Symbol">#-}</a>
+<a id="34" class="Keyword">module</a> <a id="41" href="Cubical.Foundations.Everything.html" class="Module">Cubical.Foundations.Everything</a> <a id="72" class="Keyword">where</a>
+
+<a id="79" class="Comment">-- Basic cubical prelude</a>
+<a id="104" class="Keyword">open</a> <a id="109" class="Keyword">import</a> <a id="116" href="Cubical.Foundations.Prelude.html" class="Module">Cubical.Foundations.Prelude</a> <a id="144" class="Keyword">public</a>
+
+<a id="152" class="Comment">-- Definition of Identity types and definitions of J, funExt,</a>
+<a id="214" class="Comment">-- univalence and propositional truncation using Id instead of Path</a>
+<a id="282" class="Keyword">open</a> <a id="287" class="Keyword">import</a> <a id="294" href="Cubical.Foundations.Id.html" class="Module">Cubical.Foundations.Id</a>
+  <a id="319" class="Keyword">hiding</a> <a id="326" class="Symbol">(</a> <a id="328" href="Cubical.Core.Id.html#1063" class="Function Operator">_≡_</a> <a id="332" class="Symbol">;</a> <a id="334" href="Cubical.Foundations.Id.html#3004" class="Function Operator">_≡⟨_⟩_</a> <a id="341" class="Symbol">;</a> <a id="343" href="Cubical.Foundations.Id.html#3075" class="Function Operator">_∎</a> <a id="346" class="Symbol">)</a>
+  <a id="350" class="Keyword">renaming</a> <a id="359" class="Symbol">(</a> <a id="361" href="Cubical.Foundations.Id.html#4650" class="Function Operator">_≃_</a>           <a id="375" class="Symbol">to</a> <a id="378" href="Cubical.Foundations.Id.html#4650" class="Function Operator">EquivId</a>
+           <a id="397" class="Symbol">;</a> <a id="399" href="Cubical.Foundations.Id.html#9064" class="Function">EquivContr</a>    <a id="413" class="Symbol">to</a> <a id="416" href="Cubical.Foundations.Id.html#9064" class="Function">EquivContrId</a>
+           <a id="440" class="Symbol">;</a> <a id="442" href="Cubical.Foundations.Id.html#2154" class="Function">J</a>             <a id="456" class="Symbol">to</a> <a id="459" href="Cubical.Foundations.Id.html#2154" class="Function">JId</a>
+           <a id="474" class="Symbol">;</a> <a id="476" href="Cubical.Foundations.Id.html#2775" class="Function">ap</a>            <a id="490" class="Symbol">to</a> <a id="493" href="Cubical.Foundations.Id.html#2775" class="Function">apId</a>
+           <a id="509" class="Symbol">;</a> <a id="511" href="Cubical.Foundations.Id.html#4743" class="Function">equivFun</a>      <a id="525" class="Symbol">to</a> <a id="528" href="Cubical.Foundations.Id.html#4743" class="Function">equivFunId</a>
+           <a id="550" class="Symbol">;</a> <a id="552" href="Cubical.Foundations.Id.html#4896" class="Function">equivCtr</a>      <a id="566" class="Symbol">to</a> <a id="569" href="Cubical.Foundations.Id.html#4896" class="Function">equivCtrId</a>
+           <a id="591" class="Symbol">;</a> <a id="593" href="Cubical.Foundations.Id.html#4181" class="Function">fiber</a>          <a id="608" class="Symbol">to</a> <a id="611" href="Cubical.Foundations.Id.html#4181" class="Function">fiberId</a>
+           <a id="630" class="Symbol">;</a> <a id="632" href="Cubical.Foundations.Id.html#4004" class="Function">funExt</a>        <a id="646" class="Symbol">to</a> <a id="649" href="Cubical.Foundations.Id.html#4004" class="Function">funExtId</a>
+           <a id="669" class="Symbol">;</a> <a id="671" href="Cubical.Foundations.Id.html#4298" class="Function">isContr</a>       <a id="685" class="Symbol">to</a> <a id="688" href="Cubical.Foundations.Id.html#4298" class="Function">isContrId</a>
+           <a id="709" class="Symbol">;</a> <a id="711" href="Cubical.Foundations.Id.html#4362" class="Function">isProp</a>        <a id="725" class="Symbol">to</a> <a id="728" href="Cubical.Foundations.Id.html#4362" class="Function">isPropId</a>
+           <a id="748" class="Symbol">;</a> <a id="750" href="Cubical.Foundations.Id.html#4417" class="Function">isSet</a>         <a id="764" class="Symbol">to</a> <a id="767" href="Cubical.Foundations.Id.html#4417" class="Function">isSetId</a>
+           <a id="786" class="Symbol">;</a> <a id="788" href="Cubical.Foundations.Id.html#4486" class="Record">isEquiv</a>       <a id="802" class="Symbol">to</a> <a id="805" href="Cubical.Foundations.Id.html#4486" class="Record">isEquivId</a>
+           <a id="826" class="Symbol">;</a> <a id="828" href="Cubical.Foundations.Id.html#4806" class="Function">equivIsEquiv</a>  <a id="842" class="Symbol">to</a> <a id="845" href="Cubical.Foundations.Id.html#4806" class="Function">equivIsEquivId</a>
+           <a id="871" class="Symbol">;</a> <a id="873" href="Cubical.Foundations.Id.html#1992" class="Function">refl</a>           <a id="888" class="Symbol">to</a> <a id="891" href="Cubical.Foundations.Id.html#1992" class="Function">reflId</a>
+           <a id="909" class="Symbol">;</a> <a id="911" href="Cubical.HITs.PropositionalTruncation.Base.html#259" class="Datatype Operator">∥_∥</a>           <a id="925" class="Symbol">to</a> <a id="928" href="Cubical.HITs.PropositionalTruncation.Base.html#259" class="Datatype Operator">propTruncId</a>
+           <a id="951" class="Symbol">;</a> <a id="953" href="Cubical.HITs.PropositionalTruncation.Base.html#297" class="InductiveConstructor Operator">∣_∣</a>           <a id="967" class="Symbol">to</a> <a id="970" href="Cubical.HITs.PropositionalTruncation.Base.html#297" class="InductiveConstructor Operator">incId</a>
+           <a id="987" class="Symbol">;</a> <a id="989" href="Cubical.Foundations.Id.html#7170" class="Function">isPropIsContr</a> <a id="1003" class="Symbol">to</a> <a id="1006" href="Cubical.Foundations.Id.html#7170" class="Function">isPropIsContrId</a>
+           <a id="1033" class="Symbol">;</a> <a id="1035" href="Cubical.Foundations.Id.html#7880" class="Function">isPropIsEquiv</a> <a id="1049" class="Symbol">to</a> <a id="1052" href="Cubical.Foundations.Id.html#7880" class="Function">isPropIsEquivId</a>
+           <a id="1079" class="Symbol">)</a>
+
+<a id="1082" class="Keyword">open</a> <a id="1087" class="Keyword">import</a> <a id="1094" href="Cubical.Foundations.GroupoidLaws.html" class="Module">Cubical.Foundations.GroupoidLaws</a> <a id="1127" class="Keyword">public</a>
+<a id="1134" class="Keyword">open</a> <a id="1139" class="Keyword">import</a> <a id="1146" href="Cubical.Foundations.CartesianKanOps.html" class="Module">Cubical.Foundations.CartesianKanOps</a> <a id="1182" class="Keyword">public</a>
+<a id="1189" class="Keyword">open</a> <a id="1194" class="Keyword">import</a> <a id="1201" href="Cubical.Foundations.Function.html" class="Module">Cubical.Foundations.Function</a> <a id="1230" class="Keyword">public</a>
+<a id="1237" class="Keyword">open</a> <a id="1242" class="Keyword">import</a> <a id="1249" href="Cubical.Foundations.Embedding.html" class="Module">Cubical.Foundations.Embedding</a> <a id="1279" class="Keyword">public</a>
+<a id="1286" class="Keyword">open</a> <a id="1291" class="Keyword">import</a> <a id="1298" href="Cubical.Foundations.Equiv.html" class="Module">Cubical.Foundations.Equiv</a> <a id="1324" class="Keyword">public</a>
+<a id="1331" class="Keyword">open</a> <a id="1336" class="Keyword">import</a> <a id="1343" href="Cubical.Foundations.Equiv.Properties.html" class="Module">Cubical.Foundations.Equiv.Properties</a> <a id="1380" class="Keyword">public</a>
+<a id="1387" class="Keyword">open</a> <a id="1392" class="Keyword">import</a> <a id="1399" href="Cubical.Foundations.PathSplitEquiv.html" class="Module">Cubical.Foundations.PathSplitEquiv</a> <a id="1434" class="Keyword">public</a>
+<a id="1441" class="Keyword">open</a> <a id="1446" class="Keyword">import</a> <a id="1453" href="Cubical.Foundations.BiInvEquiv.html" class="Module">Cubical.Foundations.BiInvEquiv</a> <a id="1484" class="Keyword">public</a>
+<a id="1491" class="Keyword">open</a> <a id="1496" class="Keyword">import</a> <a id="1503" href="Cubical.Foundations.FunExtEquiv.html" class="Module">Cubical.Foundations.FunExtEquiv</a> <a id="1535" class="Keyword">public</a>
+<a id="1542" class="Keyword">open</a> <a id="1547" class="Keyword">import</a> <a id="1554" href="Cubical.Foundations.HLevels.html" class="Module">Cubical.Foundations.HLevels</a> <a id="1582" class="Keyword">public</a>
+<a id="1589" class="Keyword">open</a> <a id="1594" class="Keyword">import</a> <a id="1601" href="Cubical.Foundations.Path.html" class="Module">Cubical.Foundations.Path</a> <a id="1626" class="Keyword">public</a>
+<a id="1633" class="Keyword">open</a> <a id="1638" class="Keyword">import</a> <a id="1645" href="Cubical.Foundations.Transport.html" class="Module">Cubical.Foundations.Transport</a> <a id="1675" class="Keyword">public</a>
+<a id="1682" class="Keyword">open</a> <a id="1687" class="Keyword">import</a> <a id="1694" href="Cubical.Foundations.Univalence.html" class="Module">Cubical.Foundations.Univalence</a> <a id="1725" class="Keyword">public</a>
+<a id="1732" class="Keyword">open</a> <a id="1737" class="Keyword">import</a> <a id="1744" href="Cubical.Foundations.UnivalenceId.html" class="Module">Cubical.Foundations.UnivalenceId</a> <a id="1777" class="Keyword">public</a>
+<a id="1784" class="Keyword">open</a> <a id="1789" class="Keyword">import</a> <a id="1796" href="Cubical.Foundations.GroupoidLaws.html" class="Module">Cubical.Foundations.GroupoidLaws</a> <a id="1829" class="Keyword">public</a>
+<a id="1836" class="Keyword">open</a> <a id="1841" class="Keyword">import</a> <a id="1848" href="Cubical.Foundations.Isomorphism.html" class="Module">Cubical.Foundations.Isomorphism</a> <a id="1880" class="Keyword">public</a>
+<a id="1887" class="Keyword">open</a> <a id="1892" class="Keyword">import</a> <a id="1899" href="Cubical.Foundations.Logic.html" class="Module">Cubical.Foundations.Logic</a>
+<a id="1925" class="Keyword">open</a> <a id="1930" class="Keyword">import</a> <a id="1937" href="Cubical.Foundations.HoTT-UF.html" class="Module">Cubical.Foundations.HoTT-UF</a></pre></body>
+
+	</article>
+	<div class="comment">
+		<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+	</div>
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+	<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
+
+	</script>
+	<script
+			type="text/javascript"
+			async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+	
+</footer>
+
+</body>
+</html>

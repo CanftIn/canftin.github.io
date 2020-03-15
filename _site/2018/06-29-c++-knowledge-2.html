@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>c++笔记-2</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/2018/06-29-c++-knowledge-2.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">c++笔记-2</h1>
+	<p class="date">
+		<span itemprop="datePublished" content="2018-06-29 00:00:00 +0800">2018, Jun 29</span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<blockquote>
+  <p>本系列<strong>c++笔记系列</strong>文章主要记录一些我碰到的c++的问题以及需要注意的内容。
+本文承接上一篇<a href="https://www.canftin.com/2018/c++笔记系列_零_基础知识整理/">c++笔记系列（零）：基础知识整理</a>，主要讲述c++的模板部分。
+可能对读者阅读不友好…因为暂时是我自己的一些小整理，本文内容大部分整理自侯捷老师的课程。
+曾经写过一些cpp的tricks： <a href="https://www.canftin.com/2017/some-tricks-of-cpp/">some tricks of cpp</a></p>
+</blockquote>
+
+<h2 id="可变参数模板">可变参数模板</h2>
+
+<p>例子printX：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">printX</span><span class="p">()</span>
+<span class="p">{}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="p">...</span> <span class="n">Types</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="nf">printX</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">firstArgs</span><span class="p">,</span> <span class="k">const</span> <span class="n">Types</span><span class="o">&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">firstArgs</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">printX</span><span class="p">(</span><span class="n">args</span><span class="p">...);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>上面我们用可变参数模板实现出一个打印函数，这个是c++11之后的新特性。
+过去的情况下的可变参数是使用C语言中va_list、va_start、va_arg、va_end这样的参数，下面为示例：
+<!--more--></p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">simple_va_fun</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="p">...)</span> 
+<span class="p">{</span> 
+    <span class="kt">va_list</span> <span class="n">arg_ptr</span><span class="p">;</span> 
+    <span class="n">va_start</span><span class="p">(</span><span class="n">arg_ptr</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span> 
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">va_arg</span><span class="p">(</span><span class="n">arg_ptr</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span> 
+    <span class="n">va_end</span><span class="p">(</span><span class="n">arg_ptr</span><span class="p">);</span> 
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> 
+    <span class="k">return</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>可变参数模板的用处在于递归函数调用。</p>
+
+<h2 id="关于initializer_list">关于initializer_list</h2>
+<p>C++11引入了“统一初始化”的概念。这意味着我们可以使用{}这种通用的语法在任何需要初始化的地方。
+使用：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vals</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">vals</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">vals</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">p</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">p</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">print</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">});</span>
+</code></pre></div></div>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Test</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">Test</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Test(int, int), a = "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="s">", b = "</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Test</span><span class="p">(</span><span class="n">initializer_list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">initlist</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Test(initializer_list&lt;int&gt;), values = "</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">:</span> <span class="n">initlist</span><span class="p">)</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="sc">' '</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="p">{</span>
+    <span class="n">Test</span> <span class="n">a</span><span class="p">(</span><span class="mi">77</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>      <span class="c1">// Test(int a, int b), a = 77, b = 5</span>
+    <span class="n">Test</span> <span class="n">b</span><span class="p">{</span><span class="mi">77</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>      <span class="c1">// Test(initializer_list&lt;int&gt;), values = 77 5</span>
+    <span class="n">Test</span> <span class="n">c</span><span class="p">{</span><span class="mi">77</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">42</span><span class="p">};</span>  <span class="c1">// Test(initializer_list&lt;int&gt;), values = 77 5 42</span>
+    <span class="n">Test</span> <span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="mi">77</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>   <span class="c1">// Test(initializer_list&lt;int&gt;), values = 77 5</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>initializer_list是浅拷贝，拷贝时一定要注意。</strong>
+initializer_list的实现：</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">initializer_list</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="k">typedef</span> <span class="n">T</span>         <span class="n">value_type</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span>  <span class="n">reference</span><span class="p">;</span> <span class="c1">//注意说明该对象永远为const，不能被外部修改！</span>
+    <span class="k">typedef</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span>  <span class="n">const_reference</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="kt">size_t</span>    <span class="n">size_type</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span>  <span class="n">iterator</span><span class="p">;</span>  <span class="c1">//永远为const类型</span>
+    <span class="k">typedef</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span>  <span class="n">const_iterator</span><span class="p">;</span>
+<span class="nl">private:</span>
+    <span class="n">iterator</span>    <span class="n">_M_array</span><span class="p">;</span> <span class="c1">//用于存放用{}初始化列表中的元素</span>
+    <span class="n">size_type</span>   <span class="n">_M_len</span><span class="p">;</span>   <span class="c1">//元素的个数</span>
+    
+    <span class="c1">//编译器可以调用private的构造函数！！！</span>
+    <span class="c1">//构造函数，在调用之前，编译会先在外部准备好一个array，同时把array的地址传入模板</span>
+    <span class="c1">//并保存在_M_array中</span>
+    <span class="k">constexpr</span> <span class="n">initializer_list</span><span class="p">(</span><span class="n">const_iterator</span> <span class="n">__a</span><span class="p">,</span> <span class="n">size_type</span> <span class="n">__l</span><span class="p">)</span>
+    <span class="o">:</span><span class="n">_M_array</span><span class="p">(</span><span class="n">__a</span><span class="p">),</span><span class="n">_M_len</span><span class="p">(</span><span class="n">__l</span><span class="p">){};</span>  <span class="c1">//注意构造函数被放到private中！</span>
+
+    <span class="k">constexpr</span> <span class="n">initializer_list</span><span class="p">()</span> <span class="o">:</span> <span class="n">_M_array</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">_M_len</span><span class="p">(</span><span class="mi">0</span><span class="p">){}</span> <span class="c1">// empty list，无参构造函数</span>
+    
+    <span class="c1">//size()函数，用于获取元素的个数</span>
+    <span class="k">constexpr</span> <span class="n">size_type</span> <span class="n">size</span><span class="p">()</span> <span class="k">const</span> <span class="k">noexcept</span> <span class="p">{</span><span class="k">return</span> <span class="n">_M_len</span><span class="p">;}</span>
+    
+    <span class="c1">//获取第一个元素</span>
+    <span class="k">constexpr</span> <span class="n">const_iterator</span> <span class="n">begin</span><span class="p">()</span> <span class="k">const</span> <span class="k">noexcept</span> <span class="p">{</span><span class="k">return</span> <span class="n">_M_array</span><span class="p">;}</span>
+    
+    <span class="c1">//最后一个元素的下一个位置</span>
+    <span class="k">constexpr</span> <span class="n">const_iterator</span> <span class="n">end</span><span class="p">()</span> <span class="k">const</span> <span class="k">noexcept</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">_M_len</span><span class="p">;</span>
+    <span class="p">}</span>  
+<span class="p">};</span>
+</code></pre></div></div>
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=c++笔记-2 by @CanftIn http://localhost:4000/2018/06-29-c++-knowledge-2.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=c++笔记-2 by @CanftIn http://localhost:4000/2018/06-29-c++-knowledge-2.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2018/06-29-c++-knowledge-2.html" property="cc:attributionName"
+				  rel="cc:attributionURL">c++笔记-2</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+</footer>
+
+</body>
+</html>

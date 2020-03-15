@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>车牌识别项目接手--使用opencv手动实现算法</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/2018/06-28-%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE%E6%8E%A5%E6%89%8B_%E4%BD%BF%E7%94%A8opencv%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">车牌识别项目接手--使用opencv手动实现算法</h1>
+	<p class="date">
+		<span itemprop="datePublished" content="2018-06-28 00:00:00 +0800">2018, Jun 28</span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<p>最近接手了一个毕业生学长的项目，一个车牌识别的项目。项目还有点问题，前不久跟学长交流过。</p>
+
+<p>写篇文章记录一下学长的实现思路以及我后续需要做的内容。</p>
+
+<p>感觉基本图像处理部分是手动实现完了，并没有用深度学习调模型这样先进的方式，完全手动实现算法处理的貌似。学长做了一个服务端和客户端，服务端做图像接收，客户端做图像处理。有趣的一个点是刚开始我以为服务端就是放在摄像头上然后捕捉视频流一帧一帧发个客户端处理，但是他做出来的是客户端放在摄像头上，直接在摄像头上处理完了把得到的数据发给服务端，这样貌似只需要传处理好的数据，不用传视频流占用网络了。
+<!--more--></p>
+
+<p>实际做出来的东西基本能识别图像了（按照截取出来的车牌进行识别基本上没问题，但是复杂场景的切图还是不太成功），代码其实并不算太复杂，只是有的地方在我看来太具有c的味道了，明明是用的c++但是全是c语言的写法…部分代码，呃…只是说代码部分，写的并不优雅，学长也说了是时间不够的原因，毕竟他之前一直做内核移植花了大量的时间。</p>
+
+<p>代码内部通过构建了几个数组，将车牌的地域名和ascii码等这些车牌基本数据构建成库，然后实现了一个链表对库做操作。整个图像识别系统在linux环境下，并使用opencv3.0以上版本做图像处理的库（后来我在我自己的环境安装opencv后编译未成功，highgui缺失…目前也还没搞定，没时间…），主要做法是先切图，先各种把车牌挖出来（我接手的时候就是这里有问题…），挖完之后要去铆钉，因为车牌上都会有铆钉造成整个图像识别产生噪声，去掉铆钉之后，对图像做细化，细化后再切成大小一致的图，之后再和之前建的库比对就好了。</p>
+
+<p>基本就是这样，我要做的如果偷懒的话，那么就是把剩下的切图的部分完成，代码再重构一下。
+要再多研究研究，就是去做一下深度学习的方式，这个恐怕会花很多时间了…我也没什么时间现在:(</p>
+
+<p>项目已托管至 <a href="https://github.com/CanftIn/LPR">github/CanftIn/LPR</a> 后期由我维护。</p>
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=车牌识别项目接手--使用opencv手动实现算法 by @CanftIn http://localhost:4000/2018/06-28-%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE%E6%8E%A5%E6%89%8B_%E4%BD%BF%E7%94%A8opencv%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=车牌识别项目接手--使用opencv手动实现算法 by @CanftIn http://localhost:4000/2018/06-28-%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE%E6%8E%A5%E6%89%8B_%E4%BD%BF%E7%94%A8opencv%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2018/06-28-%E8%BD%A6%E7%89%8C%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE%E6%8E%A5%E6%89%8B_%E4%BD%BF%E7%94%A8opencv%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%AE%97%E6%B3%95.html" property="cc:attributionName"
+				  rel="cc:attributionURL">车牌识别项目接手--使用opencv手动实现算法</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+</footer>
+
+</body>
+</html>
