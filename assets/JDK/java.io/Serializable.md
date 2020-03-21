@@ -2,7 +2,7 @@
 layout: post
 title: Serializable
 description: JDK source analysis
-permalink: /JDK/java.lang/Serializable.html
+permalink: /JDK/java.io/Serializable.html
 katex: true
 ---
 # Serializable

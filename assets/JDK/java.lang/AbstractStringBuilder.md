@@ -29,7 +29,7 @@ int count;
 ```
 
 ## 增加
-- 向AbstractStringBuilder末尾添加一个字符序列，实现Appendable接口.
+- 向AbstractStringBuilder末尾添加一个字符序列，实现Appendable接口。
 ```Java
 @Override
 public AbstractStringBuilder append(CharSequence s) {
@@ -46,7 +46,7 @@ public AbstractStringBuilder append(CharSequence s) {
 }
 ```
 
-- 向AbstractStringBuilder末尾添加一个子序列，该子序列取自字符序列s的[start, end)范围
+- 向AbstractStringBuilder末尾添加一个子序列，该子序列取自字符序列s的[start, end)范围。
 ```Java
 @Override
 public AbstractStringBuilder append(CharSequence s, int start, int end) {
@@ -65,7 +65,7 @@ public AbstractStringBuilder append(CharSequence s, int start, int end) {
 }
 ```
 
-- 向AbstractStringBuilder末尾添加一个字符串str
+- 向AbstractStringBuilder末尾添加一个字符串str。
 ```Java
 public AbstractStringBuilder append(String str) {
     if (str == null) {
@@ -79,7 +79,8 @@ public AbstractStringBuilder append(String str) {
 }
 ```
 
-- 向ASB末尾添加一个子序列，该子序列取自字符数组s的[offset, offset+len)范围
+- 向ASB末尾添加一个子序列，该子序列取自字符数组s的[offset, offset+len)范围。
+
 ```Java
 public AbstractStringBuilder append(char str[], int offset, int len) {
     int end = offset + len;
@@ -90,7 +91,8 @@ public AbstractStringBuilder append(char str[], int offset, int len) {
 }
 ```
 
-- 向ASB末尾添加一个boolean值的字符串序列
+- 向ASB末尾添加一个boolean值的字符串序列。
+
 ```Java
 public AbstractStringBuilder append(boolean b) {
     ensureCapacityInternal(count + (b ? 4 : 5));
@@ -121,7 +123,7 @@ public AbstractStringBuilder append(boolean b) {
 }
 ```
 
-- 向ASB末尾添加一个子序列，该子序列取自字符数组s的[off, end)范围
+- 向ASB末尾添加一个子序列，该子序列取自字符数组s的[off, end)范围。
 ```Java
 private final void appendChars(char[] s, int off, int end) {
     int count = this.count;
@@ -144,7 +146,8 @@ private final void appendChars(char[] s, int off, int end) {
     }
     this.count = count + end - off;
 }
-
+```
+```
 private final void appendChars(String s, int off, int end) {
     if (isLatin1()) {
         if (s.isLatin1()) {
@@ -173,7 +176,8 @@ private final void appendChars(String s, int off, int end) {
     }
     count += end - off;
 }
-
+```
+```
 private final void appendChars(CharSequence s, int off, int end) {
     if (isLatin1()) {
         byte[] val = this.value;
@@ -197,7 +201,7 @@ private final void appendChars(CharSequence s, int off, int end) {
 ```
 
 ## 删除
-- 删除[start, end)范围内的char
+- 删除[start, end)范围内的char。
 ```Java
 public AbstractStringBuilder delete(int start, int end) {
     int count = this.count;
@@ -214,7 +218,7 @@ public AbstractStringBuilder delete(int start, int end) {
 }
 ```
 
-- 删除索引为index的char
+- 删除索引为index的char。
 ```Java
 public AbstractStringBuilder deleteCharAt(int index) {
     checkIndex(index, count);
@@ -225,7 +229,7 @@ public AbstractStringBuilder deleteCharAt(int index) {
 ```
 
 ## 插入
-- 向ASB的dstOffset索引处插入一个子序列s
+- 向ASB的dstOffset索引处插入一个子序列s。
 ```Java
 public AbstractStringBuilder insert(int dstOffset, CharSequence s) {
     if (s == null) {
@@ -238,7 +242,7 @@ public AbstractStringBuilder insert(int dstOffset, CharSequence s) {
 }
 ```
 
-- 向ASB的dstOffset索引处插入一个子序列，该子序列取自字符序列s的[start, end)范围
+- 向ASB的dstOffset索引处插入一个子序列，该子序列取自字符序列s的[start, end)范围。
 ```Java
 public AbstractStringBuilder insert(int dstOffset, CharSequence s,
                                     int start, int end)
@@ -258,7 +262,7 @@ public AbstractStringBuilder insert(int dstOffset, CharSequence s,
 ```
 
 ## 替换
-- 向ASB的dstOffset索引处插入一个子序列，该子序列取自字符序列s的[start, end)范围
+- 向ASB的dstOffset索引处插入一个子序列，该子序列取自字符序列s的[start, end)范围。
 ```Java
 public AbstractStringBuilder replace(int start, int end, String str) {
     int count = this.count;
@@ -277,14 +281,14 @@ public AbstractStringBuilder replace(int start, int end, String str) {
 ```
 
 ## 求子串
-- 求ASB在[start, ∞)范围内的子串
+- 求ASB在[start, ∞)范围内的子串。
 ```Java
 public String substring(int start) {
     return substring(start, count);
 }
 ```
 
-- 求ASB在[start, start+end)范围内的子串
+- 求ASB在[start, start+end)范围内的子串。
 ```Java
 public String substring(int start, int end) {
     checkRangeSIOOBE(start, end, count);
@@ -296,14 +300,14 @@ public String substring(int start, int end) {
 ```
 
 ## 容量
-- 返回当前ASB的容量（可以容纳的char的数量）
+- 返回当前ASB的容量（可以容纳的char的数量）。
 ```Java
 public int capacity() {
     return value.length >> coder;
 }
 ```
 
-- 确保ASB内部拥有最小容量minimumCapacity
+- 确保ASB内部拥有最小容量minimumCapacity。
 ```Java
 public void ensureCapacity(int minimumCapacity) {
     if (minimumCapacity > 0) {
@@ -313,7 +317,7 @@ public void ensureCapacity(int minimumCapacity) {
 ```
 
 ## 比较
-- 返回当前ASB内包含的char的数量
+- 返回当前ASB内包含的char的数量。
 
 注意：此方法返回的并不是字符的数量，因为对于Unicode增补字符1个代码点对应2个代码单元。可以通过codePointCount方法获取字符数。
 ```Java
