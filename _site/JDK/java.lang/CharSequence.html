@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>CharSequence</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/JDK/java.lang/CharSequence.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">CharSequence</h1>
+	<p class="date">
+		<span itemprop="datePublished" content=""></span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<h1 id="charsequence">CharSequence</h1>
+<hr />
+<p><em>interface</em> <strong>CharSequence</strong></p>
+
+<p>字符序列接口，封装了对字符序列的一些操作（包括转换为流的操作）</p>
+
+<ul>
+  <li>Java 11新增Compare方法
+    <pre><code class="language-Java">// 按字典顺序比较两个字符序列
+static int compare(CharSequence cs1, CharSequence cs2) {
+  if(Objects.requireNonNull(cs1) == Objects.requireNonNull(cs2)) {
+      return 0;
+  }
+    
+  if(cs1.getClass() == cs2.getClass() &amp;&amp; cs1 instanceof Comparable) {
+      return ((Comparable&lt;Object&gt;) cs1).compareTo(cs2);
+  }
+    
+  for(int i = 0, len = Math.min(cs1.length(), cs2.length()); i&lt;len; i++) {
+      char a = cs1.charAt(i);
+      char b = cs2.charAt(i);
+      if(a != b) {
+          return a - b;
+      }
+  }
+    
+  return cs1.length() - cs2.length();
+}
+</code></pre>
+  </li>
+  <li>返回该字符序列的子序列
+    <pre><code class="language-Java">CharSequence subSequence(int start, int end);
+</code></pre>
+  </li>
+  <li>将当前char序列转为流序列，序列中每个元素是char
+    <pre><code class="language-Java">public default IntStream chars() {
+class CharIterator implements PrimitiveIterator.OfInt {
+    int cur = 0;
+
+    public boolean hasNext() {
+        return cur &lt; length();
+    }
+
+    public int nextInt() {
+        if (hasNext()) {
+            return charAt(cur++);
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
+
+    @Override
+    public void forEachRemaining(IntConsumer block) {
+        for (; cur &lt; length(); cur++) {
+            block.accept(charAt(cur));
+        }
+    }
+}
+
+return StreamSupport.intStream(() -&gt;
+        Spliterators.spliterator(
+                new CharIterator(),
+                length(),
+                Spliterator.ORDERED),
+        Spliterator.SUBSIZED | Spliterator.SIZED | Spliterator.ORDERED,
+        false);
+}
+</code></pre>
+  </li>
+  <li>将当前Unicode符号序列转为流序列，序列中每个元素是Unicode符号
+    <pre><code class="language-Java">public default IntStream codePoints() {
+  class CodePointIterator implements PrimitiveIterator.OfInt {
+      int cur = 0;
+
+      @Override
+      public void forEachRemaining(IntConsumer block) {
+          final int length = length();
+          int i = cur;
+          try {
+              while (i &lt; length) {
+                  char c1 = charAt(i++);
+                  if (!Character.isHighSurrogate(c1) || i &gt;= length) {
+                      block.accept(c1);
+                  } else {
+                      char c2 = charAt(i);
+                      if (Character.isLowSurrogate(c2)) {
+                          i++;
+                          block.accept(Character.toCodePoint(c1, c2));
+                      } else {
+                          block.accept(c1);
+                      }
+                  }
+              }
+          } finally {
+              cur = i;
+          }
+      }
+
+      public boolean hasNext() {
+          return cur &lt; length();
+      }
+
+      public int nextInt() {
+          final int length = length();
+
+          if (cur &gt;= length) {
+              throw new NoSuchElementException();
+          }
+          char c1 = charAt(cur++);
+          if (Character.isHighSurrogate(c1) &amp;&amp; cur &lt; length) {
+              char c2 = charAt(cur);
+              if (Character.isLowSurrogate(c2)) {
+                  cur++;
+                  return Character.toCodePoint(c1, c2);
+              }
+          }
+          return c1;
+      }
+  }
+
+  return StreamSupport.intStream(() -&gt;
+          Spliterators.spliteratorUnknownSize(
+                  new CodePointIterator(),
+                  Spliterator.ORDERED),
+          Spliterator.ORDERED,
+          false);
+}
+</code></pre>
+  </li>
+</ul>
+
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=CharSequence by @CanftIn http://localhost:4000/JDK/java.lang/CharSequence.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=CharSequence by @CanftIn http://localhost:4000/JDK/java.lang/CharSequence.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/JDK/java.lang/CharSequence.html" property="cc:attributionName"
+				  rel="cc:attributionURL">CharSequence</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css"    integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"               integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			renderMathInElement(document.body, {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					{left: "$", right: "$", display: false}
+				]
+			});
+		});
+	</script>
+	
+</footer>
+
+</body>
+</html>

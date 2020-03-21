@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Comparable</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/JDK/java.lang/Comparable.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">Comparable</h1>
+	<p class="date">
+		<span itemprop="datePublished" content=""></span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<h1 id="comparable">Comparable</h1>
+
+<ul>
+  <li>
+    <p>内部比较器，常用作自然排序接口，需要实现内部的compareTo方法</p>
+  </li>
+  <li>
+    <p>内部比较器的特点是：嵌入式</p>
+  </li>
+  <li>
+    <p>其比较行为必须在待比较对象内部实现</p>
+  </li>
+  <li>
+    <p>一个类如果实现了Comparable接口，就意味着“该类本身支持排序”，并且可以直接通过Arrays.sort()或Collections.sort()进行排序</p>
+  </li>
+  <li>
+    <p>当然，一个类如果没有实现Comparable接口，也可以挂载外部比较器Comparator进行排序</p>
+  </li>
+  <li>
+    <p>注：区别于外部比较器Comparator</p>
+  </li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 通过 x.compareTo(y) 来“比较x和y的大小”：
+ * 返回“负数”，意味着“x&lt;y”
+ * 返回“零”，意味着“x==y”
+ * 返回“正数”，意味着“x&gt;y”
+ */</span>
+<span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="no">T</span> <span class="n">o</span><span class="o">);</span>
+</code></pre></div></div>
+
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=Comparable by @CanftIn http://localhost:4000/JDK/java.lang/Comparable.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=Comparable by @CanftIn http://localhost:4000/JDK/java.lang/Comparable.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/JDK/java.lang/Comparable.html" property="cc:attributionName"
+				  rel="cc:attributionURL">Comparable</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css"    integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"               integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			renderMathInElement(document.body, {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					{left: "$", right: "$", display: false}
+				]
+			});
+		});
+	</script>
+	
+</footer>
+
+</body>
+</html>
