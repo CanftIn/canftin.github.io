@@ -1,4 +1,10 @@
 @charset "UTF-8";
+.cpp2blog-source pre { border: 2px solid; }
+
+.cpp2blog-source pre, .cpp2blog-source code { font-size: 14px; }
+
+.post-content, .post-list { text-align: justify; }
+
 nav ul:after { content: " "; display: table; clear: none; }
 
 * { position: relative; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }

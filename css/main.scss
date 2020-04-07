@@ -3,6 +3,17 @@
 ---
 @charset "utf-8";
 
+.cpp2blog-source pre {
+  border: 2px solid;
+}
+.cpp2blog-source pre, .cpp2blog-source code {
+  font-size: 14px;
+}
+
+.post-content, .post-list {
+  text-align: justify;
+}
+
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import "layout",
 "headings",
