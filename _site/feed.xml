@@ -5,9 +5,22 @@
     <description>A blog by CanftIn</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 07 Apr 2020 21:35:13 +0800</pubDate>
-    <lastBuildDate>Tue, 07 Apr 2020 21:35:13 +0800</lastBuildDate>
+    <pubDate>Sat, 25 Apr 2020 19:56:31 +0800</pubDate>
+    <lastBuildDate>Sat, 25 Apr 2020 19:56:31 +0800</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
+    
+      <item>
+        <title>about_polymorphism in C++</title>
+        <description>&lt;p&gt;C++中的四个多态性&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;多态（Polymorphism）指的是一种相同的形式（名称和操作等）表现出不同行为的概念，多态的概念由Christopher Strachey于1967年[1]定义为两个分支：特设型多态（Ad-hoc polymorphism）和通用型多态（Universal polymorphism），此处的特设仅与通用相对，并非贬义的。特设型多态在之后又被细分为特设强制多态（Ad-hoc coercion polymorphis...</description>
+        <pubDate>Sat, 25 Apr 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/04-25-about-polymorphism.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/04-25-about-polymorphism.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Free Monads in C++</title>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>about_polymorphism in C++</title>
+	<meta name="description" content="A blog by CanftIn">
+	<link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/assets/css/code.css">
+	
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds.xml">
+	<!-- PUBLIC RESOURCE BEGIN -->
+	<!-- <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat" rel="stylesheet"> 
+	<!-- PUBLIC RESOURCE END -->
+	<link rel="shortcut icon" href="../favicon.png">
+	<link rel="author" href="https://github.com/CanftIn">
+	<meta name="twitter:site" content="CanftIn">
+	<!-- <\!--/*404 THINGS*/[if lt IE 9]> -->
+	<!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> -->
+	<!-- <!/**/[endif]-\-> -->
+	<!-- <\!--[if lt IE 9]-\-> -->
+	<!-- <script src="https://cdn.bootcss.com/html5shiv/r29/html5.js"></script> -->
+	<!-- <\!--[endif]-\-> -->
+	<meta property="og:title" content="CanftIn.com">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="CanftIn.com">
+	<meta property="og:description" content="A blog by CanftIn">
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({
+		google_ad_client: "ca-pub-4120677882232967",
+		enable_page_level_ads: true
+	});
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110017464-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {dataLayer.push(arguments);}
+	gtag('js', new Date());gtag('config', 'UA-110017464-1');
+</script>
+
+
+	<link rel="canonical" href="http://localhost:4000/2020/04-25-about-polymorphism.html">
+</head>
+
+<body>
+<header id="top">
+	<nav>
+		<ul>
+			<!-- <li><a href="https://github.com/CanftIn"> -->
+			<!-- 	<img src="/assets/svg/mark-github.svg" /><span>GitHub</span></a></li> -->
+			<li><a href="/pages/about.html">
+				<img src="/assets/svg/mention.svg"/><span>About</span></a></li>
+			<!-- <li><a href="/lagda/"> -->
+			<!-- 	<img src="/assets/svg/law.svg"/><span>LAgda</span></a></li> -->
+			<!-- <li><a href="/gists/"> -->
+			<!-- 	<img src="/assets/svg/file-code.svg"/><span>Gists</span></a></li> -->
+			<!-- <li><a href="/languages/"> -->
+			<!-- 	<img src="/assets/svg/terminal.svg"/><span>Langs</span></a></li> -->
+			<!-- <li><a href="/projects/"> -->
+			<!-- 	<img src="/assets/svg/repo.svg"/><span>Projects</span></a></li> -->
+			<!-- <li><a href="/pages/cn.html"> -->
+        <!-- <img src="/assets/svg/tag.svg"/><span>Chinese</span></a></li> -->
+			<li><a href="/JDK/index.html">
+				<img src="/assets/svg/java.svg"/><span>JDKAnalysis</span></a></li>
+			<li><a href="/CharacterMap/index.html">
+				<img src="/assets/svg/font.svg"/><span>CharacterMap</span></a></li>
+			<li><a href="/">
+				<img src="/assets/svg/home.svg"/><span>Home</span></a></li>
+		</ul>
+	</nav>
+</header>
+
+<div style="border-bottom: 1px solid #000"></div>
+
+<section class="container" itemscope itemtype="http://schema.org/Blog">
+	<h1 class="big" itemprop="name">about_polymorphism in C++</h1>
+	<p class="date">
+		<span itemprop="datePublished" content="2020-04-25 00:00:00 +0800">2020, Apr 25</span>
+		by <span itemprop="author">CanftIn</span>
+	</p>
+	<article itemprop="articleBody">
+		<p>C++中的四个多态性</p>
+
+<blockquote>
+  <p>多态（Polymorphism）指的是一种相同的形式（名称和操作等）表现出不同行为的概念，多态的概念由Christopher Strachey于1967年[1]定义为两个分支：特设型多态（Ad-hoc polymorphism）和通用型多态（Universal polymorphism），此处的特设仅与通用相对，并非贬义的。特设型多态在之后又被细分为特设强制多态（Ad-hoc coercion polymorphism）及特设重载多态（Ad-hoc overloading polymorphism，有时候也简称为特设多态）两类，通用型多态也被细分为参数多态（Parametric polymorphism）及包含多态（Inclusion polymorphism，又称子类型多态 Subtyping polymorphism）。
+作者：夏之幻想
+链接：https://zhuanlan.zhihu.com/p/44526108</p>
+</blockquote>
+
+<p>通常通过基类指针或引用使用派生类，这称为子类型多态性subtype polymorphism 。</p>
+
+<p>C++中还有其他各种多态性，如参数多态性 (parametric polymorphism)、特设多态性(ad-hoc polymorphism)和强制多态性(coercion polymorphism)。</p>
+
+<p>以下是一些C++内的不同名字的多态类型。</p>
+
+<ul>
+  <li>子类型多态性也称为运行时多态性。</li>
+  <li>参数多态性也称为编译时多态性。</li>
+  <li>特设多态性也称为重载。</li>
+  <li>强制多态性也称为（隐式或显式）强制转换。</li>
+</ul>
+
+<h2 id="1-子类型多态性运行时多态性">1. 子类型多态性（运行时多态性）</h2>
+<p>子类型多态性是每个人在C++说”多态性”时所理解的。它是通过基类指针和引用使用派生类的能力
+例如对于Felidae猫科动物而言，</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// file cats.h</span>
+
+<span class="k">class</span> <span class="nc">Felid</span> <span class="p">{</span>
+<span class="nl">public:</span>
+ <span class="k">virtual</span> <span class="kt">void</span> <span class="n">meow</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Cat</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Felid</span> <span class="p">{</span>
+<span class="nl">public:</span>
+ <span class="kt">void</span> <span class="n">meow</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Meowing like a regular cat! meow!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Tiger</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Felid</span> <span class="p">{</span>
+<span class="nl">public:</span>
+ <span class="kt">void</span> <span class="n">meow</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Meowing like a tiger! MREOWWW!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Ocelot</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Felid</span> <span class="p">{</span>
+<span class="nl">public:</span>
+ <span class="kt">void</span> <span class="n">meow</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Meowing like an ocelot! mews!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<p>然后主程序可以通过指针互换实现动态绑定。</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include "cats.h"
+</span>
+<span class="kt">void</span> <span class="nf">do_meowing</span><span class="p">(</span><span class="n">Felid</span> <span class="o">*</span><span class="n">cat</span><span class="p">)</span> <span class="p">{</span>
+ <span class="n">cat</span><span class="o">-&gt;</span><span class="n">meow</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+ <span class="n">Cat</span> <span class="n">cat</span><span class="p">;</span>
+ <span class="n">Tiger</span> <span class="n">tiger</span><span class="p">;</span>
+ <span class="n">Ocelot</span> <span class="n">ocelot</span><span class="p">;</span>
+
+ <span class="n">do_meowing</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cat</span><span class="p">);</span>
+ <span class="n">do_meowing</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tiger</span><span class="p">);</span>
+ <span class="n">do_meowing</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ocelot</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>输出：</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Meowing</span> <span class="n">like</span> <span class="n">a</span> <span class="n">regular</span> <span class="n">cat</span><span class="o">!</span> <span class="n">meow</span><span class="o">!</span>
+<span class="n">Meowing</span> <span class="n">like</span> <span class="n">a</span> <span class="n">tiger</span><span class="o">!</span> <span class="n">MREOWWW</span><span class="o">!</span>
+<span class="n">Meowing</span> <span class="n">like</span> <span class="n">an</span> <span class="n">ocelot</span><span class="o">!</span> <span class="n">mews</span><span class="o">!</span>
+</code></pre></div></div>
+<p>子型多态性也称为<strong>运行时多态性</strong>。多态函数调用的解析在运行时通过虚函数表间接进行。
+解释这一点的另一种方法是编译器不会找到在编译时要调用的函数的地址，而是在运行程序时，通过取消引用虚拟表中的指针来调用该函数。</p>
+
+<h2 id="2-参数多态性编译时多态性">2. 参数多态性（编译时多态性）</h2>
+<p>参数化多态性提供了为任何类型的执行相同代码的方法。在C++参数多态性是通过模板实现的。
+最简单的示例之一是一个max通用函数：</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="nf">max</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+ <span class="k">return</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="o">?</span> <span class="n">a</span> <span class="o">:</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>     <span class="c1">// 9</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">foo</span><span class="p">(</span><span class="s">"foo"</span><span class="p">),</span> <span class="n">bar</span><span class="p">(</span><span class="s">"bar"</span><span class="p">);</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">bar</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">// "foo"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>这里函数max的多态类型为T。但是请注意，它不适用于指针类型，因为比较指针比较内存地址而不是内容。
+要使其适用于指针，您必须专门化指针类型的模板，这不再是参数多态性（parametric polymorphism），而是特设多态性（ad-hoc polymorphism）。</p>
+
+<p>由于参数多态性发生在编译时，它也被称为编译时多态性。</p>
+
+<h2 id="3-特设多态性重载">3. 特设多态性（重载）</h2>
+<p>特设多态性允许具有相同名称的函数对每种类型执行不同的操作。例如，给定两个 <code class="highlighter-rouge">int</code>s 和 <code class="highlighter-rouge">+</code> 运算符，它将它们相加。给定两个 <code class="highlighter-rouge">std::string</code>s，将他们串在一起。这称为重载。
+下面是一个具体示例：</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+</span>
+<span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+ <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">add</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">result</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+ <span class="n">result</span> <span class="o">+=</span> <span class="n">b</span><span class="p">;</span>
+ <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">add</span><span class="p">(</span><span class="s">"hello "</span><span class="p">,</span> <span class="s">"world"</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>如果专门化模板，则特设多态性也会出现在C++中。返回到前面的max函数的示例，下面是如何为两个 <code class="highlighter-rouge">char*</code> 编写最大值:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span> <span class="o">&lt;&gt;</span>
+<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">max</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+ <span class="k">return</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">a</span> <span class="o">:</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="4-强制多态性转换">4. 强制多态性（转换）</h2>
+<p>当对象或原始类型被强制转换为其他对象类型或原始类型时，就会发生强制转换。例如</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span> <span class="c1">// int gets promoted (cast) to float implicitly</span>
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mf">9.99</span> <span class="c1">// float gets demoted to int implicitly</span>
+</code></pre></div></div>
+<p>显示类型转换在你使用诸如 <code class="highlighter-rouge">(unsigned int *)</code> 或 <code class="highlighter-rouge">(int)</code> 等C类型转换或者 <code class="highlighter-rouge">static_cast</code>, <code class="highlighter-rouge">const_cast</code>, <code class="highlighter-rouge">reinterpret_cast</code>, <code class="highlighter-rouge">dynamic_cast</code>等C++类型转换时发生。</p>
+
+<p>例如，如果类的构造函数不是<code class="highlighter-rouge">explicit</code></p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span>
+<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+ <span class="kt">int</span> <span class="n">foo</span><span class="p">;</span>
+<span class="nl">public:</span>
+ <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">ffoo</span><span class="p">)</span> <span class="o">:</span> <span class="n">foo</span><span class="p">(</span><span class="n">ffoo</span><span class="p">)</span> <span class="p">{}</span>
+ <span class="kt">void</span> <span class="n">giggidy</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">foo</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">moo</span><span class="p">(</span><span class="n">A</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+ <span class="n">a</span><span class="p">.</span><span class="n">giggidy</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+ <span class="n">moo</span><span class="p">(</span><span class="mi">55</span><span class="p">);</span>     <span class="c1">// prints 55</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>前面讨论过的子类型多态性实际上也是强制多态性，因为派生类被转换为基类类型。</p>
+
+<p>引用：</p>
+
+<p><a href="https://catonmat.net/cpp-polymorphism">1.</a> https://catonmat.net/cpp-polymorphism</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Parametric_polymorphism">2.</a> Wiki -&gt; Parametric polymorphism</p>
+
+	</article>
+	<br/>
+<!--
+  <a href="http://twitter.com/home?status=about_polymorphism in C++ by @CanftIn http://localhost:4000/2020/04-25-about-polymorphism.html"
+	   target="_blank" class="tweet">Tweet this</a> 
+	<a href="http://twitter.com/home?status=about_polymorphism in C++ by @CanftIn http://localhost:4000/2020/04-25-about-polymorphism.html"
+    target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
+-->
+	<a href="#top" class="top">Top</a>
+	<div class="cc-license">
+		<br/>
+<h2>License</h2>
+<!--
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04-25-about-polymorphism.html" property="cc:attributionName"
+				  rel="cc:attributionURL">about_polymorphism in C++</a>) is licensed under a
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
+	<a rel="license"
+	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/"></a><br/>
+<br/>
+-->
+<div style="text-align: center;">
+    <img alt="License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"/>
+</div>
+<br/>
+
+	</div>
+</section>
+<div class="comment">
+	<br/><br/>
+
+
+<div class="wrapper container">
+	<div id=comments>
+		<a href="https://github.com/CanftIn/CanftIn.github.io/issues/new">
+			Create an issue
+		</a>
+		to apply for commentary
+	</div>
+</div>
+
+
+
+</div>
+
+<footer>
+	<div class="copyright left mobile-block">
+		© 2016-2020
+		<span title="CanftIn">CanftIn</span>
+	</div>
+	<a href="/feed.xml">RSS Feed</a>
+
+	
+</footer>
+
+</body>
+</html>
