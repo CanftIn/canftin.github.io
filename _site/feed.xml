@@ -5,8 +5,8 @@
     <description>A blog by CanftIn</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 25 Apr 2020 19:56:31 +0800</pubDate>
-    <lastBuildDate>Sat, 25 Apr 2020 19:56:31 +0800</lastBuildDate>
+    <pubDate>Sat, 25 Apr 2020 20:00:40 +0800</pubDate>
+    <lastBuildDate>Sat, 25 Apr 2020 20:00:40 +0800</lastBuildDate>
     <generator>Jekyll v4.0.0</generator>
     
       <item>
@@ -102,8 +102,8 @@ state is...</description>
 &lt;h2 id=&quot;函数定义&quot;&gt;函数定义&lt;/h2&gt;
 &lt;div class=&quot;language-lisp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;defun&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;function-name&lt;/span&gt; &lt;span cla...</description>
         <pubDate>Thu, 11 Apr 2019 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2019/04-11-elisp%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2019/04-11-elisp%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86.html</guid>
+        <link>http://localhost:4000/2019/04-11-elisp_knowledge.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/04-11-elisp_knowledge.html</guid>
         
         <category>lisp,</category>
         
@@ -251,8 +251,8 @@ state is...</description>
 
 04/12/2018  03:12 PM    &amp;lt;DIR&amp;...</description>
         <pubDate>Thu, 12 Apr 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/04-12-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%AA%E5%A4%A7%E9%97%AE%E9%A2%98.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/04-12-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%AA%E5%A4%A7%E9%97%AE%E9%A2%98.html</guid>
+        <link>http://localhost:4000/2018/04-12-fix-a-problem.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/04-12-fix-a-problem.html</guid>
         
         <category>ssh,</category>
         
@@ -318,8 +318,8 @@ public:
 如果使类D私有继承于类B，这样做是因为你想利用类B中已经存在的某些代码，而不是因为类型B的对象和类型D的对象之间有什么概念上的关系。
 因而，私有继...</description>
         <pubDate>Thu, 02 Nov 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/11-02-c++%E7%A7%81%E6%9C%89%E7%BB%A7%E6%89%BF.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/11-02-c++%E7%A7%81%E6%9C%89%E7%BB%A7%E6%89%BF.html</guid>
+        <link>http://localhost:4000/2017/11-02-c++-private-inheritance.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11-02-c++-private-inheritance.html</guid>
         
         <category>C++</category>
         
@@ -338,8 +338,8 @@ public:
     &lt;p&gt;0xcdcdcdcd : Used by Microsoft’s C++ debugging runtime library to mark uninitialised heap memory&lt;/p&gt;
   &lt;...</description>
         <pubDate>Thu, 11 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05-11-%E5%86%85%E5%AD%98%E4%B8%AD%E5%B8%B8%E8%A7%81%E5%BC%82%E5%B8%B8%E5%80%BC%E7%9A%84%E8%A7%A3%E9%87%8A-%E6%AF%94%E5%A6%820xcccccccc-0xcdcdcdcd%E5%92%8C0xfeeefeee%E5%BC%82%E5%B8%B8%E5%80%BC.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05-11-%E5%86%85%E5%AD%98%E4%B8%AD%E5%B8%B8%E8%A7%81%E5%BC%82%E5%B8%B8%E5%80%BC%E7%9A%84%E8%A7%A3%E9%87%8A-%E6%AF%94%E5%A6%820xcccccccc-0xcdcdcdcd%E5%92%8C0xfeeefeee%E5%BC%82%E5%B8%B8%E5%80%BC.html</guid>
+        <link>http://localhost:4000/2017/05-11-exception-value-in-memory.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05-11-exception-value-in-memory.html</guid>
         
         <category>memory</category>
         
@@ -441,8 +441,8 @@ public:
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;...</description>
         <pubDate>Mon, 23 May 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2016/05-23-Git%E5%92%8CGithub%E8%BF%9E%E6%8E%A5.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2016/05-23-Git%E5%92%8CGithub%E8%BF%9E%E6%8E%A5.html</guid>
+        <link>http://localhost:4000/2016/05-23-Git-Github-link.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/05-23-Git-Github-link.html</guid>
         
         <category>git,</category>
         

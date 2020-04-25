@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>解决了个大问题</title>
+	<title>Git和github连接</title>
 	<meta name="description" content="A blog by CanftIn">
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="/assets/css/code.css">
@@ -43,7 +43,7 @@
 </script>
 
 
-	<link rel="canonical" href="http://localhost:4000/2018/04-12-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%AA%E5%A4%A7%E9%97%AE%E9%A2%98.html">
+	<link rel="canonical" href="http://localhost:4000/2016/05-23-Git-Github-link.html">
 </head>
 
 <body>
@@ -77,85 +77,79 @@
 <div style="border-bottom: 1px solid #000"></div>
 
 <section class="container" itemscope itemtype="http://schema.org/Blog">
-	<h1 class="big" itemprop="name">解决了个大问题</h1>
+	<h1 class="big" itemprop="name">Git和github连接</h1>
 	<p class="date">
-		<span itemprop="datePublished" content="2018-04-12 00:00:00 +0800">2018, Apr 12</span>
+		<span itemprop="datePublished" content="2016-05-23 00:00:00 +0800">2016, May 23</span>
 		by <span itemprop="author">CanftIn</span>
 	</p>
 	<article itemprop="articleBody">
-		<p>git的多用户问题。</p>
+		<h1 id="git和github连接">Git和Github连接</h1>
 
-<p>关于ssh，我的配置：</p>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Directory of D:<span class="se">\l</span>inux_home<span class="se">\.</span>ssh
+<ol>
+  <li>本地配置用户名和邮箱（如果已经设置好，跳过该步）：
+    <ul>
+      <li><code class="highlighter-rouge">git config --global user.name "你的用户名"</code></li>
+    </ul>
+  </li>
+</ol>
 
-04/12/2018  03:12 PM    &lt;DIR&gt;          <span class="nb">.</span>
-04/12/2018  03:12 PM    &lt;DIR&gt;          ..
-04/12/2018  03:39 PM               212 config
-02/22/2018  01:56 PM             1,675 id_rsa
-02/22/2018  01:56 PM               405 id_rsa.pub
-04/12/2018  03:09 PM             1,675 id_rsa_vcanccc
-04/12/2018  03:09 PM               397 id_rsa_vcanccc.pub
-02/22/2018  01:57 PM             1,197 known_hosts
-               6 File<span class="o">(</span>s<span class="o">)</span>          5,561 bytes
-               2 Dir<span class="o">(</span>s<span class="o">)</span>  47,690,989,568 bytes free
-</code></pre></div></div>
-<p>其中id_rsa当然是CanftIn的私钥了，id_rsa_vcanccc则是Vcanccc这个我的早期账号的。
-config文件内容如下：
-<!--more--></p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Host github_vcanccc
-    HostName github.com
-    User git
-    IdentityFile /d/linux_home/.ssh/id_rsa_vcanccc
+<ul>
+  <li><code class="highlighter-rouge">git config --global user.email "你的邮箱"</code></li>
+  <li>或者你直接在config文件里改，位置在 <code class="highlighter-rouge">C:\Users\你的用户名\.gitconfig</code> .</li>
+</ul>
 
-Host github.com
-    HostName github.com
-    User git
-    IdentityFile /d/linux_home/.ssh/id_rsa
-</code></pre></div></div>
+<ol>
+  <li>生成ssh key
+    <ul>
+      <li>运行 <code class="highlighter-rouge">ssh-keygen -t rsa -C "你的邮箱"</code>，它会有三次等待你输入，直接回车即可。</li>
+    </ul>
+  </li>
+  <li>测试一下吧，执行 <code class="highlighter-rouge">ssh -T git@github.com</code></li>
+</ol>
 
-<p>紧接着我就犯傻了，而且还犯了很久(约乎几十分钟吧…)，不过最终还是解决了。</p>
+<p><strong>注：</strong></p>
 
-<p>遇到的问题是，我用Vcanccc这账号将hexo的站部署到github过程中出现了这么个事：</p>
+<ul>
+  <li>对于 oschina 的 “码云” ，执行 <code class="highlighter-rouge">ssh -T git@git.oschina.net</code></li>
+  <li>对于 coding 的 “码市” ，执行 <code class="highlighter-rouge">ssh -T git@git.coding.net</code></li>
+</ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR: Permission to Vcanccc/Vcanccc.github.io.git denied to CanftIn.
-fatal: Could not read from remote repository.
+<ol>
+  <li>添加远程地址</li>
+</ol>
 
-Please make sure you have the correct access rights
-and the repository exists.
-FATAL Something's wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html
-</code></pre></div></div>
-<p>这错误很明显，就是没有权限，而且我应该是Vcanccc的操作，这里变成是CanftIn，由于是我之前都是用CanftIn提交到CanftIn的github上。</p>
+<p><code class="highlighter-rouge">$ git remote add origin git@github.com/你的github用户名/仓库名.git</code></p>
 
-<p>所以这里需要在hexo博客源码目录下的_config.yml文件里加上</p>
+<p>例如，我的github的用户名是jikiuj仓库名是first git test,然后就这样打</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>deploy:
-  type: git
-  repository: git@github.com:Vcanccc/Vcanccc.github.io.git
-  branch: master
-</code></pre></div></div>
-<p>然后再执行命令</p>
+<p><code class="highlighter-rouge">$ git remote add origin git@github.com/jikiuj/first-git-test.git  </code></p>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>hexo g
-<span class="nv">$ </span>hexo d
-</code></pre></div></div>
-<p>这个时候就是犯傻的地方了，也是报错的地方，仔细再看一看之后，我们可以发现我在config文件中设置的一个Host名是github_vcanccc，而不是github.com:Vcanccc，只有默认的用户还是CanftIn。所以自然会报错了，于是我们将_config.yml文件里添加的内容改为</p>
+<p>发现了吗？仓库名的空格用 - 来代替</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>deploy:
-  type: git
-  repository: github_vcanccc:Vcanccc/Vcanccc.github.io.git
-  branch: master
-</code></pre></div></div>
+<ol>
+  <li>
+    <p>本地文件夹目录下 <code class="highlighter-rouge">git init</code></p>
+  </li>
+  <li>
+    <p>add和commit</p>
 
-<p>再执行上述命令，才会成功。</p>
+    <p><code class="highlighter-rouge">git add filename.xxx</code></p>
 
-<p>唉…原本是打算花一点时间搞完了做题目的，没想到浪费了这么多时间。:&lt;</p>
+    <p><code class="highlighter-rouge">git commit -m "reason"</code></p>
+  </li>
+  <li>
+    <p>push推送到你的github
+ <code class="highlighter-rouge">git push -u origin master</code></p>
+  </li>
+</ol>
+
 
 	</article>
 	<br/>
 <!--
-  <a href="http://twitter.com/home?status=解决了个大问题 by @CanftIn http://localhost:4000/2018/04-12-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%AA%E5%A4%A7%E9%97%AE%E9%A2%98.html"
+  <a href="http://twitter.com/home?status=Git和github连接 by @CanftIn http://localhost:4000/2016/05-23-Git-Github-link.html"
 	   target="_blank" class="tweet">Tweet this</a> 
-	<a href="http://twitter.com/home?status=解决了个大问题 by @CanftIn http://localhost:4000/2018/04-12-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%AA%E5%A4%A7%E9%97%AE%E9%A2%98.html"
+	<a href="http://twitter.com/home?status=Git和github连接 by @CanftIn http://localhost:4000/2016/05-23-Git-Github-link.html"
     target="_blank" title="Tweet this" class="tweet_this"><i class="fa fa-twitter"></i></a>
 -->
 	<a href="#top" class="top">Top</a>
@@ -163,8 +157,8 @@ FATAL Something's wrong. Maybe you can find the solution here: http://hexo.io/do
 		<br/>
 <h2>License</h2>
 <!--
-	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2018/04-12-%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%AA%E5%A4%A7%E9%97%AE%E9%A2%98.html" property="cc:attributionName"
-				  rel="cc:attributionURL">解决了个大问题</a>) is licensed under a
+	This work (<a xmlns:cc="http://creativecommons.org/ns#" href="/2016/05-23-Git-Github-link.html" property="cc:attributionName"
+				  rel="cc:attributionURL">Git和github连接</a>) is licensed under a
 	<a rel="license"
 	   href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
     Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
