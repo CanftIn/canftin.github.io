@@ -1,4 +1,4 @@
-baseURL = "https://canftin.github.io"     # 网站地址
+#baseURL = "https://canftin.github.io"     # 网站地址
 disqusShortname = ""                      # disqus shortcode
 enableGitInfo = false                     # retrieve last modified date from git commits
 enableRobotsTXT = true                    # /robots.txt
