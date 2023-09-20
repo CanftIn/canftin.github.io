@@ -8,9 +8,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-20.04
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
@@ -20,11 +18,10 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: 'v0.118.2'  # 填写你的hugo版本，可用hugo version查看
-          extended: false           # 如果你使用的不是extended版本的hugo，将true改为false
+          hugo-version: "latest"
 
       - name: Build
-        run: hugo --minify
+        run: hugo --contentDir=content --gc --minify
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
@@ -34,4 +31,5 @@ jobs:
           external_repository: canftin/canftin.github.io # 填写远程仓库
           publish_branch: master
           publish_dir: ./public
+          commit_message: ${{ github.event.head_commit.message }}
           #cname: www.example.com        # 填写你的自定义域名。如果没有用自定义域名，注释掉这行
