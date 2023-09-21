@@ -17,8 +17,8 @@ buildFuture = false
 buildExpired = false
 
 paginate = 15                         # 每页显示的文章数
-defaultContentLanguage = "en"         # 最顶部首先展示的语言页面
-defaultContentLanguageInSubdir = true
+# defaultContentLanguage = "zh"         # 最顶部首先展示的语言页面
+# defaultContentLanguageInSubdir = true
 
 [minify]
 disableXML = true
