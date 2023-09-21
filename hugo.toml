@@ -191,10 +191,10 @@ defaultMarkdownHandler = "goldmark"
 unsafe = true # enable html in markdown
 
 [markup.highlight]
-#codeFences = true
-#guessSyntax = true
-#lineNos = true
-style = "dracula" # syntax highlight style, see https://xyproto.github.io/splash/docs/
+codeFences = true
+guessSyntax = true
+lineNos = true
+style = "gruvbox-light" # syntax highlight style, see https://xyproto.github.io/splash/docs/
 
 [privacy.vimeo]
 disabled = false

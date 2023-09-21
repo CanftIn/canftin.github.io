@@ -38,6 +38,10 @@ body {
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
+code {
+  font-family: "iosevka-regular", sans-serif;
+}
+
 .post-content {
   /*color: var(--secondary);*/
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
