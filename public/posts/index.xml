@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>文章 on 矩木的博客</title><link>/posts/</link><description>Recent content in 文章 on 矩木的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>wwc7033@gmail.com (CanftIn)</managingEditor><webMaster>wwc7033@gmail.com (CanftIn)</webMaster><lastBuildDate>Wed, 20 Sep 2023 15:06:10 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>博客的重启</title><link>/posts/%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%87%8D%E5%90%AF/</link><pubDate>Wed, 20 Sep 2023 15:06:10 +0800</pubDate><author>wwc7033@gmail.com (CanftIn)</author><guid>/posts/%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%87%8D%E5%90%AF/</guid><description>&lt;p>这个博客从16年开始就在尝试用各种前端构建，期间也经历了WordPress、hexo等工具的使用，一直没有产出多少实质性的文章，虽然
-这么多年我个人陆陆续续整理了一些资料和笔记，但只适合我自己查找回顾，导致思维脉络过于零散，不够系统。
-我现在的工作专注于编译器开发，目前工作三年，前两年一直在做一些后端业务型的服务或工具的开发，近一年主要集中在底层语言编译器
-以及ai编译器开发部分。重启这个博客，一方面想让自己开始保持一定的知识整理习惯，增强语言输出能力，另一方面也是总结归纳底层
-系统知识。最近的一个愿景就是先成体系地输出关于现代语言编译器的构造系列文章，尝试去从源码分析的角度完整剖析语言编译器的构成，
-希望从这里开始重新投入。&lt;/p></description></item></channel></rss>
