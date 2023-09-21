@@ -9,7 +9,7 @@ Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-cs
   /*--content-gap: 20px;*/
   /*--content: rgb(80, 80, 80);*/
   /*--hljs-bg: rgb(35, 35, 35);*/
-  --hljs-bg: rgb(44, 44, 44);
+  --hljs-bg: rgb(35, 35, 35);
   /*--code-bg: rgb(235, 235, 235);*/
   --code-bg: rgb(240, 240, 240);
   --code-bg-border: rgb(200, 200, 200);
@@ -35,16 +35,12 @@ Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-cs
 body {
   font-size: 18px;
   line-height: 1.6;
-  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-}
-
-code {
-  font-family: "iosevka-regular", sans-serif;
+  font-family: "PingFang SC", "iosevka-regular", "Microsoft YaHei", sans-serif;
 }
 
 .post-content {
   /*color: var(--secondary);*/
-  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-family: "PingFang SC", "iosevka-regular", "Microsoft YaHei", sans-serif;
 }
 
 .post-content h1 {
