@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://canftin.github.io/sitemap.xml

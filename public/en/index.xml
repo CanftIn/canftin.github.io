@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>CanftIn&#39;s Blog</title>
+    <link>https://canftin.github.io/en/</link>
+    <description>Recent content on CanftIn&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright © 2016-2023 CanftIn, 
+许可协议：&lt;a class=link href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh target=_blank rel=noopener&gt;CC BY-NC-ND 4.0&lt;/a&gt;, </copyright>
+    <lastBuildDate>Wed, 20 Sep 2023 15:06:10 +0800</lastBuildDate><atom:link href="https://canftin.github.io/en/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>博客的重启</title>
+      <link>https://canftin.github.io/en/posts/tech/%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%87%8D%E5%90%AF/</link>
+      <pubDate>Wed, 20 Sep 2023 15:06:10 +0800</pubDate>
+      
+      <guid>https://canftin.github.io/en/posts/tech/%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%87%8D%E5%90%AF/</guid>
+      <description>这个博客从16年开始就在尝试用各种前端构建，期间也经历了WordPress、hexo等工具的使用，一直没有产出多少实质性的文章，虽然 这么多年</description>
+    </item>
+    
+    <item>
+      <title>关于我</title>
+      <link>https://canftin.github.io/en/about/</link>
+      <pubDate>Wed, 20 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://canftin.github.io/en/about/</guid>
+      <description>自我简介</description>
+    </item>
+    
+    
+    
+  </channel>
+</rss>
