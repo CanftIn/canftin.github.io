@@ -9,14 +9,13 @@ enableRobotsTXT = true        # 允许爬虫抓取到搜索引擎，建议 true
 hasCJKLanguage = true         # 自动检测是否包含 中文日文韩文 如果文章中使用了很多中文引号的话可以开启
 
 #googleAnalytics: UA-123-45 # 谷歌统计
-Copyright = """Copyright © 2016-2023 CanftIn, 
-许可协议：<a class=link href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh target=_blank rel=noopener>CC BY-NC-ND 4.0</a>, """
+#Copyright = """Copyright © 2016-2023 CanftIn, 许可协议：<a class=link href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh target=_blank rel=noopener>CC BY-NC-ND 4.0</a>, """
 
 buildDrafts = false
 buildFuture = false
 buildExpired = false
 
-paginate = 15                         # 每页显示的文章数
+paginate = 15 # 每页显示的文章数
 # defaultContentLanguage = "zh"         # 最顶部首先展示的语言页面
 # defaultContentLanguageInSubdir = true
 
@@ -38,8 +37,8 @@ enabled = true
 title = "矩木的博客"
 subtitle = "有一只叫布丁的猫 ᗢᕡᓗ <br/>"
 imageUrl = "img/buding.jpeg"
-imageWidth = 300
-imageHeight = 300
+imageWidth = 250
+imageHeight = 250
 
 [[languages.en.profileMode.buttons]]
 name = "技术"
@@ -117,6 +116,7 @@ ShowLastMod = true         # 显示文章更新时间
 ShowToc = true             # 显示目录
 TocOpen = true             # 自动展开目录
 comments = true
+StartYear = 2016
 
 [[params.socialIcons]]
 name = "github"
@@ -150,10 +150,14 @@ url = "wwc7033@gmail.com"
 name = "RSS"
 url = "index.xml"
 
+[params.math]
+enable = false # whether to enable math typesetting
+use = "katex"  # katex or mathjax
+
 [params.label]
 text = "CanftIn's Blog"
-icon = "img/text_icon.ico"
-iconHeight = 30
+#icon = "img/text_icon.ico"
+#iconHeight = 30
 
 [params.assets]
 favicon = "img/text_icon.ico"
@@ -179,14 +183,18 @@ category = "categories"
 tag = "tags"
 series = "series"
 
+# https://gohugo.io/getting-started/configuration-markup
+[markup]
+defaultMarkdownHandler = "goldmark"
+
 [markup.goldmark.renderer]
-unsafe = true
+unsafe = true # enable html in markdown
 
 [markup.highlight]
 codeFences = true
 guessSyntax = true
 lineNos = true
-style = "monokailight"
+style = "monokai" # syntax highlight style, see https://xyproto.github.io/splash/docs/
 
 [privacy.vimeo]
 disabled = false

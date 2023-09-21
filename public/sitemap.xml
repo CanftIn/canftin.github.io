@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  <sitemap>
-    <loc>https://canftin.github.io/sitemap.xml</loc>
-    
-      <lastmod>2023-09-20T15:06:10+08:00</lastmod>
-    
-  </sitemap>
-  
-</sitemapindex>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://canftin.github.io/</loc>
+    <lastmod>2023-09-21T12:33:27+08:00</lastmod>
+  </url><url>
+    <loc>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A80-%E5%BC%80%E5%A7%8B/</loc>
+    <lastmod>2023-09-21T12:33:27+08:00</lastmod>
+  </url><url>
+    <loc>https://canftin.github.io/posts/</loc>
+    <lastmod>2023-09-21T12:33:27+08:00</lastmod>
+  </url><url>
+    <loc>https://canftin.github.io/posts/tech/</loc>
+    <lastmod>2023-09-21T12:33:27+08:00</lastmod>
+  </url><url>
+    <loc>https://canftin.github.io/posts/tech/%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%87%8D%E5%90%AF/</loc>
+    <lastmod>2023-09-20T15:06:10+08:00</lastmod>
+  </url><url>
+    <loc>https://canftin.github.io/about/</loc>
+    <lastmod>2023-09-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://canftin.github.io/categories/</loc>
+  </url><url>
+    <loc>https://canftin.github.io/tags/index/</loc>
+  </url><url>
+    <loc>https://canftin.github.io/series/</loc>
+  </url><url>
+    <loc>https://canftin.github.io/archives/</loc>
+  </url><url>
+    <loc>https://canftin.github.io/search/</loc>
+  </url><url>
+    <loc>https://canftin.github.io/tags/</loc>
+  </url><url>
+    <loc>https://canftin.github.io/posts/life/</loc>
+  </url><url>
+    <loc>https://canftin.github.io/posts/read/</loc>
+  </url>
+</urlset>

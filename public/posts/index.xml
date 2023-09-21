@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>所有文章 on CanftIn&#39;s Blog</title>
+    <link>https://canftin.github.io/posts/</link>
+    <description>Recent content in 所有文章 on CanftIn&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 21 Sep 2023 12:33:27 +0800</lastBuildDate><atom:link href="https://canftin.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
