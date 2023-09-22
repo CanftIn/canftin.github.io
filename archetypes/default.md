@@ -2,7 +2,7 @@
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
 lastmod: {{ .Date }}
-author: ["CanftIn"]
+author: ["矩木"]
 keywords: 
 - 
 categories: # 没有分类界面可以不填写

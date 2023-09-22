@@ -140,11 +140,11 @@ url = "https://twitter.com/canftin_"
 
 [[params.socialIcons]]
 name = "WeChat"
-url = "https://github.com/CanftIn/CanftIn"
+url = "img/jumu_wechatpub.jpg"
 
 [[params.socialIcons]]
 name = "email"
-url = "wwc7033@gmail.com"
+url = "mailto:wwc7033@gmail.com"
 
 [[params.socialIcons]]
 name = "RSS"
