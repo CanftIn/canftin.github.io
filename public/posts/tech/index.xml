@@ -7,6 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://canftin.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>从零构造现代语言编译器(4): 语言设计</title>
+      <link>https://canftin.github.io/posts/tech/p5_compiler_build_4_lang_design/</link>
+      <pubDate>Tue, 26 Sep 2023 15:34:28 +0800</pubDate>
+      
+      <guid>https://canftin.github.io/posts/tech/p5_compiler_build_4_lang_design/</guid>
+      <description>1. 注释 在现有的编程语言中，注释有多种用途。主要的用例包括： 文档：为API的用户和未来的维护者提供人类可读的注释，解释其功能以及如何使用它。这</description>
+    </item>
+    
+    <item>
       <title>从零构造现代语言编译器(3): 诊断信息</title>
       <link>https://canftin.github.io/posts/tech/p4_compiler_build_3_diagnostics/</link>
       <pubDate>Mon, 25 Sep 2023 15:30:08 +0800</pubDate>
