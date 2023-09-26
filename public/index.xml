@@ -5,50 +5,49 @@
     <link>https://canftin.github.io/</link>
     <description>Recent content on CanftIn&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 25 Sep 2023 15:30:08 +0800</lastBuildDate><atom:link href="https://canftin.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language><atom:link href="https://canftin.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>从零构造现代语言编译器(3): 诊断信息</title>
-      <link>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A83-%E8%AF%8A%E6%96%AD%E4%BF%A1%E6%81%AF/</link>
+      <link>https://canftin.github.io/posts/tech/p4_compiler_build_3_diagnostics/</link>
       <pubDate>Mon, 25 Sep 2023 15:30:08 +0800</pubDate>
       
-      <guid>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A83-%E8%AF%8A%E6%96%AD%E4%BF%A1%E6%81%AF/</guid>
+      <guid>https://canftin.github.io/posts/tech/p4_compiler_build_3_diagnostics/</guid>
       <description>1. 什么是诊断 诊断信息（Diagnostics）在编程语言中，通常是编译器用来告诉程序员源代码中存在的问题的消息。这些问题可能包括语法错误、类</description>
     </item>
     
     <item>
       <title>从零构造现代语言编译器(2): 公共库</title>
-      <link>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A82-%E5%85%AC%E5%85%B1%E5%BA%93/</link>
+      <link>https://canftin.github.io/posts/tech/p3_compiler_build_2_common_lib/</link>
       <pubDate>Thu, 21 Sep 2023 18:05:39 +0800</pubDate>
       
-      <guid>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A82-%E5%85%AC%E5%85%B1%E5%BA%93/</guid>
+      <guid>https://canftin.github.io/posts/tech/p3_compiler_build_2_common_lib/</guid>
       <description>本章主要介绍公共库里的基础组件，这些组件抽象出来用于统一编程方式，达到可复用性，其中有一些重复造轮子的组件，这里也对这些组件和现有开源组件做</description>
     </item>
     
     <item>
       <title>从零构造现代语言编译器(1): 词法分析</title>
-      <link>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A81-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</link>
+      <link>https://canftin.github.io/posts/tech/p2_compiler_build_1_lexer/</link>
       <pubDate>Thu, 21 Sep 2023 14:51:58 +0800</pubDate>
       
-      <guid>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A81-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</guid>
+      <guid>https://canftin.github.io/posts/tech/p2_compiler_build_1_lexer/</guid>
       <description>什么是数值字面量 数值字面量（Numeric Literals）在编程中是表示特定数值的一个符号或一组符号。这些字面量用于直接在源代码中表示一个</description>
     </item>
     
     <item>
       <title>从零构造现代语言编译器(0): 开始</title>
-      <link>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A80-%E5%BC%80%E5%A7%8B/</link>
+      <link>https://canftin.github.io/posts/tech/p1_compiler_build_0_start/</link>
       <pubDate>Thu, 21 Sep 2023 12:33:27 +0800</pubDate>
       
-      <guid>https://canftin.github.io/posts/tech/%E4%BB%8E%E9%9B%B6%E6%9E%84%E9%80%A0%E7%8E%B0%E4%BB%A3%E8%AF%AD%E8%A8%80%E7%BC%96%E8%AF%91%E5%99%A80-%E5%BC%80%E5%A7%8B/</guid>
+      <guid>https://canftin.github.io/posts/tech/p1_compiler_build_0_start/</guid>
       <description>carbon-lang介绍 Carbon作为一个实验性的通用编程语言，旨在成为“C++的后继语言”[1]，目前仍在Google的项目孵化期中，</description>
     </item>
     
     <item>
       <title>重启博客</title>
-      <link>https://canftin.github.io/posts/tech/%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%87%8D%E5%90%AF/</link>
+      <link>https://canftin.github.io/posts/tech/p0_restart_blog/</link>
       <pubDate>Wed, 20 Sep 2023 15:06:10 +0800</pubDate>
       
-      <guid>https://canftin.github.io/posts/tech/%E5%8D%9A%E5%AE%A2%E7%9A%84%E9%87%8D%E5%90%AF/</guid>
+      <guid>https://canftin.github.io/posts/tech/p0_restart_blog/</guid>
       <description>这个博客从16年开始就在尝试用各种前端构建，期间也经历了WordPress、hexo等工具的使用，一直没有产出多少实质性的文章，虽然这么多年</description>
     </item>
     

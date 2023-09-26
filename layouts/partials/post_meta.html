@@ -21,3 +21,11 @@
 {{- with ($scratch.Get "meta") }}
 {{- delimit . "&nbsp;·&nbsp;" -}}
 {{- end -}}
+
+{{ $date := .Date.Format "2006-01-02" }}　
+{{ $lastmod := .Lastmod.Format "2006-01-02" }}
+{{- if $lastmod }}
+<p style="color: gray; border-bottom: dashed 1px gray;width: fit-content;margin-bottom: 1rem;">
+本文最后更新于 {{ $lastmod }}{{ with .GitInfo }}：{{ .Subject }}({{ .AbbreviatedHash }}){{ end }}
+</p>
+{{- end }}

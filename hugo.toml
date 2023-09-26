@@ -178,6 +178,9 @@ keys = ["title", "permalink", "summary"]
 [params.twikoo]
 version = "1.4.11"
 
+[frontmatter]
+lastmod = ['lastmod', ':git', ':fileModTime', 'date', 'publishDate']
+
 [taxonomies]
 category = "categories"
 tag = "tags"
