@@ -29,7 +29,7 @@ cover:
     relative: false
 ---
 
-## 什么是数值字面量
+## 1. 什么是数值字面量
 
 数值字面量（Numeric Literals）在编程中是表示特定数值的一个符号或一组符号。这些字面量用于直接在源代码中表示一个数值，无需进行任何计算。例如 `123`、`3.14`、`0xFF`、`1.23e-4` 都可以被视为数值字面量。
 
@@ -321,6 +321,181 @@ auto NumericLiteralToken::Parser::GetExponent() -> llvm::APInt {
 从上面我们可以看到`mantissa_needs_cleaning`和`exponent_needs_cleaning`永远为false，原因是因为这两个标志位需要在获取数据之前对字面量做检查后进行设置，对传入不满足要求的字面量做预处理检查后才允许提取。
 
 关于字面量检查部分在下一章[Chapter2: 诊断信息](/blog/chapter2/diagnostic/诊断信息.md)中进行说明与分析。
+
+
+
+## 2. 字符串字面量
+
+<font color="red"> 
+// TODO: 1. 讲解字符串字面量代码。
+
+// TODO: 2. 讲解字符串字面量设计。
+</font>
+
+```cpp
+
+auto StringLiteral::Lex(llvm::StringRef source_text)
+    -> std::optional<StringLiteral> {
+  int64_t cursor = 0;
+  const int64_t source_text_size = source_text.size();
+
+  // 确定前缀中的#数量。
+  while (cursor < source_text_size && source_text[cursor] == '#') {
+    ++cursor;
+  }
+  const int hash_level = cursor;
+
+  const std::optional<Introducer> introducer =
+      Introducer::Lex(source_text.substr(hash_level));
+  if (!introducer) {
+    return std::nullopt;
+  }
+
+  cursor += introducer->prefix_size;
+  const int prefix_len = cursor;
+
+  // 初始化终结符和转义序列标记。
+  llvm::SmallString<16> terminator(introducer->terminator);
+  llvm::SmallString<16> escape("\\");
+
+  // 整终结符和转义序列的大小。
+  terminator.resize(terminator.size() + hash_level, '#');
+  escape.resize(escape.size() + hash_level, '#');
+
+  /// TODO: 在找到终结符之前检测多行字符串字面量的缩进/反缩进。
+  for (; cursor < source_text_size; ++cursor) {
+    // 快速跳过不感兴趣的字符。
+    static constexpr CharSet InterestingChars = {'\\', '\n', '"', '\''};
+    if (!InterestingChars[source_text[cursor]]) {
+      continue;
+    }
+
+    // 多字符的终结符和转义序列都以可预测的字符开始，
+    // 并且不包含嵌入的、未转义的终结符或换行符。
+    switch (source_text[cursor]) {
+      case '\\':  // 处理转义字符。
+        if (escape.size() == 1 ||
+            source_text.substr(cursor + 1).startwith(escape.substr(1))) {
+          cursor += escape.size();
+          // 单行字符串且转义字符是换行符。
+          if (cursor >= source_text_size || (introducer->kind == NotMultiLine &&
+                                             source_text[cursor] == '\n')) {
+            llvm::StringRef text = source_text.take_front(cursor);
+            return StringLiteral(text, text.drop_front(prefix_len), hash_level,
+                                 introducer->kind,
+                                 /*is_terminated=*/false);
+          }
+        }
+        break;
+      case '\n':
+        // 单行字符串。
+        if (introducer->kind == NotMultiLine) {
+          llvm::StringRef text = source_text.take_front(cursor);
+          return StringLiteral(text, text.drop_front(prefix_len), hash_level,
+                               introducer->kind,
+                               /*is_terminated=*/false);
+        }
+        break;
+      case '"':
+      case '\'':
+        if (source_text.substr(cursor).startswith(terminator)) {
+          llvm::StringRef text =
+              source_text.substr(0, cursor + terminator.size());
+          llvm::StringRef content =
+              source_text.substr(prefix_len, cursor - prefix_len);
+          return StringLiteral(text, content, hash_level, introducer->kind,
+                               /*is_terminated=*/true);
+        }
+        break;
+      default:
+        // 对于非终结符，不执行任何操作。
+        break;
+    }
+  }
+  return StringLiteral(source_text, source_text.drop_front(prefix_len),
+                       hash_level, introducer->kind,
+                       /*is_terminated=*/false);
+}
+```
+
+首先，我们需要理解代码的逻辑以构建自动机。这段代码的主要目的是解析字符串字面量，特别是处理多行字符串、转义序列和终结符。
+
+基于代码的逻辑，我们可以构建以下自动机，以下是自动机图示：
+
+![p2_string_literal_automaton](/img/post_pic/p2_string_literal_automaton.png)
+
+首先，我们需要理解自动机的基本概念。在计算机科学中，一个自动机是一个抽象的机器，它可以处于有限数量的不同状态之一，且在任何给定时刻只能处于其中一个状态。自动机根据输入序列中的符号进行状态转换。
+
+现在，让我们详细分析上述自动机的每个部分：
+
+1. **开始状态 (Start)**: 这是解析字符串时的初始状态。在这个状态下，我们首先检查字符串的前缀是否包含`#`字符。
+
+2. **HashCount**: 在这个状态下，我们计算`#`的数量。这是为了确定多行字符串的终结符需要与开始的`#`数量匹配。
+
+3. **多行状态 (MultiLine)**: 如果字符串以`'''`或`"""`开始，我们进入这个状态。在这个状态下，我们查找与开始匹配的终结符。终结符需要与开始的`#`数量匹配。
+
+4. **常规状态 (Regular)**: 如果字符串以一个双引号`"`开始，我们进入这个状态。在这个状态下，我们查找另一个双引号或转义序列。
+
+5. **转义状态 (Escape)**: 当我们在常规状态下遇到反斜杠`\`时，我们进入这个状态。这是因为反斜杠通常用于表示转义序列，例如`\"`表示一个双引号字符。在这个状态下，我们查找与转义序列匹配的字符。
+
+6. **结束状态 (End)**: 当我们找到与开始匹配的终结符或达到字符串的末尾时，我们进入这个状态。这表示我们已经成功地解析了整个字符串。
+
+**为什么这个自动机是这样设计的？**
+
+这个自动机是基于Carbon语言中字符串字面量的词法规则设计的。这些规则定义了如何从源代码中解析字符串。特别是，这个自动机处理了以下几点：
+
+- `#`字符的数量，这决定了多行字符串的终结符。
+- 多行字符串和常规字符串的区别。
+- 转义序列，这是在常规字符串中表示特殊字符的方法。
+
+通过这个自动机，我们可以准确地解析Carbon语言中的字符串字面量，无论它们是多行的、常规的还是包含转义序列的。
+
+**字符串解析例子**：
+
+1. 对于输入`###'''hello world'''###`：
+   - 我们首先计算`#`的数量为3。
+   - 然后，我们确定这是一个多行字符串，并查找与`'''###`匹配的终结符。
+   - 我们成功地找到了终结符并结束了解析。
+
+2. 对于输入`"hello \\" world"`：
+   - 我们确定这是一个常规字符串。
+   - 我们继续解析，直到遇到反斜杠`\`，然后进入转义状态。
+   - 在转义状态下，我们找到另一个反斜杠，并返回常规状态。
+   - 我们继续解析，直到找到终结符`"`并结束解析。
+
+这个自动机提供了一个高层次的视图，描述了如何解析字符串字面量。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div id="references-anchor"></div>
 

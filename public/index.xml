@@ -7,6 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://canftin.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>从零构造现代语言编译器(5): 缓冲区</title>
+      <link>https://canftin.github.io/posts/tech/p6_compiler_build_5_source_buffer/</link>
+      <pubDate>Tue, 26 Sep 2023 18:28:05 +0800</pubDate>
+      
+      <guid>https://canftin.github.io/posts/tech/p6_compiler_build_5_source_buffer/</guid>
+      <description>// TODO: 1. 分析老版本mmap的SourceBuffer。 // TODO: 2. 分vfs版本SourceBuffer。 1. 为什么需要SourceBuffer 2. mma</description>
+    </item>
+    
+    <item>
       <title>从零构造现代语言编译器(4): 语言设计</title>
       <link>https://canftin.github.io/posts/tech/p5_compiler_build_4_lang_design/</link>
       <pubDate>Tue, 26 Sep 2023 15:34:28 +0800</pubDate>
@@ -39,7 +48,7 @@
       <pubDate>Thu, 21 Sep 2023 14:51:58 +0800</pubDate>
       
       <guid>https://canftin.github.io/posts/tech/p2_compiler_build_1_lexer/</guid>
-      <description>什么是数值字面量 数值字面量（Numeric Literals）在编程中是表示特定数值的一个符号或一组符号。这些字面量用于直接在源代码中表示一个</description>
+      <description>1. 什么是数值字面量 数值字面量（Numeric Literals）在编程中是表示特定数值的一个符号或一组符号。这些字面量用于直接在源代码中表示一</description>
     </item>
     
     <item>

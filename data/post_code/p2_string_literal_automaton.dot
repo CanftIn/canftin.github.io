@@ -1,0 +1,11 @@
+digraph StringLiteralAutomaton {
+    Start -> HashCount [label="#"];
+    HashCount -> MultiLine [label="''' or \""];
+    HashCount -> Regular [label="\""];
+    MultiLine -> MultiLine [label="not terminator"];
+    MultiLine -> End [label="terminator with matching #"];
+    Regular -> Regular [label="not \" and not \\"];
+    Regular -> Escape [label="\\"];
+    Regular -> End [label="\""];
+    Escape -> Regular [label="any char"];
+}
