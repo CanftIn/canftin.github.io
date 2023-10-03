@@ -7,12 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://canftin.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>从零构造现代语言编译器(6): Parse节点和状态</title>
+      <link>https://canftin.github.io/posts/tech/p7_compiler_build_6_parse_node_state/</link>
+      <pubDate>Tue, 03 Oct 2023 10:32:32 +0800</pubDate>
+      
+      <guid>https://canftin.github.io/posts/tech/p7_compiler_build_6_parse_node_state/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>从零构造现代语言编译器(5): 缓冲区</title>
       <link>https://canftin.github.io/posts/tech/p6_compiler_build_5_source_buffer/</link>
       <pubDate>Tue, 26 Sep 2023 18:28:05 +0800</pubDate>
       
       <guid>https://canftin.github.io/posts/tech/p6_compiler_build_5_source_buffer/</guid>
-      <description>// TODO: 1. 分析老版本mmap的SourceBuffer。 // TODO: 2. 分vfs版本SourceBuffer。 1. 为什么需要SourceBuffer 2. mma</description>
+      <description>// TODO: 1. 分析老版本mmap的SourceBuffer。 // TODO: 2. 分vfs版本SourceBuffer。 // TODO: 3. 分析swift版本source mana</description>
     </item>
     
     <item>

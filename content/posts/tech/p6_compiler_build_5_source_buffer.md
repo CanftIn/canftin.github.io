@@ -35,6 +35,8 @@ cover:
 
 // TODO: 2. 分vfs版本SourceBuffer。
 
+// TODO: 3. 分析swift版本source manager和llvm。
+
 </font>
 
 ## 1. 为什么需要SourceBuffer

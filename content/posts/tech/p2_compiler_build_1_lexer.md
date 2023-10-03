@@ -330,6 +330,12 @@ auto NumericLiteralToken::Parser::GetExponent() -> llvm::APInt {
 // TODO: 1. 讲解字符串字面量代码。
 
 // TODO: 2. 讲解字符串字面量设计。
+
+// TODO: 3. utf-8讲解。
+
+// TODO: 4. 单元测试讲解
+
+// TODO:          4.1 c++中的R字符串
 </font>
 
 ```cpp
@@ -465,9 +471,310 @@ auto StringLiteral::Lex(llvm::StringRef source_text)
 
 这个自动机提供了一个高层次的视图，描述了如何解析字符串字面量。
 
+### StringLiteral中静态函数的逐行分析
+
+1. ComputeIndentOfFinalLine
+
+```cpp
+// 计算给定文本中最后一行的缩进（即最后一行前面的水平空白字符序列）。
+static auto ComputeIndentOfFinalLine(llvm::StringRef text) -> llvm::StringRef {
+  int indent_end = text.size(); // 从文本的末尾开始，逐字符向前检查。
+  for (int i = indent_end - 1; i >= 0; --i) {
+    if (text[i] == '\n') { // 如果遇到换行符\n，则该位置之后的所有字符都是最后一行的缩进。
+      int indent_start = i + 1;
+      return text.substr(indent_start, indent_end - indent_start);
+    }
+    if (!IsSpace(text[i])) { // 如果遇到非空格字符，则更新缩进的结束位置。
+      indent_end = i;
+    }
+  }
+  // 如果没有找到换行符，这意味着给定的文本不包含换行符，这是一个错误情况。
+  llvm_unreachable("Given text is required to contain a newline.");
+}
+```
+
+这段代码定义了一个函数 `ComputeIndentOfFinalLine`，它的目的是计算给定文本中最后一行的缩进（即最后一行前面的水平空白字符序列）。
+
+让我们逐步分析这段代码：
+
+1. **函数签名**:
+   ```cpp
+   static auto ComputeIndentOfFinalLine(llvm::StringRef text) -> llvm::StringRef
+   ```
+   这个函数接受一个 `llvm::StringRef` 类型的参数 `text`，并返回一个 `llvm::StringRef` 类型的结果。`llvm::StringRef` 是一个轻量级的字符串引用，它不拥有其引用的字符串的内存，但提供了对该字符串的高效访问。
+
+2. **初始化**:
+   ```cpp
+   int indent_end = text.size();
+   ```
+   初始化 `indent_end` 为文本的长度。这是因为我们将从文本的末尾开始向前搜索，以找到最后一个换行符。
+
+3. **查找最后一个换行符**:
+   ```cpp
+   for (int i = indent_end - 1; i >= 0; --i) {
+       if (text[i] == '\n') {
+           int indent_start = i + 1;
+           return text.substr(indent_start, indent_end - indent_start);
+       }
+       if (!IsSpace(text[i])) {
+           indent_end = i;
+       }
+   }
+   ```
+   这个循环从文本的末尾开始，向前搜索直到找到最后一个换行符或到达文本的开始。如果找到一个非空白字符，它会更新 `indent_end` 的值。当找到换行符时，函数会返回从该换行符之后到 `indent_end` 之间的子字符串，这就是最后一行的缩进。
+
+4. **异常情况**:
+   ```cpp
+   llvm_unreachable("Given text is required to contain a newline.");
+   ```
+   如果函数没有在文本中找到换行符，它会触发一个不可达的断言，表示这是一个异常情况。这意味着调用此函数的代码应确保提供的文本至少包含一个换行符。
+
+**测试用例**:
+
+1. **基本用例**:
+   ```cpp
+   llvm::StringRef test1 = "Hello\n  World";
+   assert(ComputeIndentOfFinalLine(test1) == "  ");
+   ```
+   这个测试用例有两行，最后一行的缩进是两个空格。
+
+2. **没有缩进的用例**:
+   ```cpp
+   llvm::StringRef test2 = "Hello\nWorld";
+   assert(ComputeIndentOfFinalLine(test2) == "");
+   ```
+   这个测试用例的最后一行没有缩进。
+
+3. **只有一个换行符的用例**:
+   ```cpp
+   llvm::StringRef test3 = "\n";
+   assert(ComputeIndentOfFinalLine(test3) == "");
+   ```
+   这个测试用例只有一个换行符，所以最后一行没有缩进。
+
+4. **异常用例**:
+   ```cpp
+   llvm::StringRef test4 = "Hello World";
+   // This should trigger the llvm_unreachable assertion
+   ComputeIndentOfFinalLine(test4);
+   ```
+   这个测试用例没有换行符，所以应该触发不可达的断言。
+
+注意：在实际使用中，你可能需要确保提供给 `ComputeIndentOfFinalLine` 的文本至少包含一个换行符，以避免触发异常。
 
 
+### spec
 
+Carbon 支持使用一个双引号(`"`)的单行简单字面量和使用三个单引号(`'''`)的多行块状字面量。块状字符串字面量在第一个`'''`后可能有一个文件类型指示器；这对字符串本身没有影响，但可能有助于其他工具。例如：
+
+```rust
+// 简单字符串字面量:
+var simple: String = "example";
+
+// 块状字符串字面量:
+var block: String = '''
+    The winds grow high; so do your stomachs, lords.
+    How irksome is this music to my heart!
+    When such strings jar, what hope of harmony?
+    I pray, my lords, let me compound this strife.
+        -- History of Henry VI, Part II, Act II, Scene 1, W. Shakespeare
+    ''';
+
+// 块状字符串字面量带有文件类型指示器:
+var code_block: String = '''cpp
+    #include <iostream>
+    int main() {
+        std::cout << "Hello world!";
+        return 0;
+    }
+    '''
+```
+
+块状字符串字面量的终止行的缩进从所有前面的行中删除。因此，在上面的`code_block`示例中，只有`std::cout`和`return`在结果字符串中有缩进，每个都是4个空格。
+
+由反斜杠(`\`)引入的转义序列用于表示特殊字符或代码单元序列，例如`\n`表示换行符。原始字符串字面量还用一个或多个`#`进行分隔；这些在`\`后需要相同数量的井号符号(`#`)来表示转义序列。原始字符串字面量用于更容易地在字符串中写入字面量`\`。简单和块状字符串字面量都有原始形式。例如：
+
+```rust
+// 带有换行转义序列的原始简单字符串字面量:
+var newline: String = "line one\nline two";
+
+// 带有字面量`\n`的原始简单字符串字面量，不是换行:
+var raw: String = #"line one\nstill line one"#;
+
+// 带有换行转义序列的原始简单字符串字面量:
+var raw_newline: String = #"line one\#nline two"#;
+```
+
+#### 详细信息
+
+##### 简单和块状字符串字面量
+
+简单字符串字面量由以下序列组成：
+
+- 除`\`和`"`之外的字符。
+    - 在字符串字面量中，只有空格字符(U+0020)是有效的空白。
+    - 其他[水平空白](whitespace.md)，包括制表符，是不允许的，但为了错误恢复目的被解析为字符串的一部分。
+    - 垂直空白不会被解析为简单字符串字面量的一部分。
+- [转义序列](#转义序列)。
+    - 每个转义序列都被替换为相应的字符序列或代码单元序列。
+    - 与无效的空白类似，无效的转义序列，如`\z`，被解析为字符串的一部分。
+
+这个序列被包含在`"`中。例如，这是一个简单的字符串字面量：
+
+```rust
+var String: lucius = "The strings, my lord, are false.";
+```
+
+不允许相邻的字符串字面量，如下所示：
+
+```rust
+// 三个相邻的简单字符串字面量`""`、`"abc"`和`""`是无效的。
+var String: block = """abc""";
+```
+
+以三个双引号`"""`开始的字符串字面量是相邻的字符串字面量。拒绝并诊断它们是很重要的。
+
+块状字符串字面量以`'''`开始。`'''`后面的同一行上的字符是一个可选的文件类型指示器。字面量在下一个三个单引号的实例结束，其中第一个`'`不是`\'`转义序列的一部分。关闭的`'''`应该是那一行的第一个非空白字符。开头行和结束行之间的行（不包括）是内容行。内容行不应包含不形成转义序列一部分的`\`字符。
+
+块状字符串字面量的缩进是终止行前的水平空白序列。每个非空内容行都应该以字符串字面量的缩进开始。字面量的内容如下形成：
+
+- 从每个非空内容行中删除终止行的缩进。
+- 每行的所有尾随空白，包括行终止符，都被替换为一个换行符(U+000A)。
+- 结果行被连接起来。
+- 每个[转义序列](#转义序列)都被替换为相应的字符序列或代码单元序列。
+
+如果内容行只包含空白字符，则认为它是空的。
+
+```rust
+// 所有块状字符串字面量默认包含一个尾随换行符。
+var String: newline_example = '''
+  This is a block string literal. Its first character is 'T' and its last character is
+  a newline. It contains another newline character between 'is' and 'a'.
+  ''';
+
+// 可以使用转义字符'\'来抑制换行符
+var String: suppressed_newlines = '''
+  This is another block string literal. The newline character here \
+  is suppressed, along with the trailing newline here.\
+  ''';
+
+// 这个块状字符串字面量是无效的，因为'closing'后面的'''终止了字面量，但它不在行的开头。
+var String: invalid = '''
+  error: closing ''' is not on its own line.
+  ''';
+```
+
+文件类型指示器是除`'`或`#`之外的任何非空白字符序列。文件类型指示器对 Carbon 编译器没有语义意义，但某些文件类型指示器被语言工具（例如，语法高亮器，代码格式化器）理解为指示字符串字面量内容的结构。
+
+```rust
+// 这是一个块状字符串字面量。它的前两个字符是空格，它的最后一个字符是换行符。它有一个文件类型为'c++'。
+var String: starts_with_whitespace = '''c++
+    int x = 1; // 这一行以两个空格开始。
+    int y = 2; // 这一行以两个空格开始。
+  ''';
+```
+
+文件类型指示器可能包含超出文件类型本身的语义信息，例如指示代码格式化器为代码块禁用格式化的指令。
+
+**开放问题：** 没有明确的已识别文件类型指示器集。非正式地指定一组众所周知的指示器将是有用的，这样工具就可以对这些指示器的含义有一个共同的理解，也许在最佳实践指南中。
+
+##### 转义序列
+
+在字符串字面量中，以下转义序列被识别：
+
+| 转义        | 含义                                                  |
+| ------------- | -------------------------------------------------------- |
+| `\t`          | U+0009 字符制表符                              |
+| `\n`          | U+000A 换行符                                         |
+| `\r`          | U+000D 回车符                                         |
+| `\"`          | U+0022 引号 (`"`)                              |
+| `\'`          | U+0027 逗号 (`'`)                                  |
+| `\\`          | U+005C 反斜杠 (`\`)                             |
+| `\0`          | 值为0的代码单元                                   |
+| `\0D`         | 无效，为未来的发展保留                          |
+| `\xHH`        | 值为HH<sub>16</sub>的代码单元                     |
+| `\u{HHHH...}` | Unicode 代码点 U+HHHH...                             |
+| `\<newline>`  | 无字符串字面量内容产生 (仅限块状字面量) |
+
+十六进制字符(`H`)必须为大写(`\xAA`，而不是`\xaa`)。
+
+这包括所有C++转义序列，除了：
+
+- `\?`，它在字符串字面量中历史上用于转义三字符组，现在不再有任何用途。
+- `\ooo` 八进制转义，因为Carbon不支持八进制字面量；`\0`作为一个特殊情况被保留，这对于C互操作性预计是很重要的。
+- `\uABCD`，被`\u{ABCD}`替代。
+- `\U0010FFFF`，被`\u{10FFFF}`替代。
+- `\a` (铃声)，`\b` (退格)，`\v` (垂直制表符)，和`\f` (换页)。`\a`和`\b`已经过时，`\f`和`\v`基本上已经废弃。如果需要，这些字符可以分别用`\x07`、`\x08`、`\x0B`和`\x0C`表示。
+
+注意，这是由[Swift](https://docs.swift.org/swift-book/LanguageGuide/StringsAndCharacters.html#ID295)和[Rust](https://doc.rust-lang.org/reference/tokens.html)支持的相同的转义序列集，除了与Swift不同，它提供了对`\xHH`的支持。
+
+尽管预计八进制转义序列将继续不被允许（尽管`\0D`被保留），但决定不支持`\1`..`\7`或更一般地`\DDDD`是_实验性的_。
+
+在上表中，`H`表示任意十六进制字符，`0`-`9`或`A`-`F`（区分大小写）。与C++不同，但与Python相似，`\x`期望恰好两个十六进制数字。与JavaScript、Rust和Swift一样，可以使用`\u{10FFFF}`表示法按数字表示Unicode代码点。这接受1到8个十六进制字符。可以用这种方式表示0<sub>16</sub>-D7FF<sub>16</sub>或E000<sub>16</sub>-10FFFF<sub>16</sub>范围内的任何数字代码点。
+
+_开放问题:_ 一些编程语言（尤其是Python）支持`\N{unicode character name}`语法。我们可以添加这样的转义序列。未来考虑添加此类支持的提案应注意C++的Unicode研究小组在此领域的工作。
+
+转义序列`\0`不应该后跟十进制数字。在应该在空字节后跟随十进制数字的情况下，可以使用`\x00`代替：`"foo\x00123"`。目的是保留将来允许十进制转义序列的可能性。
+
+反斜杠后跟换行符是一个不产生字符串内容的转
+
+义序列。这个转义序列是_实验性的_，只能出现在块状字符串字面量中。这个转义序列在替换尾随空白后处理为换行符之后进行处理，所以一个`\`后跟水平空白后跟一个行终止符会移除直到并包括行终止符的空白。与Rust不同，但与Swift相似，换行符后的转义新行的前导空白不会被移除，除了与终止`'''`的缩进匹配的空白。
+
+以反斜杠开头的字符序列，如果不匹配任何已知的转义序列，则无效。除了空格和块状字符串字面量的新行（可选地前置回车）之外，其他空白字符是不允许的。所有其他字符（包括不可打印字符）都被原样保留。因为所有的Carbon源文件都要求是有效的Unicode字符序列，所以只能通过`\x`转义序列产生不是有效的UTF-8的代码单元序列。
+
+决定在字符串字面量中不允许原始制表符是_实验性的_。
+
+```rust
+var String: fret = "I would 'twere something that would fret the string,\n" +
+                   "The master-cord on's \u{2764}\u{FE0F}!";
+
+// 这个字符串包含两个字符（在编码为UTF-8之前）：
+// U+1F3F9 (弓和箭) 后跟 U+0032 (数字二)
+var String: password = "\u{1F3F9}2";
+
+// 这个字符串不包含换行符。
+var String: type_mismatch = '''
+  Shall I compare thee to a summer's day? Thou art \
+  more lovely and more temperate.\
+  ''';
+
+var String: trailing_whitespace = '''
+  This line ends in a space followed by a newline. \n\
+      This line starts with four spaces.
+  ''';
+```
+
+#### 原始字符串字面量
+
+为了允许字符串的内容包括`\`和`"`，可以通过在开头的定界符前加上_N_个`#`字符来自定义字符串字面量的定界符。这样的字符串的关闭定界符只有在后面跟着_N_个`#`字符时才会被识别，同样地，这样的字符串字面量中的转义序列只有在`\`后面也跟着_N_个`#`字符时才会被识别。一个`\`、`"`或`'''`后面没有跟着_N_个`#`字符没有特殊意义。
+
+| 开始定界符 | 转义序列引入符    | 结束定界符 |
+| ----------------- | ----------------------------- | ----------------- |
+| `"` / `'''`       | `\` (例如, `\n`)       | `"` / `'''`       |
+| `#"` / `#'''`     | `\#` (例如, `\#n`)     | `"#` / `'''#`     |
+| `##"` / `##'''`   | `\##` (例如, `\##n`)   | `"##` / `'''##`   |
+| `###"` / `###'''` | `\###` (例如, `\###n`) | `"###` / `'''###` |
+| ...               | ...                           | ...               |
+
+例如：
+
+```rust
+var String: x = #'''
+  这是字符串的内容。'T'是字符串的第一个字符。
+  ''' <-- 这不是字符串的结尾。
+  '''#;
+  // 但前面的那行确实结束了字符串。
+// OK, 最后一个字符是\
+var String: y = #"Hello\"#;
+var String: z = ##"Raw strings #"nesting"#"##;
+var String: w = #"Tab is expressed as \t. Example: '\#t'"#;
+```
+
+#### 编码
+
+字符串字面量产生一个8位字节的序列。像Carbon源文件一样，字符串字面量使用UTF-8编码。然而，不能保证字符串是有效的UTF-8，因为可以通过`\xHH`转义序列插入任意字节序列。
+
+这是_实验性的_，如果我们发现直接表示其他编码的字符串字面量的足够动机，应该重新考虑。同样，随着库对字符串类型的支持的发展，我们应该考虑包括字符串字面量语法（也许作为默认值），保证字符串内容是有效的UTF-8编码，这样在类型系统中可以区分有效的UTF-8和任意字符串。在这样的字符串字面量中，我们应该考虑拒绝HH大于7F<sub>16</sub>的`\xHH`转义，如Rust中所做的那样。
 
 
 
