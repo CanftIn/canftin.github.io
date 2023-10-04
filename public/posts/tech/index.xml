@@ -7,12 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://canftin.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>P8_compiler_build_7_parse_precedence</title>
+      <link>https://canftin.github.io/posts/tech/p8_compiler_build_7_parse_precedence/</link>
+      <pubDate>Tue, 03 Oct 2023 11:20:53 +0800</pubDate>
+      
+      <guid>https://canftin.github.io/posts/tech/p8_compiler_build_7_parse_precedence/</guid>
+      <description>表达式 目录 表达式 目录 概述 优先级 名称 非限定名称 限定名称和成员访问 操作符 转换和类型转换 if 表达式 数值类型文字表达式 考虑的替代方案 参考文献 概述 表达式</description>
+    </item>
+    
+    <item>
       <title>从零构造现代语言编译器(6): Parse节点和状态</title>
       <link>https://canftin.github.io/posts/tech/p7_compiler_build_6_parse_node_state/</link>
       <pubDate>Tue, 03 Oct 2023 10:32:32 +0800</pubDate>
       
       <guid>https://canftin.github.io/posts/tech/p7_compiler_build_6_parse_node_state/</guid>
-      <description></description>
+      <description>1. 节点类型 2. 解析状态 这些状态代表了解析器在处理输入代码时可能遇到的各种情况。以下是对这些状态的详细解释： IndexExpression：处理</description>
     </item>
     
     <item>

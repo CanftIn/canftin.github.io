@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://canftin.github.io/posts/tech/p8_compiler_build_7_parse_precedence/</loc>
+    <lastmod>2023-10-03T11:20:53+08:00</lastmod>
+  </url><url>
     <loc>https://canftin.github.io/posts/tech/p7_compiler_build_6_parse_node_state/</loc>
     <lastmod>2023-10-03T10:32:32+08:00</lastmod>
   </url><url>
