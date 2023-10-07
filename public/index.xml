@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://canftin.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>P8_compiler_build_7_parse_precedence</title>
+      <title>从零构造现代语言编译器(8): 解析树</title>
+      <link>https://canftin.github.io/posts/tech/p9_compiler_build_8_parse_tree/</link>
+      <pubDate>Sat, 07 Oct 2023 11:34:56 +0800</pubDate>
+      
+      <guid>https://canftin.github.io/posts/tech/p9_compiler_build_8_parse_tree/</guid>
+      <description>为什么不直接在tree中放NodeImpl*指针，NodeImpl指向自己的其他结点，而要用smallvector记录索引的方式，两者相比后</description>
+    </item>
+    
+    <item>
+      <title>从零构造现代语言编译器(7): Parse优先级</title>
       <link>https://canftin.github.io/posts/tech/p8_compiler_build_7_parse_precedence/</link>
       <pubDate>Tue, 03 Oct 2023 11:20:53 +0800</pubDate>
       
