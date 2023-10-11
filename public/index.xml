@@ -88,12 +88,12 @@
     </item>
     
     <item>
-      <title>从零构造现代语言编译器(0): 开始</title>
+      <title>从零构造现代语言编译器(0): C&#43;&#43;后继语言</title>
       <link>https://canftin.github.io/posts/tech/p1_compiler_build_0_start/</link>
       <pubDate>Thu, 21 Sep 2023 12:33:27 +0800</pubDate>
       
       <guid>https://canftin.github.io/posts/tech/p1_compiler_build_0_start/</guid>
-      <description>carbon-lang介绍 Carbon作为一个实验性的通用编程语言，旨在成为“C++的后继语言”[1]，目前仍在Google的项目孵化期中，</description>
+      <description>1. carbon-lang介绍 自去年（2020.7）Chandler Carruth 作为 Google 的 tech leader 官方宣布 Carbon 语言，这个项目在 github 上热度一度飙升，至今已有30k+</description>
     </item>
     
     <item>
