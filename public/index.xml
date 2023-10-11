@@ -7,6 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://canftin.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>LLVM源码分析系列(0): formatv</title>
+      <link>https://canftin.github.io/posts/tech/p10_llvm_analysis_0_formatv/</link>
+      <pubDate>Tue, 10 Oct 2023 16:03:07 +0800</pubDate>
+      
+      <guid>https://canftin.github.io/posts/tech/p10_llvm_analysis_0_formatv/</guid>
+      <description>这篇文章作为LLVM源码分析系列的开篇，初步介绍LLVM中format的相关机制和原理，format在LLVM中较为容易理解，从这里启航，后</description>
+    </item>
+    
+    <item>
       <title>从零构造现代语言编译器(8): 解析树</title>
       <link>https://canftin.github.io/posts/tech/p9_compiler_build_8_parse_tree/</link>
       <pubDate>Sat, 07 Oct 2023 11:34:56 +0800</pubDate>
