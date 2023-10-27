@@ -70,15 +70,15 @@ class Printable {
 };
 ```
 
-这里的`Printable`类被设计为一个基类，用于实现可打印的对象，它期望子类实现一个`Print`接口。
+这里的 `Printable` 类被设计为一个基类，用于实现可打印的对象，它期望子类实现一个 `Print` 接口。
 
-### 1.1 `Printable`类的用途和功能
+### 1.1 `Printable` 类的用途和功能
 
-1. **类型打印**: 通过`Print`接口，子类可以自定义如何将其内容打印到输出流。
-2. **多种输出流支持**: 支持`llvm::raw_ostream`和`std::ostream`两种输出流。
-3. **调试支持**: 提供了一个`Dump`方法，用于在调试时快速查看对象的状态。
+1. **类型打印**: 通过 `Print` 接口，子类可以自定义如何将其内容打印到输出流。
+2. **多种输出流支持**: 支持 `llvm::raw_ostream` 和 `std::ostream` 两种输出流。
+3. **调试支持**: 提供了一个 `Dump` 方法，用于在调试时快速查看对象的状态。
 
-假设有一个`Person`类，我们希望能够打印其信息：
+假设有一个 `Person` 类，我们希望能够打印其信息：
 
 ```cpp
 class Person : public Printable<Person> {
@@ -93,7 +93,7 @@ private:
 }
 ```
 
-现在，`Person`类就可以使用`Printable`提供的所有功能。
+现在，`Person` 类就可以使用 `Printable` 提供的所有功能。
 
 ```cpp
 Person p("Alice", 30);
@@ -103,15 +103,9 @@ os << p;  // 输出：Person { name: Alice, age: 30 }
 
 ### 1.2 介绍CRTP和Mixin
 
-CRTP是C++中一种常用的编程模式，全名为“Curiously Recurring Template Pattern”，中文可以翻译为“奇异递归模板模式”。这个模式主要用于实现编译时多态性，也就是在编译时解析多态行为，而不是运行时。
+CRTP 是 C++ 中一种常用的编程模式，全名为“Curiously Recurring Template Pattern”，中文可以翻译为“奇异递归模板模式”。这个模式主要用于实现编译时多态性，也就是在编译时解析多态行为，而不是运行时。由于多态行为在编译时就被解析，因此运行时性能开销小。并且可以在基类中实现通用逻辑，减少代码重复。
 
-1. **编译时多态**: 由于多态行为在编译时就被解析，因此运行时性能开销小。
-2. **代码复用**: 可以在基类中实现通用逻辑，减少代码重复。
-3. **类型安全**: 使用`static_cast`进行类型转换是安全的，因为基类知道派生类的确切类型。
-4. **不适用于运行时多态**: CRTP无法实现运行时多态，因为它依赖于编译时类型信息。
-5. **代码可读性**: 对于不熟悉CRTP的开发者来说，代码可能会显得有些复杂。
-
-在CRTP中，一个模板基类会以其派生类作为模板参数。这样，基类就可以在编译时知道其派生类的类型，基类就可以调用派生类的方法或访问其成员，即使这些方法或成员在基类中并没有被声明。
+在 CRTP 中，一个模板基类会以其派生类作为模板参数。这样，基类就可以在编译时知道其派生类的类型，基类就可以调用派生类的方法或访问其成员，即使这些方法或成员在基类中并没有被声明。
 
 ```cpp
 template <typename Derived>
@@ -130,17 +124,7 @@ public:
 };
 ```
 
-在这个例子中，`Base`类有一个`interface`方法，它内部调用了`implementation`方法。这个`implementation`方法是在`Derived`类中定义的，但`Base`类可以通过`static_cast`安全地调用它。
-
-CRTP常用于以下几种场景：
-
-1. **静态多态**: 如上面的例子所示，可以用于实现编译时多态。
-2. **Mixin 类**: 可以用CRTP实现mixin（混入）功能，即在一个类中混入另一个类的功能。
-3. **工具类**: 如在问题中的`Printable`类，用于提供一组通用的接口或实现。
-
-总体来说，CRTP是一种非常强大而灵活的编程模式，尤其适用于需要高性能和代码复用的场景。
-
-#### Mixin 功能
+在这个例子中，`Base` 类有一个 `interface` 方法，它内部调用了 `implementation` 方法。这个 `implementation` 方法是在 `Derived` 类中定义的，但 `Base` 类可以通过 `static_cast` 安全地调用它。
 
 在 C++ 中，Mixin 是一种编程模式，用于通过组合而非继承来向一个类添加额外的功能或行为。Mixin 类通常是一些小型、可复用的组件，它们定义了特定的行为或功能，但不应该单独使用。通过将多个 Mixin 类组合在一起，你可以创建出具有多种功能的复杂对象。
 
@@ -209,16 +193,10 @@ int main() {
 
 这样，`MyClass` 就继承了 `LoggerMixin` 和 `TimerMixin` 的所有功能，而你不需要在 `MyClass` 中重新实现这些功能。
 
-1. **代码复用**: 你可以在多个类中重用同一个 Mixin。
-2. **解耦**: Mixin 使得功能模块与业务逻辑解耦，更易于维护和扩展。
-3. **灵活性**: 你可以灵活地组合多个 Mixin，以创建具有所需功能的新类。
-4. **复杂性**: 使用多重继承和模板可能会增加代码复杂性。
-5. **名称冲突**: 如果两个 Mixin 有相同的成员，可能会导致名称冲突。
-
-
 ### 1.3 LLVM输出流重载
 
-LLVM是一个编译器基础设施项目，提供了一系列模块化的编译器组件和工具链。它用于开发编译器前端和后端，以及其他代码转换和代码生成工具。其中`llvm::raw_ostream`是llvm上的原始输出流。
+LLVM 中 `llvm::raw_ostream` 是 LLVM 上的原始输出流。
+
 ```cpp
 namespace llvm {
 
@@ -446,15 +424,7 @@ void Deserialize(Person& p, const std::string& s) {
 
 在这个例子中，`PERSON_XMACRO` 定义了一个 `Person` 结构体的字段。然后，我们生成了该结构体的定义以及其序列化和反序列化函数。
 
-1. **减少代码重复**: 通过在多个地方展开相同的宏，减少了代码重复。
-2. **提高可维护性**: 如果需要添加、删除或修改某个元素，只需在一个地方进行更改。
-3. **灵活性**: 可以在不同的上下文中以不同的方式展开相同的宏。
-4. **可读性**: 对于不熟悉 X-Macro 的人来说，代码可能难以理解。
-5. **调试困难**: 预处理器生成的代码可能难以调试。
-
-总体来说，X-Macro 是一种非常强大的代码生成技术，尤其适用于需要生成重复或模式化代码的场景。然而，它也有一些缺点，如可能降低代码的可读性和可调试性。因此，在使用 X-Macro 时，应权衡其优缺点。
-
-### 2.3 TokenKind实际使用
+### 2.3 TokenKind中的实际应用
 
 代码如下：
 
@@ -548,7 +518,7 @@ constexpr llvm::StringLiteral TestKindNames[] = {
 
 这样的设计提供了一种灵活、可复用的方式来创建和操作枚举类，同时也减少了代码重复和提高了可维护性。
 
-EnumBase主要用于以复用宏的方式生成Token类型，在词法分析里，过去的`TokenKind`是这样：
+EnumBase 主要用于以复用宏的方式生成Token类型，在词法分析里，不使用 EnumBase 的`TokenKind`是这样：
 
 ```cpp
 class TokenKind {
@@ -832,76 +802,188 @@ constexpr llvm::ArrayRef<TokenKind> TokenKind::KeywordTokens =
 
 ## 3. 错误状态
 
-## 4. commandline
+### 3.1 Error 相关类定义
 
+```cpp
+struct Success {};
 
-// # 命令行参数解析库。
-//
-// 这是一个用于描述简单和相对复杂命令行界面，并基于这些描述解析参数的工具集合。它针对每次执行只解析一次参数的命令行工具进行了优化，特别是那些大量使用子命令样式命令行界面的工具。
-//
-// ## 本库使用的术语
-//
-// _参数_ 或 _arg_：命令行的一个解析组件。
-//
-// _选项_：一个以 `--` 开头的 _命名_ 参数，用于配置工具的某些方面。它们通常有长形式以 `--` 开头，还有短形式以 `-` 开头，可以与其他单字符选项一起捆绑使用。
-//
-// _标志_：布尔或二进制选项。它们只能启用或禁用。
-//
-// _位置参数_：根据在命令行中出现的顺序而不是名称来识别的参数，其中排除了选项。只有叶子命令可以包含位置参数。
-//
-// _值_：提供给参数的值参数。对于选项来说，这是在参数名称后面使用 `=` 提供的。对于位置参数来说，值就是唯一提供的内容。值的字符串根据参数的类型进行解析，遵循相对简单的规则。有关更多详细信息，请参阅参数构建器。
-//
-// _命令_：包含要解析的选项、子命令和位置参数以及成功时要执行的操作的容器。
-//
-// _叶子命令_：不包含子命令的命令。这是唯一可以包含位置参数的命令类型。
-//
-// _子命令_：嵌套在另一个命令中的命令，并由特定名称标识，该名称结束了基于父命令的参数解析，并切换到基于特定子命令的选项和位置参数解析。具有子命令的命令不能解析位置参数。
-//
-// _操作_：一个开放式回调，通常反映正在解析的特定子命令。可以直接执行操作，也可以仅标记所选操作。
-//
-// _元操作_：由参数解析完全处理的操作，例如显示帮助、版本信息或完成。
-//
-// 以下是一个示例命令，用于说明不同的组件：
-//
-//     git --no-pager clone --shared --filter=blob:none my-repo my-directory
-//
-// 这个命令分解为：
-// - `git`：顶级命令。
-// - `--no-pager`：在顶级命令 (`git`) 上的否定标志。
-// - `clone`：一个子命令。
-// - `--shared`：子命令 (`clone`) 的正标志。
-// - `--filter=blob:none`：具有值 `blob:none` 的选项 `filter`。
-// - `my-repo`：子命令的第一个位置参数。
-// - `my-directory`：子命令的第二个位置参数。
-//
-// **注意：**虽然示例使用了 `git` 命令以使其相对熟悉和有文档记录，但该库不支持与 `git` 相同的标志语法，也不使用与解析的语法重叠的任何内容。此示例仅用于帮助澄清使用的术语，并经过谨慎选择，仅使用与此库解析语法重叠的语法。
-//
-// ## 选项和标志
-//
-// 该库支持的选项语法和行为旨在严格且相对简单，同时仍支持各种预期的用例：
-//
-// - 所有选项必须具有唯一的长名称，使用 `--` 前缀访问。名称必须由集合 [-a-zA-Z0-9] 中的字符组成，并且不能以 `-` 或 `no-` 开头。
-//
-// - 值始终使用名称后面的 `=` 附加。仅支持少量简单的值格式：
-//   - 任意字符串
-//   - 由 `llvm::StringRef` 解析的整数，其值适合于 `int`。
-//   - 固定一组字符串之一
-//
-// - 选项可以多次解析，并且行为可以配置：
-//   - 每次可以设置新值，覆盖任何先前的值。
-//   - 它们可以将值附加到容器。
-//   - TODO: 它们可以增加计数。
-//
-// - 选项可以具有默认值，即使在解析的命令行中没有出现它们，也将合成该值。
-//
-// - 标志（布尔选项）具有一些特殊规则。
-//   - 它们可以正常拼写，默认为将该标志设置为 `true`。
-//   - 它们还可以接受值，值必须完全是 `true` 或 `false`。
-//   - 它们可以带有 `no-` 前缀，例如 `--no-verbose`，这与 `--verbose=false` 完全等效。
-//   - 对于默认为 `true` 值的标志，在帮助中使用 `no-` 前缀呈现。
-//
-// - 选项还可以具有单个字符的短名称 [a-zA-Z]。
-//   - 长名称和短名称之间的行为没有区别。
-//   - 短名称只能指定标志的正值或 `true` 值。没有短名称的负值形式。
-//   - 短名称在单个 `-` 之后解析，例如 `-v`。
-//   - 可以在 `-` 后捆绑任意数量的布尔标志或具有默认值的选项的短名称，例如 `-xyz
+class [[nodiscard]] Error : public Printable<Error> {
+ public:
+  /// 生成错误状态。
+  explicit Error(llvm::Twine location, llvm::Twine message)
+      : location_(location.str()), message_(message.str()) {
+    COCKTAIL_CHECK(!message_.empty()) << "Errors must have a message.";
+  }
+
+  /// 生成不关联错误位置的错误状态。
+  explicit Error(llvm::Twine message) : Error("", message) {}
+
+  Error(Error&& other) noexcept
+      : location_(std::move(other.location_)),
+        message_(std::move(other.message_)) {}
+
+  auto operator=(Error&& other) noexcept -> Error& {
+    location_ = std::move(other.location_);
+    message_ = std::move(other.message_);
+    return *this;
+  }
+
+  auto Print(llvm::raw_ostream& out) const -> void {
+    if (!location().empty()) {
+      out << location() << ": ";
+    }
+    out << message();
+  }
+
+  /// 返回错误位置，错误位置的描述类似于"file.cc:123"。
+  auto location() const -> const std::string& { return location_; }
+
+  auto message() const -> const std::string& { return message_; }
+
+ private:
+  // error出现的位置。
+  std::string location_;
+  // 错误信息。
+  std::string message_;
+};
+```
+
+Success 是一个空结构体，表示操作成功。可能被用作函数的返回类型，表示没有错误。Error 类是一个表示错误的对象。它包含了错误发生的位置（例如文件名和行号）和一个错误消息。
+
+```cpp
+template <typename T>
+class [[nodiscard]] ErrorOr {
+ public:
+  ErrorOr(Error err) : value_(std::move(err)) {}
+
+  ErrorOr(T value) : value_(std::move(value)) {}
+
+  auto ok() const -> bool { return std::holds_alternative<T>(value_); }
+
+  auto error() const& -> const Error& {
+    COCKTAIL_CHECK(!ok());
+    return std::get<Error>(value_);
+  }
+
+  auto error() && -> Error {
+    COCKTAIL_CHECK(!ok());
+    return std::get<Error>(std::move(value_));
+  }
+
+  auto operator*() -> T& {
+    COCKTAIL_CHECK(ok());
+    return std::get<T>(value_);
+  }
+
+  auto operator*() const -> const T& {
+    COCKTAIL_CHECK(ok());
+    return std::get<T>(value_);
+  }
+
+  auto operator->() -> T* {
+    COCKTAIL_CHECK(ok());
+    return &std::get<T>(value_);
+  }
+
+  auto operator->() const -> const T* {
+    COCKTAIL_CHECK(ok());
+    return &std::get<T>(value_);
+  }
+
+ private:
+  std::variant<Error, T> value_;
+};
+```
+
+ErrorOr 类模板表示要么一个 Error 要么一个成功的值。使用 C++17 的 `std::variant` 来存储要么是一个 Error 要么是一个 T 类型的值。提供了检查是否成功的方法，以及获取错误或值的方法。并且重载了指针和解引用操作符来方便地访问值。
+
+```cpp
+class ErrorBuilder {
+ public:
+  explicit ErrorBuilder(std::string location = "")
+      : location_(std::move(location)),
+        out_(std::make_unique<llvm::raw_string_ostream>(message_)) {}
+
+  template <typename T>
+  [[nodiscard]] auto operator<<(const T& message) && -> ErrorBuilder&& {
+    *out_ << message;
+    return std::move(*this);
+  }
+
+  template <typename T>
+  auto operator<<(const T& message) & -> ErrorBuilder& {
+    *out_ << message;
+    return *this;
+  }
+
+  operator Error() { return Error(location_, message_); }
+
+  template <typename T>
+  operator ErrorOr<T>() {
+    return Error(location_, message_);
+  }
+
+ private:
+  std::string location_;
+  std::string message_;
+  std::unique_ptr<llvm::raw_string_ostream> out_;
+};
+```
+
+ErrorBuilder 类用于构建错误消息。它提供了一个流式API，允许用户逐步构建一个错误消息。使用LLVM的raw_string_ostream类来构建字符串。重载了左移操作符来追加到错误消息。提供了转换操作符来从建造器创建一个Error或ErrorOr。
+
+### 3.2 Error 的使用
+
+基于前面对 `Error` 和 `ErrorOr` 类的介绍，下面的代码展示了如何在实践中使用这两个类以及相关的工具。我们将逐段进行分析：
+
+**1. 使用 `ErrorOr`**
+
+```cpp
+ErrorOr<int> err(Error("test"));
+EXPECT_FALSE(err.ok());
+EXPECT_EQ(err.error().message(), "test");
+```
+
+- 这里首先构建了一个类型为 `int` 的 `ErrorOr` 对象，但是给定了一个错误，而不是成功的值。
+- 接着验证这个 `ErrorOr` 对象不表示一个成功的操作（使用 `ok()` 方法）。
+- 最后检查错误消息是否与预期相符。
+
+**2. 使用 `ErrorBuilder`**
+
+```cpp
+ErrorOr<int> result1 = ErrorBuilder() << "msg";
+ASSERT_FALSE(result1.ok());
+EXPECT_EQ(result1.error().message(), "msg");
+
+auto result2 = static_cast<Error>(ErrorBuilder("TestFunc") << "msg");
+std::string result2_output;
+llvm::raw_string_ostream oss(result2_output);
+result2.Print(oss);
+EXPECT_EQ(oss.str(), "TestFunc: msg");
+```
+
+- 使用 `ErrorBuilder` 来构建错误消息。`ErrorBuilder` 允许我们流式地构建错误消息。
+- `result1` 包含了一个错误，其消息为 "msg"。
+- 对于 `result2`，我们为 `ErrorBuilder` 提供了一个位置 `"TestFunc"` 并追加了一个错误消息。
+- 使用 `Print` 方法将 `result2` 的错误消息输出到 `llvm::raw_string_ostream`，然后验证它的内容是否符合预期。
+
+**3. 使用 `COCKTAIL_ASSIGN_OR_RETURN` 宏**
+
+```cpp
+auto result = []() -> ErrorOr<int> {
+  COCKTAIL_ASSIGN_OR_RETURN(int a, ErrorOr<int>(1));
+  COCKTAIL_ASSIGN_OR_RETURN(const int b, ErrorOr<int>(2));
+  int c = 0;
+  COCKTAIL_ASSIGN_OR_RETURN(c, ErrorOr<int>(3));
+  return a + b + c;
+}();
+ASSERT_TRUE(result.ok());
+EXPECT_EQ(6, *result);
+```
+
+- 这里定义了一个 lambda 函数，返回类型为 `ErrorOr<int>`。
+- 使用 `COCKTAIL_ASSIGN_OR_RETURN` 宏，我们尝试从 `ErrorOr` 对象中提取值并将其分配给变量。如果 `ErrorOr` 对象包含错误，宏将从当前函数返回这个错误。
+- 在此例中，我们成功地从三个 `ErrorOr` 对象中提取了值，并将这些值相加。
+- 最后验证了结果是否符合预期。
+
+`Error` 和 `ErrorOr` 类以及相关的工具和宏提供了一个结构化、类型安全的方法来处理错误。它们使得我们可以明确地表示函数可能的错误，而不是使用例如异常或特殊返回值等传统的错误处理方法。这种方法特别适合于那些不使用或限制使用异常的项目。
